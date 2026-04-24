@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.nfrancois.fr/sitemap.xml
+Sitemap: https://nfrancois.fr/sitemap.xml
