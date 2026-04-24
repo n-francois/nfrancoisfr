@@ -16,7 +16,7 @@
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://nfrancois.fr/interventions"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nfrancois.fr/en/interventions"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nfrancois.fr/en/talks"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nfrancois.fr/interventions"/>
   </url>
   <url>
@@ -29,12 +29,12 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nfrancois.fr/"/>
   </url>
   <url>
-    <loc>https://nfrancois.fr/en/interventions</loc>
+    <loc>https://nfrancois.fr/en/talks</loc>
     <lastmod>2026-04-24</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
     <xhtml:link rel="alternate" hreflang="fr" href="https://nfrancois.fr/interventions"/>
-    <xhtml:link rel="alternate" hreflang="en" href="https://nfrancois.fr/en/interventions"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://nfrancois.fr/en/talks"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://nfrancois.fr/interventions"/>
   </url>
 </urlset>
