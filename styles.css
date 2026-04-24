@@ -92,6 +92,42 @@ p strong {
   color: var(--black);
 }
 
+.nav-lang {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-right: 1.5rem;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+}
+
+.nav-lang > *:not(:last-child) {
+  margin-right: 0.6rem;
+}
+
+.nav-lang > *:not(:last-child)::after {
+  content: '·';
+  margin-left: 0.6rem;
+  color: var(--grey-mid);
+}
+
+.nav-lang a,
+.nav-lang span {
+  color: var(--grey-text);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.nav-lang a:hover {
+  color: var(--black);
+}
+
+.nav-lang [aria-current] {
+  color: var(--black);
+  font-weight: 500;
+}
+
 /* ── HERO ── */
 .hero {
   min-height: 100vh;
