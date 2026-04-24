@@ -1,0 +1,8 @@
+.DS_Store
+.claude/
+Thumbs.db
+*.swp
+*.swo
+.idea/
+.vscode/
+node_modules/
