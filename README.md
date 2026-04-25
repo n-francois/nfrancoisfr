@@ -4,7 +4,7 @@
 
 Based in Nancy, France. I test AI for the tourism industry and share what I learn.
 
-🌐 **Website** : [nfrancois.fr](https://nfrancois.fr)
+🌐 **Website** : [nfrancois.fr/en](https://nfrancois.fr)
 📬 **Newsletter** : [IA, Tech & Travel Café](https://newsletter.iatechtravel.cafe) · 3,000+ subscribers
 💼 **LinkedIn** : [linkedin.com/in/n-francois](https://www.linkedin.com/in/n-francois/)
 ✉️ **Contact** : hello@nfrancois.fr
