@@ -178,19 +178,19 @@
       <div class="stats-inner">
         <div class="stat-item">
           <div class="stat-number">
-            <span class="counter" data-target="20" data-suffix="+">0</span>
+            <span class="counter" data-target="20" data-suffix="+">20+</span>
           </div>
           <div class="stat-label">Années d'expérience<br>dans le digital</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">
-            <span class="counter" data-target="3200" data-suffix="+">0</span>
+            <span class="counter" data-target="3200" data-suffix="+">3&nbsp;200+</span>
           </div>
           <div class="stat-label">Abonnés à ma newsletter<br>IA, Tech & Travel Café</div>
         </div>
         <div class="stat-item">
           <div class="stat-number">
-            <span class="counter" data-target="5700" data-suffix="+">0</span>
+            <span class="counter" data-target="5700" data-suffix="+">5&nbsp;700+</span>
           </div>
           <div class="stat-label">Abonnés sur LinkedIn</div>
         </div>
@@ -367,17 +367,21 @@
       })(start);
     }
 
-    // Reveal + counter trigger on scroll
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        e.target.classList.add('visible');
-        const c = e.target.querySelector('.counter');
-        if (c && !c.dataset.done) { c.dataset.done = 1; animateCounter(c); }
-      });
-    }, { threshold: 0.3 });
+    // Reveal + counter trigger on scroll (respects prefers-reduced-motion)
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('.stat-item').forEach(el => el.classList.add('visible'));
+    } else {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('visible');
+          const c = e.target.querySelector('.counter');
+          if (c && !c.dataset.done) { c.dataset.done = 1; animateCounter(c); }
+        });
+      }, { threshold: 0.3 });
 
-    document.querySelectorAll('.stat-item').forEach(el => io.observe(el));
+      document.querySelectorAll('.stat-item').forEach(el => io.observe(el));
+    }
   </script>
 </body>
 
