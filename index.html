@@ -6,9 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ── SEO de base ── -->
-  <title>Nicolas François · IA, tourisme et transformation digitale</title>
+  <title>Nicolas François · IA &amp; data pour le tourisme, conférencier</title>
   <meta name="description"
-    content="Directeur Digital, conférencier et expert IA pour le tourisme. Je teste l'IA pour le secteur et je le partage. Newsletter IA, Tech & Travel Café · +3 000 abonnés.">
+    content="20 ans dans le digital, 13 dédiés au tourisme. Conférencier et expert IA &amp; data pour le tourisme. Newsletter IA, Tech &amp; Travel Café · +3 000 abonnés.">
   <meta name="author" content="Nicolas François">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://nfrancois.fr/">
@@ -19,9 +19,9 @@
 
   <!-- ── Open Graph (LinkedIn, Facebook) ── -->
   <meta property="og:type" content="profile">
-  <meta property="og:title" content="Nicolas François · IA, tourisme et transformation digitale">
+  <meta property="og:title" content="Nicolas François · IA &amp; data pour le tourisme, conférencier">
   <meta property="og:description"
-    content="Directeur Digital, conférencier et expert IA pour le tourisme. Je teste l'IA pour le secteur et je le partage. Newsletter IA, Tech & Travel Café · +3 000 abonnés.">
+    content="20 ans dans le digital, 13 dédiés au tourisme. Conférencier et expert IA &amp; data pour le tourisme. Newsletter IA, Tech &amp; Travel Café · +3 000 abonnés.">
   <meta property="og:url" content="https://nfrancois.fr/">
   <meta property="og:image" content="https://nfrancois.fr/images/Nicolas-Francois.webp">
   <meta property="og:image:alt" content="Nicolas François en conférence">
@@ -35,50 +35,76 @@
 
   <!-- ── Twitter Card ── -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@nfrancois">
-  <meta name="twitter:title" content="Nicolas François · IA, tourisme et transformation digitale">
+  <meta name="twitter:title" content="Nicolas François · IA &amp; data pour le tourisme, conférencier">
   <meta name="twitter:description"
-    content="Directeur Digital, conférencier et expert IA pour le tourisme. Je teste l'IA pour le secteur et je le partage.">
+    content="20 ans dans le digital, 13 dédiés au tourisme. Conférencier et expert IA &amp; data pour le tourisme. Newsletter IA, Tech &amp; Travel Café · +3 000 abonnés.">
   <meta name="twitter:image" content="https://nfrancois.fr/images/Nicolas-Francois.webp">
 
-  <!-- ── Données structurées JSON-LD (Schema.org Person) ── -->
+  <!-- ── Données structurées JSON-LD (Schema.org Person + Newsletter) ── -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Nicolas François",
-    "url": "https://nfrancois.fr/",
-    "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
-    "email": "bonjour@nfrancois.fr",
-    "jobTitle": "Directeur Digital",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Agence Régionale du Tourisme Grand Est",
-      "url": "https://www.art-grandest.fr"
-    },
-    "description": "Directeur Digital, conférencier et expert IA pour le tourisme. Fondateur de la newsletter IA, Tech & Travel Café.",
-    "sameAs": [
-      "https://www.linkedin.com/in/n-francois/",
-      "https://iatechtravel.cafe",
-      "https://newsletter.iatechtravel.cafe"
-    ],
-    "knowsAbout": [
-      "Intelligence artificielle",
-      "Tourisme numérique",
-      "Transformation digitale",
-      "IA agentique",
-      "Marketing digital"
-    ],
-    "alumniOf": {
-      "@type": "EducationalOrganization",
-      "name": "MIT Professional Education"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Nancy",
-      "addressRegion": "Grand Est",
-      "addressCountry": "FR"
-    }
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://nfrancois.fr/#person",
+        "name": "Nicolas François",
+        "url": "https://nfrancois.fr/",
+        "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
+        "email": "bonjour@nfrancois.fr",
+        "jobTitle": "Directeur Digital",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Agence Régionale du Tourisme Grand Est",
+          "url": "https://www.art-grandest.fr"
+        },
+        "description": "Directeur Digital, spécialiste de l'IA et de la data appliquées au tourisme. Conférencier. Fondateur de la newsletter IA, Tech & Travel Café.",
+        "sameAs": [
+          "https://www.linkedin.com/in/n-francois/",
+          "https://iatechtravel.cafe",
+          "https://newsletter.iatechtravel.cafe"
+        ],
+        "knowsAbout": [
+          "Intelligence artificielle",
+          "IA générative",
+          "Data touristique",
+          "DataTourisme",
+          "Tourisme",
+          "Transformation digitale"
+        ],
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "MIT Professional Education"
+        },
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Agentic AI Applied to Enterprise Transformation",
+          "credentialCategory": "certification",
+          "recognizedBy": {
+            "@type": "EducationalOrganization",
+            "name": "MIT Professional Education"
+          },
+          "dateCreated": "2025-12"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nancy",
+          "addressRegion": "Grand Est",
+          "addressCountry": "FR"
+        }
+      },
+      {
+        "@type": "CreativeWorkSeries",
+        "@id": "https://newsletter.iatechtravel.cafe/#newsletter",
+        "name": "IA, Tech & Travel Café",
+        "url": "https://newsletter.iatechtravel.cafe",
+        "description": "Newsletter indépendante sur l'IA appliquée au tourisme, publiée mensuellement.",
+        "author": { "@id": "https://nfrancois.fr/#person" },
+        "creator": { "@id": "https://nfrancois.fr/#person" },
+        "inLanguage": "fr",
+        "dateCreated": "2024-03"
+      }
+    ]
   }
   </script>
 
@@ -202,13 +228,15 @@
       <div class="bio-section">
         <div class="bio-label">À propos</div>
         <div>
-          <h2 class="section-heading">Expert en stratégie digitale et IA dans le tourisme</h2>
+          <h2 class="section-heading">Expert en stratégie digitale, data et IA dans le tourisme</h2>
           <div class="bio-text">
-            <p>Ça fait plus de 20 ans que j'accompagne la transformation digitale des organisations, dont 13 ans dédiés au tourisme. Directeur Digital, je pilote <a href="https://www.explore-grandest.com" target="_blank">Explore Grand Est</a>, une plateforme qui fédère plus de 2 200 partenaires et récompensée aux UX Awards et aux Trophées de la Communication Digitale.</p>
+            <p>Ça fait plus de 20 ans que j'accompagne la transformation digitale des organisations, dont 13 ans dédiés au tourisme. Directeur Digital à l'Agence Régionale du Tourisme Grand Est, je coordonne <a href="https://www.explore-grandest.com" target="_blank">Explore Grand Est</a>, une plateforme qui fédère plus de 2 200 partenaires, récompensée aux UX Awards et aux Trophées de la Communication Digitale.</p>
 
-            <p>En parallèle, je décrypte l'IA pour le tourisme. Ce que j'en retiens, je le partage dans ma <a href="https://newsletter.iatechtravel.cafe" target="_blank">newsletter</a> et sur <a href="https://linkedin.com/in/n-francois" target="_blank">LinkedIn</a>. Sans jargon, sans promesse magique. C'est l'esprit d'<strong>IA, Tech &amp; Travel Café</strong>, projet indépendant lancé en mars 2024 : analyser ce qui change vraiment pour aider les professionnels à avancer avec méthode et esprit critique.</p>
+            <p>Je connais aussi le tourisme par sa face cachée : la donnée. Systèmes d'information, DataTourisme, structuration de l'offre. C'est là que se joue la visibilité des destinations, à l'heure où les voyageurs posent de plus en plus leurs questions à des IA.</p>
 
-            <p>Je crois que l'IA est un levier puissant pour le tourisme, à condition de l'aborder sérieusement et avec bon sens. En 2025, j'ai obtenu ma certification du <strong>MIT Professional Education</strong> en IA agentique et j'ai rejoint le réseau des <strong>Ambassadeurs IA</strong> du plan national « Osez l'IA » porté par le Ministère de l'Économie, pour représenter le secteur du tourisme sur ces enjeux.</p>
+            <p>Depuis 2024, je teste l'IA pour le tourisme et je partage ce que j'en retiens dans ma <a href="https://newsletter.iatechtravel.cafe" target="_blank">newsletter</a> et sur <a href="https://linkedin.com/in/n-francois" target="_blank">LinkedIn</a>. Sans jargon, sans promesse magique. C'est l'esprit d'<strong>IA, Tech &amp; Travel Café</strong>, projet indépendant qui rassemble aujourd'hui plus de 3 000 professionnels du tourisme.</p>
+
+            <p>Je crois que l'IA est un levier puissant pour le secteur, à condition de l'aborder avec méthode, esprit critique et un peu d'humilité. En 2025, j'ai obtenu ma certification du <strong>MIT Professional Education</strong> en IA agentique et rejoint le réseau des <strong>Ambassadeurs du plan national « Osez l'IA »</strong> porté par le Ministère de l'Économie, pour représenter le tourisme sur ces enjeux.</p>
           </div>
           <div class="bio-badges">
             <span class="badge">Stratégie IA · Tourisme</span>
