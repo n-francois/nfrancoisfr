@@ -188,12 +188,6 @@ p strong {
   margin-bottom: 3rem;
 }
 
-.hero-ctas {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem 2.5rem;
-}
-
 .hero-cta {
   display: inline-flex;
   align-items: center;
