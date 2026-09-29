@@ -144,9 +144,9 @@
 
   <!-- NAV -->
   <nav id="nav" aria-label="Navigation principale">
-    <div class="nav-logo" aria-label="Nicolas François">
+    <div class="nav-logo">
       <!-- Logo NF — noir sur fond clair -->
-      <a href="https://nfrancois.fr/"><svg viewBox="0 0 430.97 365.47" xmlns="http://www.w3.org/2000/svg" fill="#0a0a0a">
+      <a href="https://nfrancois.fr/" aria-label="Nicolas François, accueil"><svg aria-hidden="true" viewBox="0 0 430.97 365.47" xmlns="http://www.w3.org/2000/svg" fill="#0a0a0a">
         <path
           d="M223.06,365.47h-4.81c-2.03-.95-4.19-.25-10-1.15-28.09-4.35-50.75-24.32-58.85-51.54L77.95,72.72c-1.11-3.72-4.67-6.22-8.33-5.53-2.55.48-3.98,3.1-3.98,5.89l-.05,259.09c0,17.85-14.41,32.01-31.61,32.59-17.74.59-31.77-12.44-33.98-29.77V68.12C0,39.25,23.17,13.5,48.78,5.12c39.11-12.8,80.22,9.75,91.74,48.41l71.77,240.8c1.17,3.91,5.26,6.27,8.94,5.02,2.26-.77,3.15-3.28,3.16-5.69l.7-210.45c.15-44.55,39.23-81.13,83.2-82.53,31.46-1,62.24-.83,93.46.08,17.28.5,29.44,17.08,29.21,32.8-.24,16.54-13.25,31.88-30.34,31.93l-87.16.23c-12.37.03-23.39,9.34-23.4,22.27l-.1,206.8c0,13.16-3.9,25.65-10.51,36.6-12.35,20.45-33.19,32.1-56.4,34.09Z" />
         <path
@@ -170,7 +170,10 @@
           <p class="hero-tagline">
             Plus de 20 ans dans le digital, dont 13 ans dédiés au tourisme. Directeur Digital et créateur de la newsletter <em>IA, Tech & Travel Café</em>. Conférencier, certifié MIT Professional Education en IA agentique et Ambassadeur du plan national « Osez l'IA ».
           </p>
-          <a href="#univers" class="hero-cta">Me lire <span>→</span></a>
+          <div class="hero-ctas">
+            <a href="#contenus" class="hero-cta">Découvrir mes contenus <span aria-hidden="true">↓</span></a>
+            <a href="#contact" class="hero-cta">Me contacter <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
         <div class="hero-image-wrap">
           <img src="/images/Nicolas-Francois.webp"
@@ -211,11 +214,11 @@
         <div>
           <h2 class="section-heading">Expert en stratégie digitale, data et IA dans le tourisme</h2>
           <div class="bio-text">
-            <p>Ça fait plus de 20 ans que j'accompagne la transformation digitale des organisations, dont 13 ans dédiés au tourisme. Directeur Digital à l'Agence Régionale du Tourisme Grand Est, je coordonne <a href="https://www.explore-grandest.com" target="_blank">Explore Grand Est</a>, une plateforme qui fédère plus de 2 200 partenaires, récompensée aux UX Awards et aux Trophées de la Communication Digitale.</p>
+            <p>Ça fait plus de 20 ans que j'accompagne la transformation digitale des organisations, dont 13 ans dédiés au tourisme. Directeur Digital à l'Agence Régionale du Tourisme Grand Est, je coordonne <a href="https://www.explore-grandest.com" target="_blank" rel="noopener">Explore Grand Est</a>, une plateforme qui fédère plus de 2 200 partenaires, récompensée aux UX Awards et aux Trophées de la Communication Digitale.</p>
 
             <p>Je connais aussi le tourisme par sa face cachée : la donnée. Systèmes d'information, DataTourisme, structuration de l'offre. C'est là que se joue la visibilité des destinations, à l'heure où les voyageurs posent de plus en plus leurs questions à des IA.</p>
 
-            <p>Depuis 2024, je teste l'IA pour le tourisme et je partage ce que j'en retiens dans ma <a href="https://www.iatechtravel.cafe/newsletter/" target="_blank">newsletter</a> et sur <a href="https://linkedin.com/in/n-francois" target="_blank">LinkedIn</a>. Sans jargon, sans promesse magique. C'est l'esprit d'<strong>IA, Tech &amp; Travel Café</strong>, projet indépendant qui rassemble aujourd'hui plus de 3 000 professionnels du tourisme.</p>
+            <p>Depuis 2024, je teste l'IA pour le tourisme et je partage ce que j'en retiens dans ma <a href="https://www.iatechtravel.cafe/newsletter/" target="_blank" rel="noopener">newsletter</a> et sur <a href="https://linkedin.com/in/n-francois" target="_blank" rel="noopener">LinkedIn</a>. Sans jargon, sans promesse magique. C'est l'esprit d'<strong>IA, Tech &amp; Travel Café</strong>, projet indépendant qui rassemble aujourd'hui plus de 3 000 professionnels du tourisme.</p>
 
             <p>Je crois que l'IA est un levier puissant pour le secteur, à condition de l'aborder avec méthode, esprit critique et un peu d'humilité. En 2025, j'ai obtenu ma certification du <strong>MIT Professional Education</strong> en IA agentique et rejoint le réseau des <strong>Ambassadeurs du plan national « Osez l'IA »</strong> porté par le Ministère de l'Économie, pour représenter le tourisme sur ces enjeux.</p>
           </div>
@@ -229,8 +232,8 @@
       </div>
     </section>
 
-    <!-- UNIVERS -->
-    <section class="univers-section" id="univers" aria-label="Où me lire">
+    <!-- OÙ ME LIRE -->
+    <section class="univers-section" id="contenus" aria-label="Où me lire">
       <div class="univers-inner">
         <div class="section-header">
           <h2 class="section-title">Où me lire</h2>
@@ -288,13 +291,13 @@
             <li>Sorbonne Université</li>
             <li>Rencontres IA & Tourisme Grand Est</li>
           </ul>
-          <a href="/interventions" class="conf-more">Conférences, médias, publications <span aria-hidden="true">→</span></a>
+          <a href="/interventions/" class="conf-more">Conférences, médias, publications <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="contact-section" aria-label="Contact">
+    <section class="contact-section" id="contact" aria-label="Contact">
       <div class="contact-inner">
         <p class="contact-pre">Contact</p>
         <h2 class="contact-title">Une question,<br>un projet, une idée&nbsp;?</h2>

@@ -4,7 +4,9 @@
 
 ## À propos
 - [Site principal](https://nfrancois.fr/)
-- [Interventions](https://nfrancois.fr/interventions): conférences, publications, médias, certifications
+- [Interventions](https://nfrancois.fr/interventions/): conférences, publications, médias, certifications
+- [English version](https://nfrancois.fr/en/): site en anglais
+- [Talks](https://nfrancois.fr/en/talks/): page Interventions en anglais
 
 ## Projets
 - [IA, Tech & Travel Café](https://www.iatechtravel.cafe): média et newsletter mensuelle indépendants sur ce que l'IA change pour les métiers du tourisme et du voyage

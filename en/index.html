@@ -35,7 +35,6 @@
 
   <!-- ── Twitter Card ── -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@nfrancois">
   <meta name="twitter:title" content="Nicolas François · AI &amp; data for tourism, speaker">
   <meta name="twitter:description" content="20 years in digital, 13 dedicated to tourism. Speaker and AI &amp; data expert for the tourism industry. IA, Tech &amp; Travel Café newsletter · 3,000+ subscribers.">
   <meta name="twitter:image" content="https://nfrancois.fr/images/Nicolas-Francois.webp">
@@ -44,39 +43,66 @@
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Nicolas François",
-    "url": "https://nfrancois.fr/en/",
-    "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
-    "email": "hello@nfrancois.fr",
-    "jobTitle": "Digital Director",
-    "worksFor": {
-      "@type": "Organization",
-      "name": "Agence Régionale du Tourisme Grand Est",
-      "url": "https://www.art-grandest.fr"
-    },
-    "description": "Digital Director, speaker and AI expert for the tourism industry. Founder of the IA, Tech & Travel Café newsletter.",
-    "sameAs": [
-      "https://www.linkedin.com/in/n-francois/",
-      "https://www.iatechtravel.cafe"
-    ],
-    "knowsAbout": [
-      "Artificial Intelligence",
-      "Digital Tourism",
-      "Digital Transformation",
-      "Agentic AI",
-      "Digital Marketing"
-    ],
-    "alumniOf": {
-      "@type": "EducationalOrganization",
-      "name": "MIT Professional Education"
-    },
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Nancy",
-      "addressRegion": "Grand Est",
-      "addressCountry": "FR"
-    }
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://nfrancois.fr/#person",
+        "name": "Nicolas François",
+        "url": "https://nfrancois.fr/en/",
+        "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
+        "email": "hello@nfrancois.fr",
+        "jobTitle": "Digital Director",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Agence Régionale du Tourisme Grand Est",
+          "url": "https://www.art-grandest.fr"
+        },
+        "description": "Digital Director specializing in AI and data for tourism. Speaker. Founder of the IA, Tech & Travel Café newsletter.",
+        "sameAs": [
+          "https://www.linkedin.com/in/n-francois/",
+          "https://www.iatechtravel.cafe"
+        ],
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "Generative AI",
+          "Tourism Data",
+          "DataTourisme",
+          "Tourism",
+          "Digital Transformation"
+        ],
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "MIT Professional Education"
+        },
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Agentic AI Applied to Enterprise Transformation",
+          "credentialCategory": "certification",
+          "recognizedBy": {
+            "@type": "EducationalOrganization",
+            "name": "MIT Professional Education"
+          },
+          "dateCreated": "2025-12"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Nancy",
+          "addressRegion": "Grand Est",
+          "addressCountry": "FR"
+        }
+      },
+      {
+        "@type": "CreativeWorkSeries",
+        "@id": "https://www.iatechtravel.cafe/newsletter/#newsletter",
+        "name": "IA, Tech & Travel Café",
+        "url": "https://www.iatechtravel.cafe/newsletter/",
+        "description": "Independent monthly media and newsletter on what AI is changing for tourism and travel professionals.",
+        "author": { "@id": "https://nfrancois.fr/#person" },
+        "creator": { "@id": "https://nfrancois.fr/#person" },
+        "inLanguage": "fr",
+        "dateCreated": "2024-03"
+      }
+    ]
   }
   </script>
 
@@ -117,8 +143,8 @@
 
   <!-- NAV -->
   <nav id="nav" aria-label="Main navigation">
-    <div class="nav-logo" aria-label="Nicolas François">
-      <a href="https://nfrancois.fr/en/"><svg viewBox="0 0 430.97 365.47" xmlns="http://www.w3.org/2000/svg" fill="#0a0a0a">
+    <div class="nav-logo">
+      <a href="https://nfrancois.fr/en/" aria-label="Nicolas François, home"><svg aria-hidden="true" viewBox="0 0 430.97 365.47" xmlns="http://www.w3.org/2000/svg" fill="#0a0a0a">
         <path
           d="M223.06,365.47h-4.81c-2.03-.95-4.19-.25-10-1.15-28.09-4.35-50.75-24.32-58.85-51.54L77.95,72.72c-1.11-3.72-4.67-6.22-8.33-5.53-2.55.48-3.98,3.1-3.98,5.89l-.05,259.09c0,17.85-14.41,32.01-31.61,32.59-17.74.59-31.77-12.44-33.98-29.77V68.12C0,39.25,23.17,13.5,48.78,5.12c39.11-12.8,80.22,9.75,91.74,48.41l71.77,240.8c1.17,3.91,5.26,6.27,8.94,5.02,2.26-.77,3.15-3.28,3.16-5.69l.7-210.45c.15-44.55,39.23-81.13,83.2-82.53,31.46-1,62.24-.83,93.46.08,17.28.5,29.44,17.08,29.21,32.8-.24,16.54-13.25,31.88-30.34,31.93l-87.16.23c-12.37.03-23.39,9.34-23.4,22.27l-.1,206.8c0,13.16-3.9,25.65-10.51,36.6-12.35,20.45-33.19,32.1-56.4,34.09Z" />
         <path
@@ -138,11 +164,14 @@
         <div class="hero-text">
           <p class="hero-eyebrow">AI Strategy &middot; Digital Transformation &middot; Speaker</p>
           <h1 class="hero-name">Nicolas<br><em>François</em></h1>
-          <p class="hero-baseline">AI applied to tourism,<br>from strategy to the field.</p>
+          <p class="hero-baseline">AI applied to tourism,<br>from strategy to real-world practice.</p>
           <p class="hero-tagline">
             20+ years in digital, including 13 years dedicated to tourism. Digital Director and creator of the <em>IA, Tech & Travel Café</em> newsletter. Speaker, certified in Agentic AI by MIT Professional Education, and Ambassador of France's national <em>"Osez l'IA"</em> (Dare AI) initiative.
           </p>
-          <a href="#channels" class="hero-cta">Discover more <span>→</span></a>
+          <div class="hero-ctas">
+            <a href="#channels" class="hero-cta">Discover more <span aria-hidden="true">↓</span></a>
+            <a href="#contact" class="hero-cta">Get in touch <span aria-hidden="true">↓</span></a>
+          </div>
         </div>
         <div class="hero-image-wrap">
           <img src="/images/Nicolas-Francois.webp"
@@ -181,15 +210,15 @@
       <div class="bio-section">
         <div class="bio-label">About</div>
         <div>
-          <h2 class="section-heading">Expert in digital strategy, data and AI for tourism</h2>
+          <h2 class="section-heading">Expert in digital strategy, data, and AI for tourism</h2>
           <div class="bio-text">
-            <p>For over 20 years, I've been supporting organizations through their digital transformation, including 13 years dedicated to tourism. As Digital Director at Agence Régionale du Tourisme Grand Est, I lead <a href="https://www.explore-grandest.com" target="_blank">Explore Grand Est</a>, a platform bringing together 2,200+ partners, recognized at the UX Awards and the Trophées de la Communication Digitale.</p>
+            <p>For over 20 years, I've been supporting organizations through their digital transformation, including 13 years dedicated to tourism. As Digital Director at Agence Régionale du Tourisme Grand Est, I lead <a href="https://www.explore-grandest.com" target="_blank" rel="noopener">Explore Grand Est</a>, a platform bringing together 2,200+ partners, recognized at the UX Awards and the Trophées de la Communication Digitale.</p>
 
-            <p>I also know tourism from a less visible angle: data. Information systems, DataTourisme, structuring destination content. This is where destinations become discoverable — at a time when travellers increasingly turn to AI for answers.</p>
+            <p>I also know tourism from a less visible angle: data. Information systems, DataTourisme, structuring destination content. This is where destinations become discoverable — at a time when travelers increasingly turn to AI for answers.</p>
 
-            <p>Based in France, I work at the crossroads of AI and tourism, bringing a European perspective to an industry largely shaped by North American narratives. Since 2024, I test AI for tourism and share what I learn in my <a href="https://www.iatechtravel.cafe/newsletter/" target="_blank">newsletter</a> and on <a href="https://linkedin.com/in/n-francois" target="_blank">LinkedIn</a> — no jargon, no magic promises. That's the spirit of <strong>IA, Tech &amp; Travel Café</strong>, an independent project now followed by 3,000+ tourism professionals.</p>
+            <p>Based in France, I work at the crossroads of AI and tourism, bringing a European perspective to an industry largely shaped by North American narratives. Since 2024, I've been testing AI for tourism and sharing what I learn in my <a href="https://www.iatechtravel.cafe/newsletter/" target="_blank" rel="noopener">newsletter</a> and on <a href="https://linkedin.com/in/n-francois" target="_blank" rel="noopener">LinkedIn</a> — no jargon, no magic promises. That's the spirit of <strong>IA, Tech &amp; Travel Café</strong>, an independent project now followed by 3,000+ tourism professionals.</p>
 
-            <p>I believe AI is a powerful lever for tourism — provided we approach it with method, critical thinking, and a bit of humility. In 2025, I earned my <strong>MIT Professional Education</strong> certification in Agentic AI and joined the network of <strong>Ambassadors of France's "Osez l'IA" national initiative</strong>, led by the French Ministry of Economy, representing the tourism sector on these issues.</p>
+            <p>I believe AI is a powerful lever for tourism — provided we approach it with rigor, critical thinking, and a bit of humility. In 2025, I earned my <strong>MIT Professional Education</strong> certification in Agentic AI and joined the network of <strong>Ambassadors of France's "Osez l'IA" national initiative</strong>, led by the French Ministry of Economy, representing the tourism sector on these issues.</p>
           </div>
           <div class="bio-badges">
             <span class="badge">AI Strategy · Tourism</span>
@@ -220,7 +249,7 @@
             </svg>
             <span class="card-type">Media · Newsletter</span>
             <h3 class="card-title">IA, Tech &amp; Travel Café</h3>
-            <span class="card-desc">What AI is really changing for tourism and travel professionals. I test, fact-check and analyse the business impact, with full editorial independence. Articles, deep dives, tools, interviews and a monthly newsletter. In French.</span>
+            <span class="card-desc">What AI is really changing for tourism and travel professionals. I test, fact-check, and analyze the business impact, with full editorial independence. Articles, deep dives, tools, interviews, and a monthly newsletter. In French.</span>
           </a>
           <a href="https://www.linkedin.com/in/n-francois/" target="_blank" rel="noopener me" class="card">
             <span class="card-arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"
@@ -236,7 +265,7 @@
             </svg>
             <span class="card-type">LinkedIn · Personal profile</span>
             <h3 class="card-title">Nicolas François</h3>
-            <span class="card-desc">Where I decode AI for tourism as it happens: tool tests, fact-checked studies, visibility in AI answers, interviews and field notes. In French.</span>
+            <span class="card-desc">Where I decode AI for tourism as it happens: tool tests, fact-checked studies, visibility in AI answers, interviews, and field notes. In French.</span>
           </a>
         </div>
       </div>
@@ -248,7 +277,7 @@
         <div class="conf-label">Speaking</div>
         <div>
           <h2 class="section-heading">AI speaker for the tourism industry</h2>
-          <p class="conf-intro">A regular speaker on AI use cases in tourism, I share field insights and practical thinking with industry professionals, students, and decision-makers.</p>
+          <p class="conf-intro">A regular speaker on AI use cases in tourism, I share field insights and practical thinking with industry professionals, students, and decision-makers. Talks are delivered in French.</p>
           <ul class="conf-list">
             <li>Next Tourisme (Paris)</li>
             <li>ADN Tourisme</li>
@@ -258,13 +287,13 @@
             <li>Sorbonne Université (Paris)</li>
             <li>Rencontres IA & Tourisme Grand Est (France)</li>
           </ul>
-          <a href="/en/talks" class="conf-more">Talks, media, publications <span aria-hidden="true">→</span></a>
+          <a href="/en/talks/" class="conf-more">Talks, media, publications <span aria-hidden="true">→</span></a>
         </div>
       </div>
     </section>
 
     <!-- CONTACT -->
-    <section class="contact-section" aria-label="Contact">
+    <section class="contact-section" id="contact" aria-label="Contact">
       <div class="contact-inner">
         <p class="contact-pre">Contact</p>
         <h2 class="contact-title">A question,<br>a project, an idea?</h2>

@@ -188,6 +188,12 @@ p strong {
   margin-bottom: 3rem;
 }
 
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2.5rem;
+}
+
 .hero-cta {
   display: inline-flex;
   align-items: center;
@@ -200,11 +206,14 @@ p strong {
   text-decoration: none;
   border-bottom: 1px solid var(--black);
   padding-bottom: 2px;
-  transition: gap 0.2s;
 }
 
-.hero-cta:hover {
-  gap: 0.9rem;
+.hero-cta span {
+  transition: transform 0.2s;
+}
+
+.hero-cta:hover span {
+  transform: translateY(3px);
 }
 
 .hero-image-wrap {
