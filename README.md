@@ -5,7 +5,7 @@
 Based in Nancy, France. I test AI for the tourism industry and share what I learn.
 
 🌐 **Website** : [nfrancois.fr](https://nfrancois.fr/en)
-📬 **Newsletter** : [IA, Tech & Travel Café](https://newsletter.iatechtravel.cafe) · 3,000+ subscribers
+📬 **Media & newsletter** : [IA, Tech & Travel Café](https://www.iatechtravel.cafe) · 3,000+ subscribers
 💼 **LinkedIn** : [linkedin.com/in/n-francois](https://www.linkedin.com/in/n-francois/)
 ✉️ **Contact** : hello@nfrancois.fr
 
@@ -15,7 +15,7 @@ Based in Nancy, France. I test AI for the tourism industry and share what I lear
 
 - **Digital Director** at [Agence Régionale du Tourisme Grand Est](https://www.art-grandest.fr)
 - **Speaker** at industry conferences on AI applied to tourism
-- **Writer** : weekly newsletter, articles, field insights
+- **Writer** : monthly newsletter, articles, field insights
 - **Hands-on experimentation** : generative AI, agentic AI, tools for tourism professionals
 
 ## Topics

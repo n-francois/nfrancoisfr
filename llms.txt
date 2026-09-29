@@ -7,8 +7,7 @@
 - [Interventions](https://nfrancois.fr/interventions): conférences, publications, médias, certifications
 
 ## Projets
-- [IA, Tech & Travel Café — média](https://www.iatechtravel.cafe)
-- [IA, Tech & Travel Café — newsletter](https://newsletter.iatechtravel.cafe)
+- [IA, Tech & Travel Café](https://www.iatechtravel.cafe): média et newsletter mensuelle indépendants sur ce que l'IA change pour les métiers du tourisme et du voyage
 
 ## Réseaux
 - [LinkedIn](https://www.linkedin.com/in/n-francois/)

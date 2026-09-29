@@ -436,30 +436,9 @@ p strong {
   flex-shrink: 0;
 }
 
-.card-logo-substack {
-  background: #FF6719;
-  padding: 10px;
-  border-radius: 4px;
-}
-
-.card-handle-wrap {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.card-handle-icon {
-  width: 13px;
-  height: 13px;
-  flex-shrink: 0;
-  color: var(--grey-mid);
-}
-
-.card-handle {
-  font-size: 0.75rem;
-  font-weight: 400;
-  letter-spacing: 0.03em;
-  color: var(--grey-mid-2);
+.card-logo-icon {
+  background: #1a1a1a;
+  padding: 12px;
 }
 
 .card-type {
