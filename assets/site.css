@@ -24,6 +24,9 @@ main { padding-bottom: var(--space-16); }
 @media (max-width: 440px) { .nf-nav__id .tampon { width: 40px; } }
 /* Sur petit écran, le tampon seul porte l'identité ; le nom reste lu par les lecteurs d'écran */
 @media (max-width: 440px) { .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } }
+/* Sur téléphone, l'en-tête ne montre que le tampon : le nom du titre de l'accueil passe en noir, un cran plus gras,
+   pour signer le premier écran */
+@media (max-width: 440px) { .hero__nom { color: var(--encre); font-weight: 600; } }
 .nav__menu summary { list-style: none; }
 .nav__menu summary::-webkit-details-marker { display: none; }
 /* Bouton rond à icône, de la même hauteur que « Contact » : trois points pour ouvrir, une croix pour fermer */
@@ -45,6 +48,13 @@ main { padding-bottom: var(--space-16); }
 @media (prefers-reduced-motion: reduce) { .entete.est-epinglee { transition: none; } }
 /* Le panneau du menu est dans l'en-tête : le tampon, « Contact » et la croix passent devant lui */
 .entete:has(.nav__menu[open]) :is(.nf-nav__id, .nf-nav__links, summary) { position: relative; z-index: 51; }
+/* En-tête compact (tampon, Contact, menu) : « Contact » s'efface en fondu tant qu'un autre bouton de contact, ou le bloc
+   e-mail de l'accueil, est à l'écran (classe posée par site.js), et revient ensuite. Sa place reste réservée pour que le
+   bouton du menu ne bouge pas ; il reste affiché quand le menu est ouvert. */
+@media (max-width: 860px) {
+  .nf-nav__links li:last-child { transition: opacity .25s ease, visibility .25s; }
+  .entete.contact-en-double:not(:has(.nav__menu[open])) .nf-nav__links li:last-child { opacity: 0; visibility: hidden; }
+}
 .nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
 .nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
 .nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
@@ -237,22 +247,21 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
 #contact { scroll-margin-top: var(--space-6); }
 
-/* Pied de page : le grand nom recule de l'approche de son N (6,3 % du corps) pour que le trait du N
-   tombe sur celui du « b » de l'adresse e-mail au-dessus (1 px d'approche à 16 px) */
 /* Pied de page : le jaune occupe toute la largeur, mais son contenu s'aligne sur la colonne du site (même bord gauche
-   que le tampon et les textes) ; le grand nom est calculé pour remplir exactement la largeur de cette colonne, quel que
-   soit l'écran (15,3 % de la colonne ; sans les unités de conteneur, la taille du design system s'applique) */
+   que le tampon de l'en-tête et les textes) */
 .nf-footer { padding-inline: 0; }
-.nf-footer__cadre { container-type: inline-size; }
-.nf-footer__big { font-size: 15.3cqi; }
-.nf-footer__big { margin-left: calc(1px - .063em); }
-/* Le grand nom est le dernier plan de la page : plus d'air au-dessus des liens, et coupé net par le bas de la page,
-   comme une affiche, au cinquième de la hauteur des lettres (le pied de page masque ce qui dépasse) */
-.nf-footer__big { padding-bottom: 0; margin-bottom: -.141em; }
-@media (min-width: 760px) { .nf-footer__big { margin-top: var(--space-24); } }
-/* Ton sur ton : le nom en jaune doré, comme une signature gravée dans le jaune ; les liens restent lus en premier
-   (un jaune mélangé à l'encre tournait au kaki). Texte décoratif, masqué aux lecteurs d'écran. */
-.nf-footer__big { color: #F2C21F; }
+/* Le tampon signe la page, ton sur ton, en jaune doré, pour que les liens restent lus en premier (un jaune mélangé à
+   l'encre tournait au kaki). Il se trace quand il arrive à l'écran (classes posées par site.js) ; sans JavaScript, il
+   est simplement affiché. Sur mobile, il vient sous les liens, avec en dessous la même marge qu'en haut du pied de page. */
+.nf-footer__cadre { padding-bottom: var(--space-12); }
+.nf-footer .tampon--pied { width: 141px; margin-top: var(--space-16); color: #F2C21F; }
+/* Dès la tablette, une seule bande : les liens à gauche, les mentions à droite, et le tampon tout au bout, comme une
+   signature au bas d'une lettre (sans tampon, comme sur la page 404, la ligne de liens reste seule) */
+@media (min-width: 760px) {
+  .nf-footer__cadre:has(.tampon--pied) { display: flex; align-items: center; gap: var(--space-12); }
+  .nf-footer .tampon--pied { flex: none; width: 94px; margin: 0; }
+  .nf-footer__cadre:has(.tampon--pied) .nf-footer__top { flex: 1; align-items: center; }
+}
 
 /* Flèche des lignes d'interventions : un peu plus grande et plus marquée que celle du design system */
 .nf-fiche__arrow { width: 24px; height: 24px; stroke-width: 2.25; }
@@ -313,6 +322,7 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* ── Tampon NF dessiné ──────────────────────────────────────────────────────── */
 /* Le tampon est un seul trait continu (le N, puis la barre du F) et un point : on le trace comme une ligne d'encre.
    En-tête : il se dessine en 0,75 s à chaque page. Page 404 : « tampon--lent », en grand, comme une signature.
+   Pied de page : « tampon--pied », tracé en 1,4 s quand il arrive à l'écran.
    « tampon--chargement » : en boucle, comme indicateur de chargement (aussi en fichier autonome : assets/nf-chargement.svg). */
 .tampon { display: block; width: 34px; height: auto; overflow: visible; color: var(--encre); }
 .tampon__trait { fill: none; stroke: currentColor; stroke-width: 65.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; }
@@ -322,6 +332,11 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   .tampon__point { animation: tampon-point .38s cubic-bezier(.2, .8, .2, 1) .84s backwards; }
   .tampon--lent .tampon__trait { animation-duration: 1.9s; animation-delay: .3s; }
   .tampon--lent .tampon__point { animation-delay: 2.14s; }
+  .tampon--pied .tampon__trait, .tampon--pied .tampon__point { animation: none; }
+  /* en attente, il est masqué en entier (un trait effacé laisserait voir son bout arrondi) */
+  .tampon--pied.est-en-attente { visibility: hidden; }
+  .tampon--pied.est-trace .tampon__trait { animation: tampon-trace 1.4s cubic-bezier(.65, 0, .35, 1) backwards; }
+  .tampon--pied.est-trace .tampon__point { animation: tampon-point .38s cubic-bezier(.2, .8, .2, 1) 1.34s backwards; }
   .tampon--chargement .tampon__trait { animation: tampon-boucle 2.2s cubic-bezier(.65, 0, .35, 1) infinite; }
   .tampon--chargement .tampon__point { animation: tampon-battement 2.2s ease-in-out infinite; }
 }
