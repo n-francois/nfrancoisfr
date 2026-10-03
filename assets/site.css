@@ -217,7 +217,8 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* Sur mobile : le logo d'abord, puis le titre et le texte, le chiffre, et les boutons */
 @media (max-width: 759px) {
   .newsletter > div:first-child, .newsletter__marque { display: contents; }
-  .newsletter .newsletter__logo { order: 1; max-width: 200px; }
+  /* le logo tient lieu de titre : son texte vient juste dessous (16 px au lieu des 32 px entre les autres blocs) */
+  .newsletter .newsletter__logo { order: 1; max-width: 200px; margin-bottom: calc(var(--space-4) - var(--space-8)); }
   .newsletter .nf-section__head { order: 2; margin-bottom: 0; }
   .newsletter__chiffre { order: 3; }
   .newsletter .actions { order: 4; margin-top: 0; }
