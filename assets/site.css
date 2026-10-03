@@ -70,6 +70,9 @@ html:has(.nav__menu[open]) { overflow: hidden; }
 /* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
 .page-head { padding-block: var(--space-16) 0; }
 .page-title { font-family: var(--font-display); font-size: clamp(36px, 5.2vw, 56px); line-height: 1; letter-spacing: -.03em; font-weight: 800; margin: var(--space-4) 0 0; max-width: 16em; text-wrap: balance; }
+/* Le surlignage du titre reste d'un seul tenant (« réalité du terrain », « real-world practice ») ; sous 360 px, il peut
+   passer sur deux lignes pour ne pas déborder */
+@media (min-width: 360px) { .page-title .nf-hl { white-space: nowrap; } }
 .page-lead { font-size: 22px; line-height: 1.4; margin: var(--space-6) 0 0; max-width: 34em; }
 /* Introductions : lignes équilibrées sur grand écran ; sur mobile, l'équilibrage raccourcissait trop les lignes */
 @media (min-width: 760px) { .page-lead, .nf-section__lead { text-wrap: balance; } }
@@ -284,7 +287,7 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
   /* Titre de l'accueil : une idée par ligne (les <br class="hero__br"> ne servent que sur mobile) */
   .nf-hero__title { font-size: min(40px, 11.5vw); text-wrap: wrap; }
   /* Le surlignage commence une ligne : on compense son petit débord pour que le texte reste aligné à gauche */
-  .nf-hero__title .nf-hl { margin-left: -.06em; }
+  .nf-hero__title .nf-hl, .page-title .nf-hl { margin-left: -.06em; }
   /* Bande newsletter : le logo juste au-dessus dit déjà le nom ; le titre reste pour les lecteurs d'écran */
   .newsletter .nf-section__name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
   /* Listes d'interventions : la flèche monte en haut à droite, sur la ligne de la date, au lieu d'occuper une ligne */
