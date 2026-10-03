@@ -190,13 +190,15 @@ def prose_item(nom, lang):
 
 
 def galerie(d, lang):
-    """Petite galerie de photos sur scène : légende « événement année © crédit », sans séparateur."""
+    """Petite galerie de photos sur scène : légende « événement année © crédit », sans séparateur.
+    La première photo est visible dès l'arrivée sur la page (sur mobile surtout) : elle se charge tout de suite."""
     items = []
-    for g in d.get("galerie", []):
+    for n, g in enumerate(d.get("galerie", [])):
         legende = f'{tr(g, "evenement", lang)} {g["annee"]}' + (f' © {g["credit"]}' if g["credit"] else "")
         style = f' style="object-position: {g["position"]}"' if g.get("position") else ""
+        lazy = "" if n == 0 else ' loading="lazy"'
         items.append(f'<li><figure><img src="/images/galerie/{g["image"]}" alt="{attr(tr(g, "alt", lang))}" width="{g["largeur"]}" '
-                     f'height="{g["hauteur"]}" loading="lazy"{style}><figcaption class="nf-label">{typo(legende, lang)}</figcaption></figure></li>')
+                     f'height="{g["hauteur"]}"{lazy}{style}><figcaption class="nf-label">{typo(legende, lang)}</figcaption></figure></li>')
     return '<ul class="galerie">' + "".join(items) + "</ul>"
 
 

@@ -18,15 +18,15 @@ main { padding-bottom: var(--space-16); }
 /* Navigation : groupe de droite et menu mobile plein écran (fonctionne sans JavaScript) */
 .nav__droite { display: flex; align-items: center; gap: var(--space-4); }
 @media (max-width: 520px) { .nf-nav { gap: var(--space-3); } .nav__droite { gap: var(--space-2); } }
-/* Tampon NF un peu plus présent que dans le design system : 34 px à côté du nom, 40 px quand il est seul (mobile),
+/* Tampon NF un peu plus présent que dans le design system : 34 px à côté du nom, 40 px quand il est seul,
    presque à la hauteur des boutons de la barre */
 .nf-nav__id .tampon { width: 34px; }
-@media (max-width: 440px) { .nf-nav__id .tampon { width: 40px; } }
-/* Sur petit écran, le tampon seul porte l'identité ; le nom reste lu par les lecteurs d'écran */
-@media (max-width: 440px) { .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } }
-/* Sur téléphone, l'en-tête ne montre que le tampon : le nom du titre de l'accueil passe en noir, un cran plus gras,
-   pour signer le premier écran */
-@media (max-width: 440px) { .hero__nom { color: var(--encre); font-weight: 600; } }
+/* En-tête compact (mobile, tablette) : le nom à côté du tampon en haut de la page ; quand la barre revient en glissant
+   pendant la lecture, le tampon seul, un peu plus grand. Le nom reste lu par les lecteurs d'écran. */
+@media (max-width: 860px) {
+  .entete.est-epinglee .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  .entete.est-epinglee .nf-nav__id .tampon { width: 40px; }
+}
 .nav__menu summary { list-style: none; }
 .nav__menu summary::-webkit-details-marker { display: none; }
 /* Bouton rond à icône, de la même hauteur que « Contact » : trois points pour ouvrir, une croix pour fermer */
@@ -231,6 +231,10 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 .credo__n { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; color: var(--gris); margin: 0 0 var(--space-3); }
 
 
+
+/* Photos : pas de fondu propre à l'arrivée (celui du design system pour les images chargées tard). Le changement de
+   page fait déjà apparaître la page en fondu, et les deux à la suite faisaient clignoter les photos sur mobile. */
+.nf-motion img[loading="lazy"] { opacity: 1; transition: none; }
 
 /* Interventions : petite galerie de photos sur scène, sous l'introduction */
 .galerie-bloc { margin-top: var(--space-16); }
