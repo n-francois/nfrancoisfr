@@ -30,12 +30,15 @@ main { padding-bottom: var(--space-16); }
 .nav__picto { width: 22px; height: 22px; fill: currentColor; }
 .nav__picto--trait { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 @media (min-width: 861px) { .nav__menu { display: none; } }
-/* En-tête collé en haut de l'écran, sur mobile comme sur ordinateur : il se cache quand on descend et revient dès
-   qu'on remonte (site.js). Il est hors du conteneur de la page pour rester disponible jusqu'en bas, pied de page compris.
-   « sticky » garde sa place dans la page : rien ne saute quand il se cache, ni quand le menu se ferme. */
-.entete { position: sticky; top: 0; z-index: 60; background: var(--papier); transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
-.entete.is-cachee { transform: translateY(-100%); }
-@media (prefers-reduced-motion: reduce) { .entete { transition: none; } }
+/* En-tête, sur mobile comme sur ordinateur : au départ il reste dans la page et part normalement avec le défilement.
+   Quand on remonte, il revient en glissant depuis le haut de l'écran (« est-epinglee ») ; si on redescend, il repart ;
+   revenu tout en haut, il reprend simplement sa place (site.js). Il est hors du conteneur de la page pour rester
+   disponible jusqu'en bas, pied de page compris. « sticky » garde sa place dans la page : rien ne saute. */
+.entete { position: relative; z-index: 60; background: var(--papier); }
+.entete.est-epinglee { position: sticky; top: 0; transition: transform .35s cubic-bezier(.2, .8, .2, 1); }
+.entete.est-epinglee.is-cachee { transform: translateY(-100%); }
+.entete.sans-transition { transition: none; }
+@media (prefers-reduced-motion: reduce) { .entete.est-epinglee { transition: none; } }
 /* Le panneau du menu est dans l'en-tête : le tampon, « Contact » et la croix passent devant lui */
 .entete:has(.nav__menu[open]) :is(.nf-nav__id, .nf-nav__links, summary) { position: relative; z-index: 51; }
 .nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }

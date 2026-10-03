@@ -8,32 +8,50 @@
   var entete = document.querySelector('.entete');
   var menu = document.querySelector('.nav__menu');
 
-  /* En-tête : il disparaît quand on descend et revient dès qu'on remonte, pour retrouver vite le tampon et la
-     navigation. Il reste affiché près du haut de la page et tant que le menu est ouvert. */
+  /* En-tête : au départ, il défile normalement avec la page. Dès qu'on remonte alors qu'il est sorti de l'écran, il
+     revient en glissant depuis le haut ; si on redescend, il repart. Revenu tout en haut de la page, il reprend
+     simplement sa place. Il reste affiché tant que le menu est ouvert. */
   if (entete) {
     var dernier = window.scrollY;
     var attente = false;
-    var SEUIL = 8;
+    var SEUIL = 10;
+    function epingler() {
+      /* posé hors de l'écran sans animation, puis glissé vers le bas */
+      entete.classList.add('sans-transition', 'est-epinglee', 'is-cachee');
+      void entete.offsetHeight;
+      entete.classList.remove('sans-transition', 'is-cachee');
+    }
     function majEntete() {
       attente = false;
       var y = window.scrollY;
       var delta = y - dernier;
+      var epinglee = entete.classList.contains('est-epinglee');
       var enBas = y + window.innerHeight >= document.documentElement.scrollHeight - 2;
-      if ((menu && menu.open) || y < 120) {
+      if (y <= 0) {
+        /* tout en haut : il reprend sa place dans la page, sans finir un éventuel glissement en cours */
+        if (epinglee) {
+          entete.classList.remove('est-epinglee', 'is-cachee');
+          if (entete.getAnimations) entete.getAnimations().forEach(function (a) { a.cancel(); });
+        }
+      } else if (menu && menu.open) {
         entete.classList.remove('is-cachee');
-      } else if (delta > SEUIL) {
-        entete.classList.add('is-cachee');
       } else if (delta < -SEUIL && !enBas) {
-        /* (en bas de page, le rebond du défilement sur iPhone ne doit pas faire réapparaître l'en-tête) */
-        entete.classList.remove('is-cachee');
+        /* on remonte (le rebond du défilement en bas de page, sur iPhone, ne compte pas) */
+        if (!epinglee && y > entete.offsetHeight) epingler();
+        else entete.classList.remove('is-cachee');
+      } else if (delta > SEUIL && epinglee) {
+        entete.classList.add('is-cachee');
       }
       if (Math.abs(delta) > SEUIL) dernier = y;
     }
     window.addEventListener('scroll', function () {
       if (!attente) { attente = true; window.requestAnimationFrame(majEntete); }
     }, { passive: true });
-    /* Au clavier, arriver sur un lien de l'en-tête le réaffiche */
-    entete.addEventListener('focusin', function () { entete.classList.remove('is-cachee'); });
+    /* Au clavier, arriver sur un lien de l'en-tête caché le fait revenir */
+    entete.addEventListener('focusin', function () {
+      if (window.scrollY > entete.offsetHeight && !entete.classList.contains('est-epinglee')) epingler();
+      else entete.classList.remove('is-cachee');
+    });
   }
 
   /* Menu mobile : s'ouvre en glissant depuis la droite (CSS) ; à la fermeture, on joue le mouvement inverse
