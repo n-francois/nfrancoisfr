@@ -106,6 +106,8 @@ p { text-wrap: pretty; }
 .nf-col__texte { font-size: 16px; line-height: 1.5; margin: var(--space-3) 0 0; }
 
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-12); }
+/* Bouton sous un texte en colonne (À propos, vers le parcours complet sur LinkedIn) : rattaché au texte qu'il prolonge */
+.texte .actions { margin-top: var(--space-8); }
 .bloc { margin-top: var(--space-12); }
 
 /* Liste en prose : plus petite que le titre de section qui la précède */
