@@ -27,6 +27,9 @@ main { padding-bottom: var(--space-16); }
   .entete.est-epinglee .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
   .entete.est-epinglee .nf-nav__id .tampon { width: 40px; }
 }
+/* Accueil sur mobile : le nom est déjà dans la barre juste au-dessus, on ne le répète pas devant le titre. Il reste dans
+   le h1 (masqué à l'écran seulement), pour Google et les lecteurs d'écran. */
+@media (max-width: 759px) { .hero__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } }
 .nav__menu summary { list-style: none; }
 .nav__menu summary::-webkit-details-marker { display: none; }
 /* Bouton rond à icône, de la même hauteur que « Contact » : trois points pour ouvrir, une croix pour fermer */

@@ -1,6 +1,6 @@
 # Nicolas François
 
-**Digital Director · Speaker · AI Expert for Tourism**
+**Digital and AI Strategy Expert · Speaker · Tourism**
 
 Based in Nancy, France. I test AI for the tourism industry and share what I learn.
 
@@ -13,7 +13,7 @@ Based in Nancy, France. I test AI for the tourism industry and share what I lear
 
 ## What I do
 
-- **Digital Director** at [Agence Régionale du Tourisme Grand Est](https://www.art-grandest.fr)
+- **Digital and AI strategy** for tourism, built on 20 years in digital, 13 of them in tourism
 - **Speaker** at industry conferences on AI applied to tourism
 - **Writer** : monthly newsletter, articles, field insights
 - **Hands-on experimentation** : generative AI, agentic AI, tools for tourism professionals

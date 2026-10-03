@@ -8,13 +8,8 @@
       "url": "https://nfrancois.fr/",
       "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
       "email": "bonjour@nfrancois.fr",
-      "jobTitle": "Directeur Digital",
-      "worksFor": {
-        "@type": "Organization",
-        "name": "Agence Régionale du Tourisme Grand Est",
-        "url": "https://www.art-grandest.fr"
-      },
-      "description": "Stratégie IA et data appliquées au tourisme. Directeur Digital de l’Agence Régionale du Tourisme Grand Est, fondateur du média et de la newsletter IA, Tech & Travel Café.",
+      "jobTitle": "Expert en stratégie digitale et IA",
+      "description": "Expert en stratégie digitale et IA appliquées au tourisme, fondateur du média et de la newsletter IA, Tech & Travel Café.",
       "sameAs": [
         "https://www.linkedin.com/in/n-francois/",
         "https://www.iatechtravel.cafe/author/nicolas/",
