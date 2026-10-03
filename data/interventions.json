@@ -1,5 +1,5 @@
 {
-  "_lisez_moi": "Source : tableau Google « interventions-nfrancois ». Les textes sont saisis tels quels (apostrophes droites, espaces normales) : scripts/build.py applique la typographie française. Types autorisés : Conférence, Atelier, Table ronde, Webinaire, Média. statut : Passé ou À venir. date : AAAA-MM (ou AAAA si le mois est inconnu). Version anglaise : chaque entrée peut porter un objet « en » qui remplace les champs traduits (titre, organisateur, ville, precision, date_affichee, format, editeur…) ; les autres champs, dont les noms propres, sont repris tels quels.",
+  "_lisez_moi": "Source : tableau Google « interventions-nfrancois ». Les textes sont saisis tels quels (apostrophes droites, espaces normales) : scripts/build.py applique la typographie française. Les trois rubriques (prises_de_parole, medias, publications) s'affichent ensemble sur la page Interventions, par année. type = ce que Nicolas a fait : Conférence, Table ronde, Atelier, Webinaire, Cours, Interview, Podcast, Article, Citation, Étude, Livre blanc (traductions dans scripts/build.py). statut : Passé ou À venir. date : AAAA-MM (ou AAAA si le mois est inconnu). Version anglaise : chaque entrée peut porter un objet « en » qui remplace les champs traduits (titre, organisateur, ville, precision, date_affichee, editeur…) ; les autres champs, dont les noms propres, sont repris tels quels.",
   "prises_de_parole": [
     {
       "id": "C-01",
@@ -24,7 +24,7 @@
       "titre": "Exister quand l'IA répond à tout",
       "organisateur": "Next Tourisme, édition « Accélération IA »",
       "ville": "Paris",
-      "precision": "co-organisateur de l'édition",
+      "precision": "animation de la table ronde, co-organisateur de l'édition",
       "type": "Table ronde",
       "lien": "https://www.next-tourisme.com/exister-quand-ia-repond-a-tout/",
       "accueil": true,
@@ -32,7 +32,7 @@
       "en": {
         "titre": "Staying visible when AI answers everything",
         "organisateur": "Next Tourisme, “Accélération IA” edition",
-        "precision": "co-organizer of the edition"
+        "precision": "panel moderator, co-organizer of the edition"
       }
     },
     {
@@ -50,6 +50,21 @@
       }
     },
     {
+      "id": "C-04",
+      "statut": "Passé",
+      "date": "2026-03",
+      "titre": "L'IA dans votre golf : ce qui change vraiment pour votre quotidien",
+      "organisateur": "Association des Directeurs de Golf de France",
+      "ville": "Chantilly",
+      "public": "Directeurs de golfs, une soixantaine de participants",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "AI at your golf course: what really changes in your day-to-day"
+      }
+    },
+    {
       "id": "C-07",
       "statut": "Passé",
       "date": "2025-12",
@@ -57,25 +72,10 @@
       "organisateur": "Enjeux du e-tourisme · L'Echo Touristique & FEVAD",
       "ville": "Paris",
       "type": "Conférence",
-      "lien": "",
+      "lien": "https://www.lechotouristique.com/article/ia-dans-le-voyage-a-quoi-sattendre-en-2026",
       "accueil": true,
       "en": {
         "titre": "AI in travel: what to expect in 2026?"
-      }
-    },
-    {
-      "id": "C-04",
-      "statut": "Passé",
-      "date": "2025-11",
-      "titre": "L'IA concrète pour les gestionnaires de golfs",
-      "organisateur": "Association des Directeurs de Golf de France",
-      "ville": "",
-      "public": "Directeurs de golfs, une soixantaine de participants",
-      "type": "Conférence",
-      "lien": "",
-      "accueil": false,
-      "en": {
-        "titre": "Practical AI for golf course managers"
       }
     },
     {
@@ -91,6 +91,20 @@
       "en": {
         "titre": "AI in tourism: demystify, demonstrate, question",
         "ville": "Houffalize, Belgium"
+      }
+    },
+    {
+      "id": "C-20",
+      "statut": "Passé",
+      "date": "2025-11",
+      "titre": "IA générative : usages et potentiels dans le tourisme & les loisirs",
+      "organisateur": "SPARKS · Syndicat des Loisirs Actifs",
+      "ville": "Reims",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "Generative AI: uses and potential in tourism and leisure"
       }
     },
     {
@@ -114,29 +128,29 @@
       "id": "C-10b",
       "statut": "Passé",
       "date": "2025-10",
-      "titre": "Atelier IA & juridique",
+      "titre": "IA & Tourisme : c'est pas sorcier, mais faut pas faire n'importe quoi",
       "organisateur": "Rencontres nationales du e-tourisme",
       "ville": "Pau",
       "type": "Atelier",
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "AI & law workshop"
+        "titre": "AI & tourism: it's not rocket science, but you can't just wing it"
       }
     },
     {
       "id": "C-10c",
       "statut": "Passé",
       "date": "2025-10",
-      "titre": "Interview IA & Tourisme",
+      "titre": "Regards sur l'IA",
       "organisateur": "Rencontres nationales du e-tourisme",
       "ville": "Pau",
       "precision": "interview sur scène",
-      "type": "Table ronde",
+      "type": "Conférence",
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "AI & tourism interview",
+        "titre": "Perspectives on AI",
         "precision": "on-stage interview"
       }
     },
@@ -222,7 +236,7 @@
       "organisateur": "École Supérieure de Tourisme Troyes-Metz",
       "ville": "Metz",
       "precision": "module de cours, étudiants de 1re à 3e année",
-      "type": "Atelier",
+      "type": "Cours",
       "lien": "",
       "accueil": false,
       "en": {
@@ -253,7 +267,7 @@
       "organisateur": "IFTM · TOM.travel, émission Grand Angle",
       "ville": "Paris",
       "precision": "interview télévisée",
-      "type": "Média",
+      "type": "Interview",
       "lien": "",
       "accueil": false,
       "en": {
@@ -279,13 +293,13 @@
     {
       "id": "C-18",
       "statut": "Passé",
-      "date": "2024",
+      "date": "2024-06",
       "titre": "L'expérience utilisateur doit être la première préoccupation",
       "organisateur": "Next Tourisme",
       "ville": "Paris",
       "precision": "interview et table ronde",
       "type": "Table ronde",
-      "lien": "",
+      "lien": "https://www.next-tourisme.com/nicolas-francois-art-grand-est/",
       "accueil": false,
       "en": {
         "titre": "User experience must come first",
@@ -297,8 +311,8 @@
     {
       "id": "M-01",
       "date": "2026-07",
+      "type": "Podcast",
       "media": "AI Experience",
-      "format": "podcast",
       "titre": "Tourisme : l'IA prépare déjà le voyage sans vous",
       "lien": "https://www.ai-experience.io/podcast/tourisme-lia-prepare-deja-le-voyage-sans-vous",
       "en": {
@@ -308,8 +322,8 @@
     {
       "id": "M-02",
       "date": "2026-04",
+      "type": "Interview",
       "media": "Paris&Co, Cahier de Tendances Tourisme #9",
-      "format": "interview",
       "titre": "Décrypter l'IA dans le tourisme : tendances, limites et bonnes pratiques",
       "lien": "/interventions/Interview-Nicolas-Francois-Cahier-de-Tendances-Tourisme-2026.pdf",
       "en": {
@@ -317,21 +331,10 @@
       }
     },
     {
-      "id": "M-03",
-      "date": "2025-12",
-      "media": "L'Echo Touristique",
-      "format": "article",
-      "titre": "IA dans le voyage : à quoi s'attendre en 2026",
-      "lien": "https://www.lechotouristique.com/article/ia-dans-le-voyage-a-quoi-sattendre-en-2026",
-      "en": {
-        "titre": "AI in travel: what to expect in 2026"
-      }
-    },
-    {
       "id": "M-04",
       "date": "2025-10",
+      "type": "Citation",
       "media": "Juris Tourisme · Lefebvre Dalloz",
-      "format": "article",
       "titre": "Newsletter IA, Tech & Travel Café mise en avant dans la rubrique Initiatives",
       "lien": "",
       "en": {
@@ -341,8 +344,8 @@
     {
       "id": "M-05",
       "date": "2025-07",
+      "type": "Podcast",
       "media": "Away We Go",
-      "format": "podcast",
       "titre": "Utiliser l'IA à bon escient dans le tourisme",
       "lien": "https://awaywego.fr/utiliser-ia-a-bon-escient-nicolas-francois/",
       "en": {
@@ -352,110 +355,78 @@
     {
       "id": "M-06",
       "date": "2025-03",
+      "type": "Interview",
       "media": "Puissance Télévision",
-      "format": "citation",
       "titre": "Quand l'intelligence artificielle se met au service du tourisme",
       "lien": "https://www.puissancetelevision.fr/societe/quand-lintelligence-artificielle-se-met-au-service-du-tourisme/",
       "en": {
-        "titre": "When artificial intelligence serves tourism",
-        "format": "quoted"
+        "titre": "When artificial intelligence serves tourism"
       }
     },
     {
       "id": "M-07",
       "date": "2025-02",
-      "media": "etourisme.info",
-      "format": "citation",
-      "titre": "30 mn IA tourisme, un nouveau podcast vidéo",
+      "type": "Podcast",
+      "titre": "30 min IA & Tourisme",
       "lien": "https://www.etourisme.info/30-mn-ia-tourisme-un-nouveau-podcast-video/",
       "en": {
-        "titre": "30 mn IA tourisme, a new video podcast",
-        "format": "quoted"
-      }
-    },
-    {
-      "id": "M-08",
-      "date": "2025-02",
-      "media": "Revue ESPACES",
-      "format": "dossier",
-      "titre": "Intelligence artificielle : animer son réseau de socioprofessionnels",
-      "lien": "https://www.tourisme-espaces.com/doc/11896.intelligence-artificielle-animer-reseau-socioprofessionnels.html",
-      "en": {
-        "titre": "Artificial intelligence: engaging your network of tourism stakeholders",
-        "format": "feature"
-      }
+        "precision": "Host of several episodes"
+      },
+      "precision": "Animateur de plusieurs épisodes"
     },
     {
       "id": "M-09",
       "date": "2024-11",
+      "type": "Citation",
       "media": "etourisme.info",
-      "format": "article",
       "titre": "L'IA dans le tourisme : un an après, où en sommes-nous ?",
       "lien": "https://www.etourisme.info/lia-dans-le-tourisme-un-an-apres-ou-en-sommes-nous/",
       "en": {
         "titre": "AI in tourism: one year later, where do we stand?"
       }
-    },
-    {
-      "id": "M-10",
-      "date": "2024-07",
-      "media": "Away We Go",
-      "format": "podcast",
-      "titre": "Utiliser l'IA à bon escient",
-      "lien": "https://open.spotify.com/episode/2jGJJ2zV7QTCUsWEpWEfuS",
-      "en": {
-        "titre": "Using AI wisely"
-      }
-    },
-    {
-      "id": "M-11",
-      "date": "2024-05",
-      "media": "Next Tourisme",
-      "format": "article",
-      "titre": "L'expérience utilisateur doit être la première préoccupation",
-      "lien": "https://www.next-tourisme.com/nicolas-francois-art-grand-est/",
-      "en": {
-        "titre": "User experience must come first"
-      }
     }
   ],
   "publications": [
     {
+      "id": "P-01",
       "date": "2026-09",
+      "type": "Article",
       "editeur": "Juris Tourisme n° 299, Lefebvre Dalloz",
       "titre": "Applications et impacts de l'IA dans le secteur du tourisme",
-      "nature": "Article",
-      "lien": "",
+      "lien": "https://www.dalloz-revues.fr/revues/juris_tourisme-43.htm",
       "en": {
         "titre": "Applications and impacts of AI in the tourism sector",
         "editeur": "Juris Tourisme no. 299, Lefebvre Dalloz"
       }
     },
     {
+      "id": "P-02",
       "date": "2026-02",
+      "type": "Étude",
       "editeur": "ADN Tourisme × AFDAS",
       "titre": "L'IA et l'évolution des métiers dans les organismes de tourisme",
-      "nature": "Étude",
       "lien": "https://www.adn-tourisme.fr/etude-ia-metiers/",
       "en": {
         "titre": "AI and the evolution of jobs in tourism organizations"
       }
     },
     {
+      "id": "P-03",
       "date": "2026-01",
+      "type": "Citation",
       "editeur": "CCI Paris Île-de-France",
       "titre": "L'intelligence artificielle au cœur de la révolution touristique",
-      "nature": "Étude",
       "lien": "https://www.cci-paris-idf.fr/fr/prospective/IA-tourisme",
       "en": {
         "titre": "Artificial intelligence at the heart of the tourism revolution"
       }
     },
     {
+      "id": "P-04",
       "date": "2025-11",
+      "type": "Livre blanc",
       "editeur": "Hauts-de-France Innovation Tourisme",
       "titre": "IA Générative et Tourisme, 2e édition",
-      "nature": "Livre blanc",
       "lien": "https://www.hautsdefranceinnovationtourisme.com/ressource/ia-generative-et-tourisme/",
       "en": {
         "titre": "Generative AI and Tourism, 2nd edition"
@@ -477,7 +448,7 @@
     {
       "date": "depuis septembre 2025",
       "titre": "Ambassadeur du plan national « Osez l'IA » pour le secteur du tourisme",
-      "organisme": "Ministère de l'Économie",
+      "organisme": "ministère de l'Économie",
       "nature": "Nomination",
       "en": {
         "titre": "Ambassador of France’s “Osez l'IA” national initiative for the tourism sector",
@@ -532,38 +503,37 @@
       "image": "totec-pupitre.jpg",
       "largeur": 1000,
       "hauteur": 666,
-      "evenement": "To.Tec",
+      "evenement": "ToTec",
       "annee": "2022",
       "credit": "Alexandre Nestora",
-      "alt": "Nicolas François au pupitre devant une salle, To.Tec",
+      "alt": "Nicolas François au pupitre devant une salle, ToTec",
       "en": {
-        "alt": "Nicolas François at the lectern in front of an audience, To.Tec"
+        "alt": "Nicolas François at the lectern in front of an audience, ToTec"
       }
     },
     {
       "image": "abbaye-premontres-scene.jpg",
       "largeur": 1000,
       "hauteur": 667,
-      "evenement": "Club Nova · Abbaye des Prémontrés",
+      "evenement": "Club Nova Grand Est",
       "annee": "2024",
-      "credit": "",
+      "credit": "Pierre Defontaine",
       "alt": "Nicolas François sur scène, micro en main, à l'Abbaye des Prémontrés",
       "en": {
         "alt": "Nicolas François on stage holding a microphone at the Abbaye des Prémontrés"
       }
     },
     {
-      "image": "talk-bibliotheque.jpg",
-      "largeur": 750,
-      "hauteur": 1000,
-      "evenement": "Talk en bibliothèque",
-      "annee": "2023",
-      "credit": "",
-      "position": "50% 70%",
-      "alt": "Nicolas François intervenant devant un public dans une bibliothèque",
+      "image": "pau-2025-scene.jpg",
+      "largeur": 533,
+      "hauteur": 666,
+      "evenement": "#ET Pau",
+      "annee": "2025",
+      "credit": "Maria Alberola",
+      "position": "50% 15%",
+      "alt": "Nicolas François debout sur scène, micro serre-tête, aux Rencontres nationales du e-tourisme à Pau",
       "en": {
-        "evenement": "Library talk",
-        "alt": "Nicolas François speaking to an audience in a library"
+        "alt": "Nicolas François standing on stage with a headset microphone at the Rencontres nationales du e-tourisme in Pau"
       }
     }
   ]

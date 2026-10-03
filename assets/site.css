@@ -36,14 +36,27 @@ html:has(.nav__menu[open]) { overflow: hidden; }
 /* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
 .page-head { padding-block: var(--space-16) 0; }
 .page-title { font-family: var(--font-display); font-size: clamp(36px, 5.2vw, 56px); line-height: 1; letter-spacing: -.03em; font-weight: 800; margin: var(--space-4) 0 0; max-width: 16em; text-wrap: balance; }
-.page-lead { font-size: 22px; line-height: 1.4; margin: var(--space-6) 0 0; max-width: 34em; }
+.page-lead { font-size: 22px; line-height: 1.4; margin: var(--space-6) 0 0; max-width: 34em; text-wrap: balance; }
+/* Pas de mot seul sur la dernière ligne d'un paragraphe (navigateurs récents ; les autres l'ignorent) */
+p { text-wrap: pretty; }
 
 /* Texte courant */
 .texte { max-width: var(--measure); }
 .texte p { margin: 0 0 var(--space-4); }
 .texte p:last-child { margin-bottom: 0; }
-.texte h2 { font-size: 22px; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; margin: var(--space-12) 0 var(--space-3); }
-.texte h2:first-child { margin-top: 0; }
+/* Mentions légales : une ligne par rubrique, séparées par des filets fins comme les listes d'interventions ;
+   dès la tablette, le titre à gauche et le texte à droite */
+.legal__ligne { display: grid; gap: var(--space-3); padding-block: var(--space-8); border-bottom: var(--rule-thin) solid var(--gris-clair); }
+.legal__ligne:first-child { padding-top: 0; }
+.legal__ligne:last-child { border-bottom: 0; padding-bottom: 0; }
+.legal__titre { margin: 0; font-size: 22px; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; }
+@media (min-width: 760px) { .legal__ligne { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: var(--space-12); } }
+/* Identité de l'éditeur : libellé gris, valeur en encre, une information par ligne */
+.legal__infos { margin: var(--space-4) 0 0; }
+.legal__infos div { display: grid; gap: 0 var(--space-6); padding-block: var(--space-2); }
+.legal__infos dt { font-size: 15px; color: var(--gris); }
+.legal__infos dd { margin: 0; }
+@media (min-width: 560px) { .legal__infos div { grid-template-columns: 220px minmax(0, 1fr); align-items: baseline; } }
 .nf-col__texte { font-size: 16px; line-height: 1.5; margin: var(--space-3) 0 0; }
 
 .actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-12); }
@@ -75,10 +88,17 @@ html:has(.nav__menu[open]) { overflow: hidden; }
 .duo { display: grid; gap: var(--space-8); }
 @media (min-width: 760px) { .duo { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; } }
 @media (min-width: 760px) { .duo--centre { align-items: center; } }
+/* Variante inversée (bloc e-mail de l'accueil) : la photo à gauche, le texte à droite ; sur mobile, le texte reste en premier */
+@media (min-width: 760px) {
+  .duo--inverse { grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+  .duo--inverse > figure { order: -1; justify-self: start; }
+}
 .duo .nf-section__head { margin-bottom: var(--space-8); }
 .duo__photo { margin: 0; justify-self: end; width: 100%; max-width: 440px; }
 .duo__photo img { display: block; width: 100%; height: auto; background: var(--gris-clair); }
 figure .nf-label { display: block; margin-top: var(--space-2); }
+/* Portrait légèrement recadré (15:16), calé sur le haut pour garder la tête */
+.duo__photo--haut img { aspect-ratio: 15 / 16; object-fit: cover; object-position: 50% 0%; }
 /* Accueil : portrait légèrement recadré (15:16 au lieu de 8:9), calé sur le bas pour garder le micro et le badge ;
    on retire la moitié du fond noir au-dessus de la tête (le fichier reste entier pour À propos) */
 .duo__photo--carre img { aspect-ratio: 15 / 16; object-fit: cover; object-position: 50% 100%; }
@@ -91,14 +111,13 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   .fiche__quand { flex-direction: column; }
 }
 
-/* Contact */
-.contact { display: grid; gap: var(--space-12); }
-@media (min-width: 900px) { .contact { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-16); align-items: start; } }
+/* Bloc e-mail en bas de l'accueil (#contact) */
 .contact__mail { display: inline-block; font-size: clamp(28px, 4.4vw, 48px); line-height: 1.1; font-weight: 700; letter-spacing: -.025em; color: var(--encre); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; overflow-wrap: anywhere; }
 .contact__mail:hover { background: linear-gradient(transparent 56%, var(--jaune) 56%, var(--jaune) 92%, transparent 92%); }
 .contact__mail:focus-visible { outline: 2px solid var(--encre); outline-offset: 4px; }
-.contact__aide { margin: var(--space-8) 0 0; }
-.contact__infos { margin: 0; display: grid; gap: var(--space-6); }
+.contact__aide { margin: var(--space-8) 0 0; font-size: 20px; line-height: 1.45; max-width: 36em; }
+/* Deux informations côte à côte sous la phrase, sans encart */
+.contact__infos { margin: var(--space-8) 0 0; display: flex; flex-wrap: wrap; gap: var(--space-4) var(--space-12); }
 .contact__infos dd { margin: var(--space-1) 0 0; }
 
 /* Grille à deux colonnes de même largeur */
@@ -117,6 +136,8 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* Accueil : références sous le hero */
 .nf-hero { padding-block: var(--space-16); }
 .nf-hero__title { font-size: clamp(40px, 6.2vw, 76px); }
+/* Le petit libellé « Nicolas François · … » fait partie du h1 (le nom y reste pour les moteurs) mais garde son allure de libellé */
+.nf-hero__title .nf-hero__label { display: block; font-family: var(--font-sans); }
 /* Dès la tablette : « J’aide les pros du tourisme » en première ligne, le surlignage d’un seul tenant en deuxième */
 @media (min-width: 760px) { .hero__ligne { display: block; white-space: nowrap; } }
 /* Ouverture de l'accueil : le hero et le bandeau remplissent le premier écran (sous la navigation de 81 px),
@@ -168,23 +189,6 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* Ce que je crois */
 .credo__n { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; color: var(--gris); margin: 0 0 var(--space-3); }
 
-/* Ce que je propose : sujets et photo sur scène, puis les informations pratiques en encart pleine largeur et le bouton */
-.offre { display: grid; gap: var(--space-12); }
-.offre .nf-section__head { margin-bottom: var(--space-8); }
-@media (min-width: 900px) {
-  .offre { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
-  .offre__encart { grid-column: 1 / -1; }
-  .offre__encart .encart__infos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6) var(--space-8); }
-}
-.offre__photo { margin: 0; justify-self: end; width: 100%; max-width: 440px; }
-.offre__photo img { display: block; width: 100%; height: auto; background: var(--gris-clair); aspect-ratio: 15 / 16; object-fit: cover; object-position: 50% 0%; }
-.puces { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: var(--space-3); }
-.puces li { position: relative; padding-left: var(--space-6); font-size: 17px; line-height: 1.45; }
-.puces li::before { content: ""; position: absolute; left: 2px; top: .6em; width: 7px; height: 7px; border-radius: 50%; background: var(--encre); }
-.encart { background: var(--survol); padding: var(--space-6); }
-@media (min-width: 760px) { .encart { padding: var(--space-8); } }
-.encart__infos { margin: var(--space-6) 0 0; display: grid; gap: var(--space-4); }
-.encart__infos dd { margin: var(--space-1) 0 0; font-size: 17px; line-height: 1.45; }
 
 
 /* Interventions : petite galerie de photos sur scène, sous l'introduction */
@@ -195,3 +199,11 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 @media (max-width: 759px) { .galerie li:first-child { grid-column: 1 / -1; } }
 .galerie figure { margin: 0; }
 .galerie img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--gris-clair); }
+
+/* Ancre « Me contacter » : défilement doux vers le bloc e-mail (désactivé si l'utilisateur réduit les animations) */
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+#contact { scroll-margin-top: var(--space-6); }
+
+/* Pied de page : le grand nom recule de l'approche de son N (6,3 % du corps) pour que le trait du N
+   tombe sur celui du « b » de l'adresse e-mail au-dessus (1 px d'approche à 16 px) */
+.nf-footer__big { margin-left: calc(1px - .063em); }

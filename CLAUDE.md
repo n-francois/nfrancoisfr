@@ -45,7 +45,7 @@ Quand un chiffre change, le mettre à jour partout : compteurs, meta description
 
 ## IA, Tech & Travel Café
 
-- Plus de Substack : tout est sur `https://www.iatechtravel.cafe` (newsletter : `/newsletter/`).
+- Plus de Substack : tout est sur `https://www.iatechtravel.cafe`. Tous les liens, y compris « S'abonner à ma newsletter », pointent vers cette page d'accueil.
 - Logo : virgule mint `#3de5bc` sur fond encre `#1a1a1a`, défini une fois par page dans le symbole SVG `#logo-ittc`.
 
 ## Pages Interventions / Talks
@@ -58,7 +58,7 @@ Quand un chiffre change, le mettre à jour partout : compteurs, meta description
 ## SEO
 
 - URLs finales avec slash (`/interventions/`, `/en/talks/`) partout : canonical, hreflang, og:url, JSON-LD, sitemap, liens internes. Les versions sans slash redirigent en 301.
-- À chaque modification d'une page, mettre à jour son `<lastmod>` dans `sitemap.xml`.
+- `sitemap.xml` est généré par `scripts/build.py` (le `<lastmod>` d'une page passe à la date du jour quand elle change) : ne pas l'éditer à la main.
 - `title`, `og:title` et `twitter:title` identiques ; même chose pour les trois descriptions. `&` encodé en `&amp;` dans les attributs.
 - JSON-LD des accueils : `@graph` avec la Person `https://nfrancois.fr/#person` et la newsletter (CreativeWorkSeries). Garder FR et EN alignés.
 - Images de partage : `images/og-image-fr.jpg` et `images/og-image-en.jpg` (1200×630, JPG). La photo portrait `Nicolas-Francois.webp` reste l'image du hero et du JSON-LD.

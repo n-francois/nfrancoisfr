@@ -10,21 +10,26 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE = "https://nfrancois.fr"
 NNBSP = "\u202f"  # espace fine insécable
 
-TYPES = [  # types autorisés par le design system
-    ("Conférence", "conference"),
-    ("Atelier", "atelier"),
-    ("Table ronde", "table-ronde"),
-    ("Webinaire", "webinaire"),
-    ("Média", "media"),
-]
-SLUG = dict(TYPES)
+TYPES = {  # ce que Nicolas a fait, avec sa traduction anglaise
+    "Conférence": "Talk",
+    "Table ronde": "Panel",
+    "Atelier": "Workshop",
+    "Webinaire": "Webinar",
+    "Cours": "Course",
+    "Interview": "Interview",
+    "Podcast": "Podcast",
+    "Article": "Article",
+    "Citation": "Mention",
+    "Étude": "Study",
+    "Livre blanc": "White paper",
+}
 
 # Libellés propres à chaque langue. Les noms propres français restent tels quels en anglais.
 LANGUES = {
     "fr": {
         "og_locale": "fr_FR",
         "og_image": "og-image-fr.jpg",
-        "og_alt": "Nicolas François, stratégie IA et data, conférencier",
+        "og_alt": "Nicolas François, stratégie IA et data pour le tourisme",
         "skip": "Aller au contenu",
         "nav_label": "Navigation principale",
         "fermer": "Fermer",
@@ -32,18 +37,17 @@ LANGUES = {
         "email": "bonjour@nfrancois.fr",
         "accueil": "/",
         "nav": [("Interventions", "/interventions/"), ("À propos", "/a-propos/")],
-        "contact": "/contact/",
+        "contact": "/#contact",  # le bloc e-mail en bas de l'accueil
         "legal": ("Mentions légales", "/mentions-legales/"),
         "autre": ("English", "en"),
         "mois": ["janv.", "févr.", "mars", "avr.", "mai", "juin", "juil.", "août", "sept.", "oct.", "nov.", "déc."],
-        "types": {},
-        "natures": {},
+        "types": {t: t for t in TYPES},
         "accreditations": "Accréditations média",
     },
     "en": {
         "og_locale": "en_US",
         "og_image": "og-image-en.jpg",
-        "og_alt": "Nicolas François, AI and data strategy, speaker",
+        "og_alt": "Nicolas François, AI and data strategy for tourism",
         "skip": "Skip to content",
         "nav_label": "Main navigation",
         "fermer": "Close",
@@ -51,12 +55,11 @@ LANGUES = {
         "email": "hello@nfrancois.fr",
         "accueil": "/en/",
         "nav": [("Talks", "/en/talks/"), ("About", "/en/about/")],
-        "contact": "/en/contact/",
+        "contact": "/en/#contact",
         "legal": ("Legal notice", "/en/legal-notice/"),
         "autre": ("Français", "fr"),
         "mois": ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        "types": {"Conférence": "Talk", "Atelier": "Workshop", "Table ronde": "Panel", "Webinaire": "Webinar", "Média": "Media"},
-        "natures": {"Article": "Article", "Étude": "Study", "Livre blanc": "White paper"},
+        "types": TYPES,
         "accreditations": "Media accreditations",
     },
 }
@@ -109,14 +112,14 @@ def est_externe(url):
     return url.startswith("http") or url.endswith(".pdf")
 
 
-def ligne(quand, nature, titre, meta, lien, lang, data=""):
+def ligne(quand, nature, titre, meta, lien, lang):
     """Une ligne de liste : date et nature en texte dans la première colonne, titre et détail, flèche si lien."""
     inner = (
         f'<span class="fiche__quand"><span class="nf-fiche__date">{typo(quand, lang)}</span>'
         f'<span class="fiche__type">{typo(nature, lang)}</span></span>'
         f'<span><p class="nf-fiche__title">{typo(titre, lang)}</p><p class="nf-fiche__meta">{typo(meta, lang)}</p></span>'
     )
-    li = f"<li {data}>" if data else "<li>"
+    li = "<li>"
     if not lien:
         return f'{li}<div class="nf-fiche nf-fiche--statique">{inner}<span></span></div></li>'
     if est_externe(lien):
@@ -126,20 +129,18 @@ def ligne(quand, nature, titre, meta, lien, lang, data=""):
 
 
 def fiche(item, lang):
-    if "media" in item:  # passage dans un média (rubrique « medias » des données)
-        meta = f'{tr(item, "media", lang)} · {tr(item, "format", lang)}'
-    else:
-        meta = " · ".join(x for x in [tr(item, "organisateur", lang), tr(item, "ville", lang)] if x)
-        if tr(item, "precision", lang):
-            meta += f' · {tr(item, "precision", lang)}'
-    nature = LANGUES[lang]["types"].get(item["type"], item["type"])
-    return ligne(date_courte(item, lang), nature, tr(item, "titre", lang), meta, item.get("lien", ""), lang,
-                 f'data-type="{SLUG[item["type"]]}"')
+    if item["type"] not in TYPES:
+        raise SystemExit(f'{item["id"]} : type inconnu « {item["type"]} » (types possibles : {", ".join(TYPES)})')
+    # Qui : l'organisateur d'une prise de parole, le média d'un passage, l'éditeur d'une publication
+    qui = tr(item, "organisateur", lang) or tr(item, "media", lang) or tr(item, "editeur", lang)
+    meta = " · ".join(x for x in [qui, tr(item, "ville", lang), tr(item, "precision", lang)] if x)
+    return ligne(date_courte(item, lang), LANGUES[lang]["types"][item["type"]], tr(item, "titre", lang), meta,
+                 item.get("lien", ""), lang)
 
 
 def toutes_interventions(d):
-    medias = [dict(m, type="Média") for m in d["medias"]]
-    return sorted(d["prises_de_parole"] + medias, key=cle_date, reverse=True)
+    """Prises de parole, médias et publications ensemble, de la plus récente à la plus ancienne."""
+    return sorted(d["prises_de_parole"] + d["medias"] + d["publications"], key=cle_date, reverse=True)
 
 
 def par_annee(items, lang):
@@ -153,16 +154,6 @@ def par_annee(items, lang):
             '<ul class="nf-fiches">' + "".join(fiche(i, lang) for i in lot) + "</ul></section>"
         )
     return "".join(blocs_html)
-
-
-def publications(d, lang):
-    lignes = []
-    for p in d["publications"]:
-        y, m = p["date"].split("-")
-        quand = f'{LANGUES[lang]["mois"][int(m) - 1]} {y}'
-        nature = LANGUES[lang]["natures"].get(p["nature"], p["nature"])
-        lignes.append(ligne(quand, nature, tr(p, "titre", lang), tr(p, "editeur", lang), p["lien"], lang))
-    return '<ul class="nf-fiches">' + "".join(lignes) + "</ul>"
 
 
 def reconnaissances(d, lang):
@@ -185,10 +176,10 @@ def prose_item(nom, lang):
 
 
 def galerie(d, lang):
-    """Petite galerie de photos sur scène : légende événement · année · crédit."""
+    """Petite galerie de photos sur scène : légende « événement année © crédit », sans séparateur."""
     items = []
     for g in d.get("galerie", []):
-        legende = " · ".join(x for x in [tr(g, "evenement", lang), g["annee"], f'© {g["credit"]}' if g["credit"] else ""] if x)
+        legende = f'{tr(g, "evenement", lang)} {g["annee"]}' + (f' © {g["credit"]}' if g["credit"] else "")
         style = f' style="object-position: {g["position"]}"' if g.get("position") else ""
         items.append(f'<li><figure><img src="/images/galerie/{g["image"]}" alt="{attr(tr(g, "alt", lang))}" width="{g["largeur"]}" '
                      f'height="{g["hauteur"]}" loading="lazy"{style}><figcaption class="nf-label">{typo(legende, lang)}</figcaption></figure></li>')
@@ -203,7 +194,6 @@ def blocs(d, lang):
         "fiches_accueil": '<ul class="nf-fiches">' + "".join(fiche(i, lang) for i in accueil) + "</ul>",
         "interventions_par_annee": par_annee(items, lang),
         "logo_iattc": re.sub(r"<!--.*?-->\s*", "", (ROOT / "src" / "logo-iattc.svg").read_text(encoding="utf-8"), flags=re.S).strip(),
-        "publications": publications(d, lang),
         "reconnaissances": reconnaissances(d, lang),
         "galerie": galerie(d, lang),
     }
@@ -245,10 +235,59 @@ def footer(lang, autre_path):
     )
 
 
-def jsonld(meta, path, lang):
+TYPES_SCHEMA = {"Podcast": "PodcastEpisode", "Étude": "Report", "Livre blanc": "Report"}  # sinon Article
+
+
+def url_absolue(lien):
+    return SITE + lien if lien.startswith("/") else lien
+
+
+def oeuvre(item):
+    """Un article, podcast ou rapport du fichier de données, décrit pour schema.org. Ces contenus sont en français :
+    on garde leur vrai titre, même sur la version anglaise."""
+    o = {"@type": TYPES_SCHEMA.get(item["type"], "Article"), "name": item["titre"].replace("'", "’"),
+         "url": url_absolue(item["lien"]), "datePublished": item["date"], "inLanguage": "fr"}
+    qui = item.get("media") or item.get("editeur")
+    if qui:
+        o["publisher"] = {"@type": "Organization", "name": qui.replace("'", "’")}
+    return o
+
+
+def graphe_personne(d, lang):
+    """Graphe de l'accueil : la Person, le site et la newsletter (src/jsonld-person*.json), complétés par les données.
+    subjectOf : les interviews, podcasts et articles qui parlent de Nicolas ; les études et articles qu'il a écrits
+    ou auxquels il a contribué deviennent des nœuds à part, reliés à lui."""
+    fichier = "jsonld-person.json" if lang == "fr" else "jsonld-person-en.json"
+    graphe = json.loads((ROOT / "src" / fichier).read_text(encoding="utf-8"))
+    personne = graphe["@graph"][0]
+    a_propos, siennes = [], []
+    for item in d["prises_de_parole"] + d["medias"] + d["publications"]:
+        if not item.get("lien", "").startswith(("http", "/")):
+            continue
+        if item["type"] in ("Article", "Étude", "Livre blanc") and item in d["publications"]:
+            o = oeuvre(item)
+            o["author" if item["type"] == "Article" else "contributor"] = {"@id": SITE + "/#person"}
+            siennes.append(o)
+        else:
+            a_propos.append(oeuvre(item))
+    personne["subjectOf"] = a_propos
+    graphe["@graph"] += siennes
+    return graphe
+
+
+def jsonld(meta, path, lang, d):
+    """Bloc <script> JSON-LD de la page, ou rien (page 404)."""
+    if meta.get("jsonld") == "aucun":
+        return ""
     if meta.get("jsonld") == "person":
-        fichier = "jsonld-person.json" if lang == "fr" else "jsonld-person-en.json"
-        return (ROOT / "src" / fichier).read_text(encoding="utf-8").strip()
+        data = graphe_personne(d, lang)
+    else:
+        data = page_jsonld(meta, path, lang, d)
+    corps = json.dumps(data, ensure_ascii=False, indent=2)
+    return f'<script type="application/ld+json">\n{corps}\n  </script>'
+
+
+def page_jsonld(meta, path, lang, d):
     accueil = SITE + LANGUES[lang]["accueil"]
     crumbs = [{"@type": "ListItem", "position": 1, "name": "Nicolas François", "item": accueil}]
     if path != LANGUES[lang]["accueil"]:
@@ -263,7 +302,9 @@ def jsonld(meta, path, lang):
         "author": {"@id": SITE + "/#person"},
         "breadcrumb": {"@type": "BreadcrumbList", "itemListElement": crumbs},
     }
-    return json.dumps(data, ensure_ascii=False, indent=2)
+    if data["@type"] == "ProfilePage":  # À propos : la page décrit Nicolas, on y reprend sa fiche complète
+        data["mainEntity"] = graphe_personne(d, lang)["@graph"][0]
+    return data
 
 
 def paire(meta, path, lang):
@@ -287,10 +328,31 @@ def alternates(meta, path, lang):
     ])
 
 
+def sitemap(pages):
+    """sitemap.xml des pages indexables. lastmod : la date du jour si la page a changé à ce build, sinon celle d'avant."""
+    fichier = ROOT / "sitemap.xml"
+    avant = dict(re.findall(r"<loc>(.*?)</loc>\s*<lastmod>(.*?)</lastmod>", fichier.read_text(encoding="utf-8"))) if fichier.exists() else {}
+    blocs_xml = []
+    for path, lang, p, change in sorted(pages, key=lambda x: (x[1] != "fr", x[0])):
+        loc = SITE + path
+        lastmod = date.today().isoformat() if change or loc not in avant else avant[loc]
+        lignes = [f"    <loc>{loc}</loc>", f"    <lastmod>{lastmod}</lastmod>"]
+        if p:
+            lignes += [f'    <xhtml:link rel="alternate" hreflang="{h}" href="{SITE}{p[c]}"/>'
+                       for h, c in (("fr", "fr"), ("en", "en"), ("x-default", "fr"))]
+        blocs_xml.append("  <url>\n" + "\n".join(lignes) + "\n  </url>")
+    fichier.write_text('<?xml version="1.0" encoding="UTF-8"?>\n'
+                       '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"\n'
+                       '        xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + "\n".join(blocs_xml) + "\n</urlset>\n",
+                       encoding="utf-8")
+    print("  sitemap.xml")
+
+
 def build():
     data = json.loads((ROOT / "data" / "interventions.json").read_text(encoding="utf-8"))
     generes = {lang: blocs(data, lang) for lang in LANGUES}
     layout = (ROOT / "src" / "layout.html").read_text(encoding="utf-8")
+    indexables = []
     for src in sorted((ROOT / "src" / "pages").rglob("*.html")):
         raw = src.read_text(encoding="utf-8")
         m = re.match(r"\s*<!--(.*?)-->\s*", raw, re.S)
@@ -314,7 +376,7 @@ def build():
             "og_image": f'{SITE}/images/{L["og_image"]}',
             "og_alt": attr(L["og_alt"]),
             "og_locale": L["og_locale"],
-            "jsonld": jsonld(meta, path, lang),
+            "jsonld": jsonld(meta, path, lang, data),
             "skip": L["skip"],
             "nav": nav(path, lang),
             "contenu": contenu.strip(),
@@ -326,9 +388,13 @@ def build():
         if reste:
             raise SystemExit(f"{src.name} : balises non remplacées {sorted(set(reste))}")
         out = ROOT / meta["out"]
+        change = not out.exists() or out.read_text(encoding="utf-8") != page
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(page, encoding="utf-8")
         print(f"  {meta['out']}")
+        if "noindex" not in remplacements["robots"]:
+            indexables.append((path, lang, p, change))
+    sitemap(indexables)
 
 
 if __name__ == "__main__":

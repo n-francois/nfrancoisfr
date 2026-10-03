@@ -1,71 +1,82 @@
 {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "Person",
-        "@id": "https://nfrancois.fr/#person",
-        "name": "Nicolas François",
-        "url": "https://nfrancois.fr/",
-        "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
-        "email": "bonjour@nfrancois.fr",
-        "jobTitle": "Directeur Digital",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Agence Régionale du Tourisme Grand Est",
-          "url": "https://www.art-grandest.fr"
-        },
-        "description": "Stratégie IA et data appliquées au tourisme. Conférencier. Fondateur du média et de la newsletter IA, Tech & Travel Café.",
-        "sameAs": [
-          "https://www.linkedin.com/in/n-francois/",
-          "https://www.iatechtravel.cafe"
-        ],
-        "knowsAbout": [
-          "Intelligence artificielle",
-          "IA générative",
-          "Data touristique",
-          "DataTourisme",
-          "Tourisme",
-          "Transformation digitale"
-        ],
-        "alumniOf": {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Person",
+      "@id": "https://nfrancois.fr/#person",
+      "name": "Nicolas François",
+      "url": "https://nfrancois.fr/",
+      "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
+      "email": "bonjour@nfrancois.fr",
+      "jobTitle": "Directeur Digital",
+      "worksFor": {
+        "@type": "Organization",
+        "name": "Agence Régionale du Tourisme Grand Est",
+        "url": "https://www.art-grandest.fr"
+      },
+      "description": "Stratégie IA et data appliquées au tourisme. Directeur Digital de l’Agence Régionale du Tourisme Grand Est, fondateur du média et de la newsletter IA, Tech & Travel Café.",
+      "sameAs": [
+        "https://www.linkedin.com/in/n-francois/",
+        "https://www.iatechtravel.cafe/author/nicolas/",
+        "https://www.iatechtravel.cafe"
+      ],
+      "knowsAbout": [
+        "Intelligence artificielle",
+        "IA générative",
+        "Data touristique",
+        "DataTourisme",
+        "Tourisme",
+        "Transformation digitale"
+      ],
+      "alumniOf": {
+        "@type": "EducationalOrganization",
+        "name": "MIT Professional Education"
+      },
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "name": "Agentic AI Applied to Enterprise Transformation",
+        "credentialCategory": "certification",
+        "recognizedBy": {
           "@type": "EducationalOrganization",
           "name": "MIT Professional Education"
         },
-        "hasCredential": {
-          "@type": "EducationalOccupationalCredential",
-          "name": "Agentic AI Applied to Enterprise Transformation",
-          "credentialCategory": "certification",
-          "recognizedBy": {
-            "@type": "EducationalOrganization",
-            "name": "MIT Professional Education"
-          },
-          "dateCreated": "2025-12"
-        },
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Metz",
-          "addressRegion": "Grand Est",
-          "addressCountry": "FR"
-        }
+        "dateCreated": "2025-12"
       },
-      {
-        "@type": "WebSite",
-        "@id": "https://nfrancois.fr/#website",
-        "url": "https://nfrancois.fr/",
-        "name": "Nicolas François",
-        "inLanguage": ["fr", "en"],
-        "publisher": { "@id": "https://nfrancois.fr/#person" }
-      },
-      {
-        "@type": "CreativeWorkSeries",
-        "@id": "https://www.iatechtravel.cafe/newsletter/#newsletter",
-        "name": "IA, Tech & Travel Café",
-        "url": "https://www.iatechtravel.cafe/newsletter/",
-        "description": "Média et newsletter mensuelle indépendants sur ce que l'IA change pour les métiers du tourisme et du voyage.",
-        "author": { "@id": "https://nfrancois.fr/#person" },
-        "creator": { "@id": "https://nfrancois.fr/#person" },
-        "inLanguage": "fr",
-        "dateCreated": "2024-03"
+      "award": "Ambassadeur du plan national « Osez l’IA » pour le secteur du tourisme, ministère de l’Économie (2025)",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Metz",
+        "addressRegion": "Grand Est",
+        "addressCountry": "FR"
       }
-    ]
-  }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://nfrancois.fr/#website",
+      "url": "https://nfrancois.fr/",
+      "name": "Nicolas François",
+      "inLanguage": [
+        "fr",
+        "en"
+      ],
+      "publisher": {
+        "@id": "https://nfrancois.fr/#person"
+      }
+    },
+    {
+      "@type": "CreativeWorkSeries",
+      "@id": "https://www.iatechtravel.cafe/newsletter/#newsletter",
+      "name": "IA, Tech & Travel Café",
+      "url": "https://www.iatechtravel.cafe/newsletter/",
+      "description": "Média et newsletter mensuelle indépendants sur ce que l'IA change pour les métiers du tourisme et du voyage.",
+      "author": {
+        "@id": "https://nfrancois.fr/#person"
+      },
+      "creator": {
+        "@id": "https://nfrancois.fr/#person"
+      },
+      "inLanguage": "fr",
+      "dateCreated": "2024-03"
+    }
+  ]
+}
