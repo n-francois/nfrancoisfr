@@ -30,9 +30,14 @@ main { padding-bottom: var(--space-16); }
 .nav__picto { width: 22px; height: 22px; fill: currentColor; }
 .nav__picto--trait { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 @media (min-width: 861px) { .nav__menu { display: none; } }
-/* Ouvert, le bouton reste exactement à sa place (centré dans la barre de 80 px) au-dessus du panneau */
-.nav__menu[open] summary { position: fixed; top: calc((80px - 43px) / 2); right: var(--space-4); z-index: 60; background: var(--papier); }
-@media (min-width: 760px) { .nav__menu[open] summary { right: var(--space-6); } }
+/* En-tête collé en haut de l'écran, sur mobile comme sur ordinateur : il se cache quand on descend et revient dès
+   qu'on remonte (site.js). Il est hors du conteneur de la page pour rester disponible jusqu'en bas, pied de page compris.
+   « sticky » garde sa place dans la page : rien ne saute quand il se cache, ni quand le menu se ferme. */
+.entete { position: sticky; top: 0; z-index: 60; background: var(--papier); transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+.entete.is-cachee { transform: translateY(-100%); }
+@media (prefers-reduced-motion: reduce) { .entete { transition: none; } }
+/* Le panneau du menu est dans l'en-tête : le tampon, « Contact » et la croix passent devant lui */
+.entete:has(.nav__menu[open]) :is(.nf-nav__id, .nf-nav__links, summary) { position: relative; z-index: 51; }
 .nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
 .nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
 .nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
@@ -237,6 +242,10 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   .photo { margin-bottom: var(--space-8); }
   .duo:not(.newsletter) { row-gap: var(--space-12); }
   .bande__pied { margin-top: var(--space-8); }
+  /* « Ce que je crois » : chaque conviction sous un filet fin, son numéro collé au titre, pour bien les grouper */
+  .nf-cols--2 { gap: var(--space-8); }
+  .nf-cols--2 .nf-col { border-top: var(--rule-thin) solid var(--gris-clair); padding-top: var(--space-6); }
+  .credo__n { margin-bottom: var(--space-1); }
   /* Titre de l'accueil : une idée par ligne (les <br class="hero__br"> ne servent que sur mobile) */
   .nf-hero__title { font-size: min(40px, 11.5vw); text-wrap: wrap; }
   /* Le surlignage commence une ligne : on compense son petit débord pour que le texte reste aligné à gauche */
@@ -260,3 +269,16 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   .nf-footer__top > .nf-footer__cols:last-child { gap: var(--space-2) var(--space-6); padding-top: var(--space-6); border-top: var(--rule-thin) solid rgba(26, 26, 26, .25); font-size: 14px; }
 }
 @media (min-width: 760px) { .hero__br { display: none; } }
+
+/* ── Changement de page ─────────────────────────────────────────────────────── */
+/* Comme dans une app : la page quittée s'efface, la suivante apparaît en montant de quelques pixels ; l'en-tête reste
+   en place. Navigateurs récents (Chrome, Edge, Safari 18.2+) ; ailleurs, la page change normalement. */
+@view-transition { navigation: auto; }
+.entete { view-transition-name: entete; }
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) { animation: .2s ease-in both page-sortie; }
+  ::view-transition-new(root) { animation: .45s cubic-bezier(.2, .8, .2, 1) both page-entree; }
+}
+@media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
+@keyframes page-sortie { to { opacity: 0; } }
+@keyframes page-entree { from { opacity: 0; transform: translateY(16px); } }
