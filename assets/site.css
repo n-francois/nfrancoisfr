@@ -107,7 +107,7 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 .fiche__quand { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
 .fiche__type { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--encre); }
 @media (min-width: 760px) {
-  .nf-fiche { grid-template-columns: 128px minmax(0, 1fr) 24px; }
+  .nf-fiche { grid-template-columns: 152px minmax(0, 1fr) 24px; }
   .fiche__quand { flex-direction: column; }
 }
 
@@ -185,6 +185,8 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* Photo de section avec légende */
 .photo { margin: 0 0 var(--space-12); }
 .photo .nf-section__media { margin-bottom: var(--space-3); }
+/* Bandeau de la salle de Pau (accueil) : cadré haut, pour garder les deux écrans où l'on voit Nicolas */
+.photo .nf-section__media img { object-position: 50% 15%; }
 
 /* Ce que je crois */
 .credo__n { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; color: var(--gris); margin: 0 0 var(--space-3); }

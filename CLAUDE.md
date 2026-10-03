@@ -29,7 +29,7 @@ Fichiers communs : `styles.css`, `images/`, `sitemap.xml`, `robots.txt`, `llms.t
 - Toute modification de contenu d'une langue s'applique aussi à l'autre (proposer la traduction si le texte est nouveau).
 - Anglais américain : organizations, travelers, analyze ; virgule avant le dernier élément d'une liste (« A, B, and C ») ; present perfect avec « since ».
 - Garder les noms propres français tels quels (ART Grand Est, Next Tourisme, Rencontres…, « Osez l'IA »). Écrire « French Ministry of Economy ».
-- Les contenus de Nicolas sont en français : « In French. » sur les cartes EN, « Talks are delivered in French. » sur les textes d'interventions EN.
+- Les contenus de Nicolas sont en français : « In French. » sur les cartes EN, « Talks are delivered in French. » sur les textes d'interventions EN ; en tête de la page Talks, qui liste aussi médias et publications : « …, all in French. ».
 - Email : `bonjour@nfrancois.fr` en FR, `hello@nfrancois.fr` en EN.
 
 ## Chiffres de référence

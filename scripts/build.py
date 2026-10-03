@@ -17,6 +17,7 @@ TYPES = {  # ce que Nicolas a fait, avec sa traduction anglaise
     "Webinaire": "Webinar",
     "Cours": "Course",
     "Interview": "Interview",
+    "Interview sur scène": "On-stage interview",
     "Podcast": "Podcast",
     "Article": "Article",
     "Citation": "Mention",

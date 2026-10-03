@@ -145,13 +145,11 @@
       "titre": "Regards sur l'IA",
       "organisateur": "Rencontres nationales du e-tourisme",
       "ville": "Pau",
-      "precision": "interview sur scène",
-      "type": "Conférence",
+      "type": "Interview sur scène",
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "Perspectives on AI",
-        "precision": "on-stage interview"
+        "titre": "Perspectives on AI"
       }
     },
     {
@@ -180,7 +178,7 @@
       "accueil": false,
       "public": "Étudiants et enseignants en tourisme",
       "en": {
-        "titre": "Opportunities and challenges of artificial intelligence in tourism"
+        "titre": "Challenges and opportunities of artificial intelligence in tourism"
       }
     },
     {
@@ -231,7 +229,7 @@
       "id": "C-15",
       "statut": "Passé",
       "date": "2024-10",
-      "date_affichee": "oct.-déc. 2024",
+      "date_affichee": "oct.–déc. 2024",
       "titre": "IA générative : usages et potentiels dans le tourisme",
       "organisateur": "École Supérieure de Tourisme Troyes-Metz",
       "ville": "Metz",
@@ -407,7 +405,7 @@
       "titre": "L'IA et l'évolution des métiers dans les organismes de tourisme",
       "lien": "https://www.adn-tourisme.fr/etude-ia-metiers/",
       "en": {
-        "titre": "AI and the evolution of jobs in tourism organizations"
+        "titre": "How AI is changing jobs in tourism organizations"
       }
     },
     {
@@ -500,40 +498,39 @@
   ],
   "galerie": [
     {
-      "image": "totec-pupitre.jpg",
+      "image": "totec-data.webp",
       "largeur": 1000,
-      "hauteur": 666,
+      "hauteur": 750,
       "evenement": "ToTec",
       "annee": "2022",
-      "credit": "Alexandre Nestora",
-      "alt": "Nicolas François au pupitre devant une salle, ToTec",
+      "credit": "",
+      "alt": "Nicolas François présente « La data pour piloter toutes les décisions » devant une salle comble, ToTec",
       "en": {
-        "alt": "Nicolas François at the lectern in front of an audience, ToTec"
+        "alt": "Nicolas François presenting “La data pour piloter toutes les décisions” to a packed room at ToTec"
       }
     },
     {
-      "image": "abbaye-premontres-scene.jpg",
+      "image": "next-tourisme-table-ronde.webp",
       "largeur": 1000,
-      "hauteur": 667,
-      "evenement": "Club Nova Grand Est",
-      "annee": "2024",
-      "credit": "Pierre Defontaine",
-      "alt": "Nicolas François sur scène, micro en main, à l'Abbaye des Prémontrés",
+      "hauteur": 750,
+      "evenement": "Next Tourisme",
+      "annee": "2022",
+      "credit": "",
+      "alt": "Nicolas François en table ronde sur la scène de Next Tourisme",
       "en": {
-        "alt": "Nicolas François on stage holding a microphone at the Abbaye des Prémontrés"
+        "alt": "Nicolas François speaking on a panel at Next Tourisme"
       }
     },
     {
-      "image": "pau-2025-scene.jpg",
-      "largeur": 533,
-      "hauteur": 666,
+      "image": "pau-2025-ecran.webp",
+      "largeur": 1000,
+      "hauteur": 750,
       "evenement": "#ET Pau",
       "annee": "2025",
       "credit": "Maria Alberola",
-      "position": "50% 15%",
-      "alt": "Nicolas François debout sur scène, micro serre-tête, aux Rencontres nationales du e-tourisme à Pau",
+      "alt": "Nicolas François sur scène aux Rencontres nationales du e-tourisme à Pau, son image projetée sur l’écran géant",
       "en": {
-        "alt": "Nicolas François standing on stage with a headset microphone at the Rencontres nationales du e-tourisme in Pau"
+        "alt": "Nicolas François on stage at the Rencontres nationales du e-tourisme in Pau, his image projected on the big screen"
       }
     }
   ]
