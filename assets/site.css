@@ -18,6 +18,10 @@ main { padding-bottom: var(--space-16); }
 /* Navigation : groupe de droite et menu mobile plein écran (fonctionne sans JavaScript) */
 .nav__droite { display: flex; align-items: center; gap: var(--space-4); }
 @media (max-width: 520px) { .nf-nav { gap: var(--space-3); } .nav__droite { gap: var(--space-2); } }
+/* Tampon NF un peu plus présent que dans le design system : 34 px à côté du nom, 40 px quand il est seul (mobile),
+   presque à la hauteur des boutons de la barre */
+.nf-nav__id img { width: 34px; }
+@media (max-width: 440px) { .nf-nav__id img { width: 40px; } }
 /* Sur petit écran, le tampon seul porte l'identité ; le nom reste lu par les lecteurs d'écran */
 @media (max-width: 440px) { .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } }
 .nav__menu summary { list-style: none; }
@@ -231,7 +235,20 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 
 /* Pied de page : le grand nom recule de l'approche de son N (6,3 % du corps) pour que le trait du N
    tombe sur celui du « b » de l'adresse e-mail au-dessus (1 px d'approche à 16 px) */
+/* Pied de page : le jaune occupe toute la largeur, mais son contenu s'aligne sur la colonne du site (même bord gauche
+   que le tampon et les textes) ; le grand nom est calculé pour remplir exactement la largeur de cette colonne, quel que
+   soit l'écran (15,3 % de la colonne ; sans les unités de conteneur, la taille du design system s'applique) */
+.nf-footer { padding-inline: 0; }
+.nf-footer__cadre { container-type: inline-size; }
+.nf-footer__big { font-size: 15.3cqi; }
 .nf-footer__big { margin-left: calc(1px - .063em); }
+/* Le grand nom est le dernier plan de la page : plus d'air au-dessus des liens, et les lettres entières
+   (le bas du « ç » n'est plus coupé par le bord de la page) */
+.nf-footer__big { padding-bottom: .18em; }
+@media (min-width: 760px) { .nf-footer__big { margin-top: var(--space-24); } }
+/* Ton sur ton : le nom en jaune doré, comme une signature gravée dans le jaune ; les liens restent lus en premier
+   (un jaune mélangé à l'encre tournait au kaki). Texte décoratif, masqué aux lecteurs d'écran. */
+.nf-footer__big { color: #F2C21F; }
 
 /* Flèche des lignes d'interventions : un peu plus grande et plus marquée que celle du design system */
 .nf-fiche__arrow { width: 24px; height: 24px; stroke-width: 2.25; }
@@ -245,6 +262,8 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   .photo { margin-bottom: var(--space-8); }
   .duo:not(.newsletter) { row-gap: var(--space-12); }
   .bande__pied { margin-top: var(--space-8); }
+  /* Légendes des photos (crédits, lieux) plus discrètes sur petit écran */
+  figcaption.nf-label { font-size: 12px; }
   /* « Ce que je crois » : chaque conviction sous un filet fin, son numéro collé au titre, pour bien les grouper */
   .nf-cols--2 { gap: var(--space-8); }
   .nf-cols--2 .nf-col { border-top: var(--rule-thin) solid var(--gris-clair); padding-top: var(--space-6); }

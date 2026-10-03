@@ -230,7 +230,7 @@ def footer(lang, autre_path):
     L = LANGUES[lang]
     libelle, autre_lang = L["autre"]
     return (
-        '<footer class="nf-footer">\n  <div class="nf-footer__top">\n    <div class="nf-footer__cols">\n'
+        '<footer class="nf-footer">\n<div class="nf-page nf-footer__cadre">\n  <div class="nf-footer__top">\n    <div class="nf-footer__cols">\n'
         f'      <a href="mailto:{L["email"]}">{L["email"]}</a>\n'
         '      <a href="https://www.linkedin.com/in/n-francois/" rel="me">LinkedIn</a>\n'
         '      <a href="https://www.iatechtravel.cafe">IA, Tech &amp; Travel Café</a>\n'
@@ -239,7 +239,7 @@ def footer(lang, autre_path):
         f'      <a href="{autre_path}" hreflang="{autre_lang}" lang="{autre_lang}">{libelle}</a>\n'
         f'      <span>© {date.today().year}</span>\n'
         '    </div>\n  </div>\n'
-        '  <p class="nf-footer__big" aria-hidden="true">Nicolas François</p>\n</footer>'
+        '  <p class="nf-footer__big" aria-hidden="true">Nicolas François</p>\n</div>\n</footer>'
     )
 
 
