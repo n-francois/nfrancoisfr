@@ -46,15 +46,10 @@ main { padding-bottom: var(--space-16); }
 .entete.est-epinglee.is-cachee { transform: translateY(-100%); }
 .entete.sans-transition { transition: none; }
 @media (prefers-reduced-motion: reduce) { .entete.est-epinglee { transition: none; } }
-/* Le panneau du menu est dans l'en-tête : le tampon, « Contact » et la croix passent devant lui */
-.entete:has(.nav__menu[open]) :is(.nf-nav__id, .nf-nav__links, summary) { position: relative; z-index: 51; }
-/* En-tête compact (tampon, Contact, menu) : « Contact » s'efface en fondu tant qu'un autre bouton de contact, ou le bloc
-   e-mail de l'accueil, est à l'écran (classe posée par site.js), et revient ensuite. Sa place reste réservée pour que le
-   bouton du menu ne bouge pas ; il reste affiché quand le menu est ouvert. */
-@media (max-width: 860px) {
-  .nf-nav__links li:last-child { transition: opacity .25s ease, visibility .25s; }
-  .entete.contact-en-double:not(:has(.nav__menu[open])) .nf-nav__links li:last-child { opacity: 0; visibility: hidden; }
-}
+/* Le panneau du menu est dans l'en-tête : le tampon et la croix passent devant lui */
+.entete:has(.nav__menu[open]) :is(.nf-nav__id, summary) { position: relative; z-index: 51; }
+/* En-tête compact (tampon et menu) : pas de bouton « Contact », il est déjà dans le menu et dans les pages */
+@media (max-width: 860px) { .nf-nav__links { display: none; } }
 .nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
 .nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
 .nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }

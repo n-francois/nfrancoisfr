@@ -1,4 +1,4 @@
-/* nfrancois.fr · en-tête qui se cache au défilement, « Contact » qui s'efface en double, tampon tracé en pied de page, menu mobile et mesure des clics sur l’e-mail. Sans dépendance. */
+/* nfrancois.fr · en-tête qui se cache au défilement, tampon tracé en pied de page, menu mobile et mesure des clics sur l’e-mail. Sans dépendance. */
 (function () {
   /* Plausible : un clic sur une adresse e-mail compte comme objectif « Clic e-mail » (à déclarer dans Plausible) */
   document.addEventListener('click', function (e) {
@@ -54,25 +54,6 @@
     });
   }
 
-  /* « Contact » de l'en-tête compact : il s'efface (CSS) tant qu'un autre bouton de contact, ou le bloc e-mail de
-     l'accueil, est visible sous l'en-tête. L'état de départ est posé tout de suite, pour qu'il ne clignote pas. */
-  var contacts = document.querySelectorAll('main a.nf-btn[href$="#contact"], #contact');
-  if (entete && contacts.length && 'IntersectionObserver' in window) {
-    var visibles = new Set();
-    var majContact = function () { entete.classList.toggle('contact-en-double', visibles.size > 0); };
-    var hauteur = entete.offsetHeight;
-    contacts.forEach(function (c) {
-      var r = c.getBoundingClientRect();
-      if (r.bottom > hauteur && r.top < window.innerHeight) visibles.add(c);
-    });
-    majContact();
-    var vigie = new IntersectionObserver(function (entrees) {
-      entrees.forEach(function (e) { if (e.isIntersecting) visibles.add(e.target); else visibles.delete(e.target); });
-      majContact();
-    }, { rootMargin: '-' + hauteur + 'px 0px 0px 0px' });
-    contacts.forEach(function (c) { vigie.observe(c); });
-  }
-
   /* Tampon du pied de page : il attend, effacé, d'arriver aux trois cinquièmes à l'écran, puis se trace une fois.
      Sans JavaScript ou avec les animations réduites, il est simplement affiché. */
   var pied = document.querySelector('.tampon--pied');
@@ -113,7 +94,7 @@
   bouton.addEventListener('click', function (e) {
     if (menu.open) { e.preventDefault(); fermer(); }
   });
-  /* Choisir un lien du menu ou de la barre (tampon, « Contact ») referme le menu, utile pour l'ancre #contact */
+  /* Choisir un lien du menu, ou le tampon de la barre, referme le menu, utile pour l'ancre #contact */
   (menu.closest('.nf-nav') || panneau).addEventListener('click', function (e) { if (e.target.closest('a')) fermer(); });
   document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape' && menu.open) { fermer(); bouton.focus(); }
