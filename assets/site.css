@@ -53,14 +53,20 @@ main { padding-bottom: var(--space-16); }
 .entete.est-epinglee.is-cachee { transform: translateY(-100%); }
 .entete.sans-transition { transition: none; }
 @media (prefers-reduced-motion: reduce) { .entete.est-epinglee { transition: none; } }
-/* Le panneau du menu est dans l'en-tête : le tampon et la croix passent devant lui */
-.entete:has(.nav__menu[open]) :is(.nf-nav__id, summary) { position: relative; z-index: 51; }
+/* Le panneau du menu est dans l'en-tête : le tampon et la croix passent devant lui. Réglé en permanence, et pas
+   seulement menu ouvert : sur iPhone, ce changement de plan à l'ouverture faisait remonter le tampon d'un pixel. */
+.nf-nav__id, .nav__menu summary { position: relative; z-index: 51; }
 /* En-tête compact (tampon et menu) : pas de bouton « Contact », il est déjà dans le menu et dans les pages */
 @media (max-width: 860px) { .nf-nav__links { display: none; } }
-.nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
+/* Le filet épais du menu se pose exactement sur le filet fin de la barre (80 px du haut) : à l'ouverture, le filet
+   semble s'épaissir */
+.nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 80px var(--space-4) var(--space-12); }
 @media (max-width: 759px) { .nav__panneau { padding-inline: 20px; } }
 .nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
 .nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
+/* Sous les rubriques, en petit et soulignés comme dans le pied de page : mentions légales, autre langue, LinkedIn */
+.nav__panneau .nav__secondaire { display: flex; flex-wrap: wrap; gap: var(--space-3) var(--space-6); margin-top: var(--space-8); border-top: 0; }
+.nav__panneau .nav__secondaire a { display: inline; padding: 0; border-bottom: 0; font-size: 16px; line-height: 1.5; font-weight: 500; letter-spacing: 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
 /* Page active : surlignée en jaune, comme le titre de l'accueil ; la bande se trace une fois le menu ouvert.
    Le surlignage déborde un peu du mot : on le compense pour garder le texte aligné à gauche. */
 .nav__panneau a[aria-current="page"] span { background: linear-gradient(transparent 56%, var(--jaune) 56%, var(--jaune) 92%, transparent 92%) no-repeat 0 0 / 100% 100%; padding: 0 .06em; margin-left: -.06em; }

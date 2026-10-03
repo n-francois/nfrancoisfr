@@ -216,7 +216,7 @@ def blocs(d, lang):
     }
 
 
-def nav(path, lang):
+def nav(path, lang, autre_path):
     L = LANGUES[lang]
     courant = ' aria-current="page"'
     liens = "".join(f'<li><a href="{h}"{courant if path == h else ""}>{l}</a></li>' for l, h in L["nav"])
@@ -224,6 +224,14 @@ def nav(path, lang):
                f'{courant if path == L["contact"] else ""}><span class="nf-btn__lbl">Contact</span></a></li>')
     panneau = "".join(f'<li><a href="{h}"{courant if path == h else ""}><span>{l}</span></a></li>'
                       for l, h in [(L["accueil_lib"], L["accueil"])] + L["nav"] + [("Contact", L["contact"])])
+    # Sous les rubriques du menu mobile, en petit : mentions légales, l'autre langue et LinkedIn (flèche inclinée)
+    legal_lib, legal_url = L["legal"]
+    autre_lib, autre_lang = L["autre"]
+    secondaire = ('<ul class="nav__secondaire">'
+                  f'<li><a href="{legal_url}"{courant if path == legal_url else ""}>{legal_lib}</a></li>'
+                  f'<li><a href="{autre_path}" hreflang="{autre_lang}" lang="{autre_lang}">{autre_lib}</a></li>'
+                  '<li><a href="https://www.linkedin.com/in/n-francois/" target="_blank" rel="noopener me">LinkedIn'
+                  f'<span class="sr-only">{L["onglet"]}</span>{FLECHE_LIEN}</a></li></ul>')
     return (
         f'<nav class="nf-nav" aria-label="{L["nav_label"]}">'
         f'<a class="nf-nav__id" href="{L["accueil"]}">' + tampon() +
@@ -232,7 +240,7 @@ def nav(path, lang):
         '<details class="nav__menu"><summary class="nf-nav__menu nf-btn nf-btn--secondaire nf-btn--petit nav__bouton">'
         f'<span class="nav__ouvrir"><span class="sr-only">Menu</span>{POINTS}</span>'
         f'<span class="nav__fermer"><span class="sr-only">{L["fermer"]}</span>{CROIX}</span></summary>'
-        '<div class="nav__panneau"><ul>' + panneau + "</ul></div></details></div></nav>"
+        '<div class="nav__panneau"><ul>' + panneau + "</ul>" + secondaire + "</div></details></div></nav>"
     )
 
 
@@ -411,7 +419,7 @@ def build():
             "og_locale": L["og_locale"],
             "jsonld": jsonld(meta, path, lang, data),
             "skip": L["skip"],
-            "nav": nav(path, lang),
+            "nav": nav(path, lang, autre_path),
             "contenu": contenu.strip(),
             "footer": footer(lang, autre_path, signature="tampon--lent" not in contenu),
         }
