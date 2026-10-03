@@ -25,11 +25,17 @@ main { padding-bottom: var(--space-16); }
 /* Tampon NF un peu plus présent que dans le design system : 34 px à côté du nom, 40 px quand il est seul,
    presque à la hauteur des boutons de la barre */
 .nf-nav__id .tampon { width: 34px; }
+/* Hauteur en pixels entiers (le dessin reste centré dedans) : centré dans la barre de 80 px, le tampon tombe sur un pixel
+   entier. Avec sa hauteur naturelle (28,87 px), il était à 25,56 px, et l'iPhone le redessinait un pixel plus haut à
+   l'ouverture du menu, quand la page passe au premier plan. Il garde aussi son propre plan d'affichage en permanence. */
+@media (max-width: 860px) {
+  .nf-nav__id .tampon { height: 30px; will-change: transform; }
+}
 /* En-tête compact (mobile, tablette) : le nom à côté du tampon en haut de la page ; quand la barre revient en glissant
    pendant la lecture, le tampon seul, un peu plus grand. Le nom reste lu par les lecteurs d'écran. */
 @media (max-width: 860px) {
   .entete.est-epinglee .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
-  .entete.est-epinglee .nf-nav__id .tampon { width: 40px; }
+  .entete.est-epinglee .nf-nav__id .tampon { width: 40px; height: 34px; }
 }
 /* Accueil sur mobile : le nom est déjà dans la barre juste au-dessus, on ne le répète pas devant le titre. Il reste dans
    le h1 (masqué à l'écran seulement), pour Google et les lecteurs d'écran. */
