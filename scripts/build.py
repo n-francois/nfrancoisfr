@@ -217,7 +217,7 @@ def nav(path, lang):
     liens = "".join(f'<li><a href="{h}"{courant if path == h else ""}>{l}</a></li>' for l, h in L["nav"])
     contact = (f'<li><a class="nf-btn nf-btn--primaire nf-btn--petit" href="{L["contact"]}"'
                f'{courant if path == L["contact"] else ""}><span class="nf-btn__lbl">Contact</span></a></li>')
-    panneau = "".join(f'<li><a href="{h}"{courant if path == h else ""}>{l}</a></li>'
+    panneau = "".join(f'<li><a href="{h}"{courant if path == h else ""}><span>{l}</span></a></li>'
                       for l, h in [(L["accueil_lib"], L["accueil"])] + L["nav"] + [("Contact", L["contact"])])
     return (
         f'<nav class="nf-nav" aria-label="{L["nav_label"]}">'

@@ -48,14 +48,18 @@ main { padding-bottom: var(--space-16); }
 .nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
 .nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
 .nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
-.nav__panneau a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+/* Page active : surlignée en jaune, comme le titre de l'accueil ; la bande se trace une fois le menu ouvert.
+   Le surlignage déborde un peu du mot : on le compense pour garder le texte aligné à gauche. */
+.nav__panneau a[aria-current="page"] span { background: linear-gradient(transparent 56%, var(--jaune) 56%, var(--jaune) 92%, transparent 92%) no-repeat 0 0 / 100% 100%; padding: 0 .06em; margin-left: -.06em; }
 html:has(.nav__menu[open]) { overflow: hidden; }
 /* Le panneau glisse de la droite vers la gauche à l'ouverture, et repart vers la droite à la fermeture (site.js) */
 @media (prefers-reduced-motion: no-preference) {
   .nav__menu[open] .nav__panneau { animation: menu-entree .4s cubic-bezier(.2, .8, .2, 1); }
+  .nav__menu[open] .nav__panneau a[aria-current="page"] span { animation: menu-surlignage var(--duree-moyenne) var(--sortie-douce) .3s backwards; }
   .nav__menu.is-fermeture .nav__panneau { animation: menu-sortie .3s cubic-bezier(.5, 0, .75, 0) forwards; }
 }
 @keyframes menu-entree { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes menu-surlignage { from { background-size: 0% 100%; } }
 @keyframes menu-sortie { from { transform: none; } to { transform: translateX(100%); } }
 
 /* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
@@ -308,7 +312,8 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 
 /* ── Tampon NF dessiné ──────────────────────────────────────────────────────── */
 /* Le tampon est un seul trait continu (le N, puis la barre du F) et un point : on le trace comme une ligne d'encre.
-   En-tête : il se dessine en 0,75 s à chaque page. Page 404 : « tampon--lent », en grand, comme une signature. */
+   En-tête : il se dessine en 0,75 s à chaque page. Page 404 : « tampon--lent », en grand, comme une signature.
+   « tampon--chargement » : en boucle, comme indicateur de chargement (aussi en fichier autonome : assets/nf-chargement.svg). */
 .tampon { display: block; width: 34px; height: auto; overflow: visible; color: var(--encre); }
 .tampon__trait { fill: none; stroke: currentColor; stroke-width: 65.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; }
 .tampon__point { fill: currentColor; transform-box: fill-box; transform-origin: center; }
@@ -317,9 +322,17 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   .tampon__point { animation: tampon-point .38s cubic-bezier(.2, .8, .2, 1) .84s backwards; }
   .tampon--lent .tampon__trait { animation-duration: 1.9s; animation-delay: .3s; }
   .tampon--lent .tampon__point { animation-delay: 2.14s; }
+  .tampon--chargement .tampon__trait { animation: tampon-boucle 2.2s cubic-bezier(.65, 0, .35, 1) infinite; }
+  .tampon--chargement .tampon__point { animation: tampon-battement 2.2s ease-in-out infinite; }
 }
+/* Mouvement réduit : le chargement reste signalé, par une simple pulsation du tampon entier */
+@media (prefers-reduced-motion: reduce) { .tampon--chargement { animation: tampon-pulsation 1.2s ease-in-out infinite alternate; } }
 @keyframes tampon-trace { from { stroke-dashoffset: 1; } }
 @keyframes tampon-point { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.18); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+/* Boucle : le trait se dessine, reste un instant, puis s'efface par son début ; le point bat quand le trait est complet */
+@keyframes tampon-boucle { 0% { stroke-dashoffset: 1; } 45%, 60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -1; } }
+@keyframes tampon-battement { 0%, 38% { transform: scale(0); opacity: 0; } 48% { transform: scale(1.2); opacity: 1; } 56%, 66% { transform: scale(1); opacity: 1; } 80%, 100% { transform: scale(0); opacity: 0; } }
+@keyframes tampon-pulsation { to { opacity: .3; } }
 /* Changement de page : la barre du haut apparaît telle quelle, pour que son tampon se dessine sans fondu par-dessus */
 ::view-transition-old(entete) { display: none; }
 ::view-transition-new(entete) { animation: none; }

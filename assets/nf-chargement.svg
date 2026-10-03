@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 431 366" width="96" height="82" role="img" aria-label="Chargement">
+  <!-- Indicateur de chargement NF : le tampon se dessine, puis s'efface, en boucle. Couleur : changer la valeur de la variable nf-encre ci-dessous. -->
+  <style>
+    :root { --nf-encre: #1A1A1A; }
+    .trait { fill: none; stroke: var(--nf-encre); stroke-width: 65.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; animation: boucle 2.2s cubic-bezier(.65, 0, .35, 1) infinite; }
+    .point { fill: var(--nf-encre); transform-box: fill-box; transform-origin: center; animation: battement 2.2s ease-in-out infinite; }
+    @keyframes boucle { 0% { stroke-dashoffset: 1; } 45%, 60% { stroke-dashoffset: 0; } 100% { stroke-dashoffset: -1; } }
+    @keyframes battement { 0%, 38% { transform: scale(0); opacity: 0; } 48% { transform: scale(1.2); opacity: 1; } 56%, 66% { transform: scale(1); opacity: 1; } 80%, 100% { transform: scale(0); opacity: 0; } }
+    @keyframes pulsation { to { opacity: .3; } }
+    @media (prefers-reduced-motion: reduce) { .trait, .point { animation: none; } :root { animation: pulsation 1.2s ease-in-out infinite alternate; } }
+  </style>
+  <path class="trait" pathLength="1" d="M32.8,332.5 V72 C32.8,47 50,33.3 70,33.3 C89,33.3 104,45 109.3,63.4 L180.7,303.5 C186,322 202,332.7 221.5,332.7 C241,332.7 257.9,317 257.9,294 V88 C257.9,57.5 282,33 312,33 H398.4"/>
+  <circle class="point" cx="352.9" cy="188.6" r="33"/>
+</svg>
