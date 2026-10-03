@@ -263,11 +263,11 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* Pied de page : le jaune occupe toute la largeur, mais son contenu s'aligne sur la colonne du site (même bord gauche
    que le tampon de l'en-tête et les textes) */
 .nf-footer { padding-inline: 0; }
-/* Le tampon signe la page, ton sur ton, en jaune doré, pour que les liens restent lus en premier (un jaune mélangé à
-   l'encre tournait au kaki). Il se trace quand il arrive à l'écran (classes posées par site.js) ; sans JavaScript, il
-   est simplement affiché. Sur mobile, il vient sous les liens, avec en dessous la même marge qu'en haut du pied de page. */
+/* Le tampon signe la page, en encre sur le jaune comme l'icône du site (le jaune ton sur ton paraissait délavé). Il se
+   trace quand il arrive à l'écran (classes posées par site.js) ; sans JavaScript, il est simplement affiché. Sur mobile,
+   il vient sous les liens, avec en dessous la même marge qu'en haut du pied de page. */
 .nf-footer__cadre { padding-bottom: var(--space-12); }
-.nf-footer .tampon--pied { width: 141px; margin-top: var(--space-16); color: #F2C21F; }
+.nf-footer .tampon--pied { width: 141px; margin-top: var(--space-16); color: var(--on-jaune); }
 /* Dès la tablette, une seule bande : les liens à gauche, les mentions à droite, et le tampon tout au bout, comme une
    signature au bas d'une lettre (sans tampon, comme sur la page 404, la ligne de liens reste seule) */
 @media (min-width: 760px) {
