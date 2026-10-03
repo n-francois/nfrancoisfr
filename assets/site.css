@@ -1,0 +1,197 @@
+/* nfrancois.fr · mise en page propre au site. Complète assets/nf/ (design system), sans le modifier. */
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip-link { position: absolute; left: var(--space-4); top: -80px; z-index: 100; background: var(--encre); color: var(--on-encre); padding: var(--space-3) var(--space-4); font-weight: 600; text-decoration: none; }
+.skip-link:focus { top: var(--space-4); }
+
+main { padding-bottom: var(--space-16); }
+@media (min-width: 760px) { main { padding-bottom: var(--space-24); } }
+
+/* En-têtes de section : partout le même titre (titre-2) puis le chapeau dessous, alignés à gauche */
+/* Rythme vertical : 64 px sur mobile, 96 px dès la tablette, entre les blocs comme entre le filet et le titre */
+.nf-section { margin-top: var(--space-16); padding-top: var(--space-16); }
+@media (min-width: 760px) { .nf-section { margin-top: var(--space-24); padding-top: var(--space-24); } }
+.nf-section__head { grid-template-columns: 1fr; gap: var(--space-3); margin-bottom: var(--space-12); }
+.nf-section__name { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 36px); line-height: 1.08; font-weight: 800; letter-spacing: -.025em; }
+.nf-section__lead { font-size: 20px; line-height: 1.45; max-width: 36em; }
+
+/* Navigation : groupe de droite et menu mobile plein écran (fonctionne sans JavaScript) */
+.nav__droite { display: flex; align-items: center; gap: var(--space-4); }
+@media (max-width: 520px) { .nf-nav { gap: var(--space-3); } .nav__droite { gap: var(--space-2); } }
+/* Sur petit écran, le tampon seul porte l'identité ; le nom reste lu par les lecteurs d'écran */
+@media (max-width: 440px) { .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } }
+.nav__menu summary { list-style: none; }
+.nav__menu summary::-webkit-details-marker { display: none; }
+.nav__fermer, .nav__menu[open] .nav__ouvrir { display: none; }
+.nav__menu[open] .nav__fermer { display: inline; }
+@media (min-width: 861px) { .nav__menu { display: none; } }
+.nav__menu[open] summary { position: fixed; top: 20px; right: var(--space-4); z-index: 60; background: var(--papier); }
+@media (min-width: 760px) { .nav__menu[open] summary { right: var(--space-6); } }
+.nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
+.nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
+.nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
+.nav__panneau a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
+html:has(.nav__menu[open]) { overflow: hidden; }
+
+/* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
+.page-head { padding-block: var(--space-16) 0; }
+.page-title { font-family: var(--font-display); font-size: clamp(36px, 5.2vw, 56px); line-height: 1; letter-spacing: -.03em; font-weight: 800; margin: var(--space-4) 0 0; max-width: 16em; text-wrap: balance; }
+.page-lead { font-size: 22px; line-height: 1.4; margin: var(--space-6) 0 0; max-width: 34em; }
+
+/* Texte courant */
+.texte { max-width: var(--measure); }
+.texte p { margin: 0 0 var(--space-4); }
+.texte p:last-child { margin-bottom: 0; }
+.texte h2 { font-size: 22px; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; margin: var(--space-12) 0 var(--space-3); }
+.texte h2:first-child { margin-top: 0; }
+.nf-col__texte { font-size: 16px; line-height: 1.5; margin: var(--space-3) 0 0; }
+
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); margin-top: var(--space-12); }
+.bloc { margin-top: var(--space-12); }
+
+/* Liste en prose : plus petite que le titre de section qui la précède */
+.nf-prose { font-size: clamp(22px, 2.6vw, 30px); }
+
+/* Liste en prose sur petit écran : un nom long peut passer à la ligne, la pastille reste collée au premier mot */
+@media (max-width: 600px) {
+  .nf-prose__item { white-space: normal; }
+  .nf-prose__item::before { display: none; }
+  .prose__tete { white-space: nowrap; }
+  .prose__tete::before { content: ""; display: inline-block; width: .38em; height: .38em; border-radius: 50%; background: var(--encre); margin-right: .26em; vertical-align: .12em; }
+}
+
+/* Listes de lignes (interventions, publications) : sous un titre de section, un filet fin suffit */
+.nf-fiches { border-top: var(--rule-thin) solid var(--gris-clair); }
+.nf-fiche--statique:hover { background: none; }
+
+/* Bande sombre pleine largeur, pour un moment fort (sans débordement horizontal) */
+.bande { background: var(--encre); box-shadow: 0 0 0 100vmax var(--encre); clip-path: inset(0 -100vmax); margin-top: var(--space-16); padding-block: var(--space-16); }
+@media (min-width: 760px) { .bande { margin-top: var(--space-24); padding-block: var(--space-24); } }
+.bande .nf-section { margin-top: 0; padding-top: 0; border-top: 0; }
+.nf-dark .nf-btn--primaire .nf-btn__fleche, .nf-dark .nf-btn--primaire:hover .nf-btn__fleche { stroke: var(--on-jaune); }
+.nf-dark .nf-btn--secondaire:hover { background: var(--on-encre); color: var(--encre); }
+
+/* Photo et texte côte à côte */
+.duo { display: grid; gap: var(--space-8); }
+@media (min-width: 760px) { .duo { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; } }
+@media (min-width: 760px) { .duo--centre { align-items: center; } }
+.duo .nf-section__head { margin-bottom: var(--space-8); }
+.duo__photo { margin: 0; justify-self: end; width: 100%; max-width: 440px; }
+.duo__photo img { display: block; width: 100%; height: auto; background: var(--gris-clair); }
+figure .nf-label { display: block; margin-top: var(--space-2); }
+/* Accueil : portrait légèrement recadré (15:16 au lieu de 8:9), calé sur le bas pour garder le micro et le badge ;
+   on retire la moitié du fond noir au-dessus de la tête (le fichier reste entier pour À propos) */
+.duo__photo--carre img { aspect-ratio: 15 / 16; object-fit: cover; object-position: 50% 100%; }
+
+/* Lignes : la date et le type, en texte, dans la première colonne (même style, le type en encre) */
+.fiche__quand { display: flex; flex-wrap: wrap; gap: var(--space-1) var(--space-3); }
+.fiche__type { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--encre); }
+@media (min-width: 760px) {
+  .nf-fiche { grid-template-columns: 128px minmax(0, 1fr) 24px; }
+  .fiche__quand { flex-direction: column; }
+}
+
+/* Contact */
+.contact { display: grid; gap: var(--space-12); }
+@media (min-width: 900px) { .contact { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-16); align-items: start; } }
+.contact__mail { display: inline-block; font-size: clamp(28px, 4.4vw, 48px); line-height: 1.1; font-weight: 700; letter-spacing: -.025em; color: var(--encre); text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 8px; overflow-wrap: anywhere; }
+.contact__mail:hover { background: linear-gradient(transparent 56%, var(--jaune) 56%, var(--jaune) 92%, transparent 92%); }
+.contact__mail:focus-visible { outline: 2px solid var(--encre); outline-offset: 4px; }
+.contact__aide { margin: var(--space-8) 0 0; }
+.contact__infos { margin: 0; display: grid; gap: var(--space-6); }
+.contact__infos dd { margin: var(--space-1) 0 0; }
+
+/* Grille à deux colonnes de même largeur */
+@media (min-width: 760px) { .nf-cols--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12) var(--space-8); } }
+.nf-cols--2 .nf-col { border-top: 0; padding-top: 0; }
+
+/* Bandeau de preuve à trois chiffres (sous le titre d'À propos) */
+@media (min-width: 760px) { .nf-preuve--3 { grid-template-columns: repeat(3, 1fr); } }
+/* Chiffres clés d'À propos centrés entre leur filet et celui de la section suivante, comme le bandeau de l'accueil */
+.preuve-page { margin-top: var(--space-12); padding-block: var(--space-12); }
+.preuve-page + .nf-section { margin-top: 0; }
+
+/* Note en pied de section */
+.note { margin: var(--space-8) 0 0; max-width: var(--measure); font-size: 15px; line-height: 1.45; color: var(--gris); }
+
+/* Accueil : références sous le hero */
+.nf-hero { padding-block: var(--space-16); }
+.nf-hero__title { font-size: clamp(40px, 6.2vw, 76px); }
+/* Dès la tablette : « J’aide les pros du tourisme » en première ligne, le surlignage d’un seul tenant en deuxième */
+@media (min-width: 760px) { .hero__ligne { display: block; white-space: nowrap; } }
+/* Ouverture de l'accueil : le hero et le bandeau remplissent le premier écran (sous la navigation de 81 px),
+   le filet de la section suivante n'apparaît qu'au défilement ; l'espace en trop se répartit autour du hero */
+.ouverture { display: flex; flex-direction: column; min-height: calc(100vh - 81px); min-height: calc(100svh - 81px); }
+.ouverture .nf-hero { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.ouverture + .nf-section { margin-top: 0; }
+/* Bandeau centré entre son filet et celui de la section suivante ; 4 px de moins au-dessus pour compenser
+   optiquement le petit libellé gris, qui donne l'impression de plus d'air en haut */
+.references { list-style: none; margin: 0; padding: calc(var(--space-12) - var(--space-1)) 0 var(--space-12); border-top: var(--rule-strong) solid var(--encre); display: grid; gap: var(--space-6); }
+@media (min-width: 760px) { .references { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6); } }
+.references li { display: grid; gap: var(--space-1); align-content: start; }
+.references__titre { font-size: 22px; line-height: 1.2; font-weight: 600; letter-spacing: -.01em; }
+.references__texte { font-size: 15px; line-height: 1.45; color: var(--gris); }
+
+/* Accueil : newsletter */
+/* Colonne de droite (photos, logo) : même largeur et même axe sur toute la page, calée sur le bord droit */
+.newsletter__marque { display: grid; gap: var(--space-8); justify-self: end; width: 100%; max-width: 440px; }
+/* Sur grand écran : le bloc logo + chiffre est centré verticalement sur tout le contenu de la bande,
+   du titre jusqu'à la ligne LinkedIn (la grille de la section remplace celle du duo) */
+@media (min-width: 760px) {
+  .bande .nf-section { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); column-gap: var(--space-12); }
+  .duo.newsletter { display: contents; }
+  .newsletter > div:first-child { grid-column: 1; grid-row: 1; }
+  .newsletter__marque { grid-column: 2; grid-row: 1 / span 2; align-self: center; gap: var(--space-12); }
+  .bande__pied { grid-column: 1; grid-row: 2; }
+}
+/* Sur mobile : le logo d'abord, puis le titre et le texte, le chiffre, et les boutons */
+@media (max-width: 759px) {
+  .newsletter > div:first-child, .newsletter__marque { display: contents; }
+  .newsletter .newsletter__logo { order: 1; max-width: 200px; }
+  .newsletter .nf-section__head { order: 2; margin-bottom: 0; }
+  .newsletter__chiffre { order: 3; }
+  .newsletter .actions { order: 4; margin-top: 0; }
+}
+.newsletter__logo { display: block; color: var(--on-encre); max-width: 280px; }
+.newsletter__logo:focus-visible { outline-offset: 6px; }
+.logo-iattc { display: block; width: 100%; height: auto; }
+/* Le chiffre posé sous un filet fin, comme dans le bandeau de preuve de la charte */
+.newsletter__chiffre { margin: 0; border-top: var(--rule-thin) solid var(--gris); padding-top: var(--space-6); }
+.nf-dark .nf-preuve__l { color: var(--gris-sur-encre); }
+.bande__pied { margin: var(--space-16) 0 0; font-size: 16px; line-height: 1.5; color: var(--gris-sur-encre); }
+.bande__pied .nf-link { margin-left: var(--space-2); }
+
+/* Photo de section avec légende */
+.photo { margin: 0 0 var(--space-12); }
+.photo .nf-section__media { margin-bottom: var(--space-3); }
+
+/* Ce que je crois */
+.credo__n { font-family: var(--font-mono); font-size: 12px; font-weight: 500; letter-spacing: .04em; color: var(--gris); margin: 0 0 var(--space-3); }
+
+/* Ce que je propose : sujets et photo sur scène, puis les informations pratiques en encart pleine largeur et le bouton */
+.offre { display: grid; gap: var(--space-12); }
+.offre .nf-section__head { margin-bottom: var(--space-8); }
+@media (min-width: 900px) {
+  .offre { grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: var(--space-12); align-items: start; }
+  .offre__encart { grid-column: 1 / -1; }
+  .offre__encart .encart__infos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-6) var(--space-8); }
+}
+.offre__photo { margin: 0; justify-self: end; width: 100%; max-width: 440px; }
+.offre__photo img { display: block; width: 100%; height: auto; background: var(--gris-clair); aspect-ratio: 15 / 16; object-fit: cover; object-position: 50% 0%; }
+.puces { list-style: none; margin: var(--space-4) 0 0; padding: 0; display: grid; gap: var(--space-3); }
+.puces li { position: relative; padding-left: var(--space-6); font-size: 17px; line-height: 1.45; }
+.puces li::before { content: ""; position: absolute; left: 2px; top: .6em; width: 7px; height: 7px; border-radius: 50%; background: var(--encre); }
+.encart { background: var(--survol); padding: var(--space-6); }
+@media (min-width: 760px) { .encart { padding: var(--space-8); } }
+.encart__infos { margin: var(--space-6) 0 0; display: grid; gap: var(--space-4); }
+.encart__infos dd { margin: var(--space-1) 0 0; font-size: 17px; line-height: 1.45; }
+
+
+/* Interventions : petite galerie de photos sur scène, sous l'introduction */
+.galerie-bloc { margin-top: var(--space-16); }
+.galerie { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6) var(--space-4); }
+@media (min-width: 760px) { .galerie { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-8) var(--space-6); } }
+/* Sur mobile, trois photos sur deux colonnes : la première prend toute la largeur */
+@media (max-width: 759px) { .galerie li:first-child { grid-column: 1 / -1; } }
+.galerie figure { margin: 0; }
+.galerie img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover; background: var(--gris-clair); }

@@ -1,0 +1,105 @@
+/* nfrancois.fr · mouvement et interactions
+   À charger après nf-components.css. Tout le contenu reste visible sans JavaScript :
+   nf-motion.js ajoute la classe .nf-motion sur <html> puis .is-in sur les éléments qui entrent à l'écran. */
+
+:root {
+  --duree-courte: 160ms;   /* survols, changements d'état */
+  --duree-moyenne: 320ms;  /* surlignage qui se trace, remplissage des boutons */
+  --duree-longue: 640ms;   /* barres de graphique, révélations */
+  --sortie-douce: cubic-bezier(.2, .7, .2, 1);   /* démarre vite, se pose en douceur */
+  --entree-sortie: cubic-bezier(.65, 0, .35, 1); /* pour ce qui traverse l'écran */
+  --decalage: 80ms;        /* cascade entre éléments d'une même liste */
+}
+
+html { scroll-behavior: smooth; }
+
+/* 1. Le surlignage se trace de gauche à droite */
+.nf-hl { background-repeat: no-repeat; background-position: 0 0; background-size: 100% 100%; }
+.nf-motion .nf-hl--trace { background-size: 0% 100%; transition: background-size var(--duree-longue) var(--sortie-douce) .2s; }
+.nf-motion .nf-hl--trace.is-in { background-size: 100% 100%; }
+
+/* 2. Liens : le souligné encre se redessine en jaune, de gauche à droite */
+.nf-link { text-decoration: none; background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--jaune), var(--jaune)); background-repeat: no-repeat; background-position: 0 100%, 0 100%; background-size: 100% 1px, 0% 3px; padding-bottom: 3px; transition: background-size var(--duree-moyenne) var(--sortie-douce); }
+.nf-link:hover { background-size: 100% 1px, 100% 3px; }
+.nf-dark .nf-link { background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--jaune), var(--jaune)); }
+.ds-toc a { background-image: linear-gradient(var(--jaune), var(--jaune)); background-repeat: no-repeat; background-position: 0 100%; background-size: 0% 3px; padding-bottom: 4px; transition: background-size var(--duree-moyenne) var(--sortie-douce); }
+.ds-toc a:hover { background-size: 100% 3px; }
+/* Texte de 24 px et plus (liste en prose) : la bande de surlignage se trace */
+.nf-prose a.nf-prose__item { background: linear-gradient(transparent 56%, var(--jaune) 56%, var(--jaune) 92%, transparent 92%) no-repeat 0 0 / 0% 100%; transition: background-size var(--duree-moyenne) var(--sortie-douce); }
+.nf-prose a.nf-prose__item:hover { background-size: 100% 100%; }
+
+/* 3. Bouton principal : un aplat jaune monte depuis le bas et redescend à la sortie, par le même chemin.
+      Le libellé change de couleur exactement à la hauteur de l'aplat (dégradé découpé dans le texte),
+      il reste lisible à chaque image. Balisage : <a class="nf-btn nf-btn--primaire"><span class="nf-btn__lbl">Libellé <svg class="nf-btn__fleche">…</svg></span></a> */
+:root { --duree-bouton: 380ms; }
+.nf-btn--primaire { position: relative; isolation: isolate; overflow: hidden; background: var(--encre); color: var(--on-encre); transition: transform var(--duree-courte) ease-out; }
+.nf-btn--primaire::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--jaune); transform: translateY(102%); transition: transform var(--duree-bouton) var(--entree-sortie); }
+.nf-btn--primaire:hover::before { transform: none; }
+.nf-btn--primaire:has(.nf-btn__lbl) { padding: 0; }
+.nf-btn__lbl { display: inline-flex; align-items: center; gap: var(--space-2); align-self: stretch; padding: 0 var(--space-6); background-image: linear-gradient(to bottom, var(--on-encre) 50%, var(--on-jaune) 50%); background-size: 100% 200%; background-position: 0 0; -webkit-background-clip: text; background-clip: text; color: transparent; transition: background-position var(--duree-bouton) var(--entree-sortie); }
+.nf-btn--petit .nf-btn__lbl { padding: 0 var(--space-4); }
+.nf-btn--primaire:hover .nf-btn__lbl { background-position: 0 100%; }
+.nf-btn__fleche { width: 16px; height: 16px; fill: none; stroke-width: 2; stroke: var(--on-encre); transition: transform var(--duree-bouton) var(--sortie-douce), stroke 0s linear calc(var(--duree-bouton) / 2); }
+.nf-btn--primaire:hover .nf-btn__fleche { stroke: var(--on-jaune); transform: translateX(3px); }
+.nf-btn--primaire:not(:has(.nf-btn__lbl)) { transition: transform var(--duree-courte) ease-out, color 0s linear calc(var(--duree-bouton) / 2); }
+.nf-btn--primaire:not(:has(.nf-btn__lbl)):hover { color: var(--on-jaune); }
+.nf-btn:active { transform: scale(.98); }
+.nf-btn--secondaire { transition: background-color 240ms var(--sortie-douce), transform var(--duree-courte) ease-out; }
+.nf-btn--secondaire .nf-btn__fleche { stroke: currentColor; }
+.nf-btn--secondaire:hover .nf-btn__fleche { transform: translateX(3px); }
+.nf-dark .nf-btn--primaire { background: var(--jaune); border-color: var(--jaune); }
+.nf-dark .nf-btn--primaire::before { background: var(--on-encre); }
+.nf-dark .nf-btn__lbl { background-image: linear-gradient(to bottom, var(--on-jaune) 50%, var(--encre) 50%); }
+
+/* 4. Navigation : le trait glisse depuis la gauche */
+.nf-nav__links a:not(.nf-btn) { position: relative; border-bottom: 0; }
+.nf-nav__links a:not(.nf-btn)::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--jaune); transform: scaleX(0); transform-origin: left; transition: transform var(--duree-moyenne) var(--sortie-douce); }
+.nf-nav__links a:not(.nf-btn):hover::after { transform: scaleX(1); }
+.nf-nav__links a[aria-current="page"]::after { background: var(--encre); transform: scaleX(1); }
+
+/* 5. Lignes cliquables : fond de survol et flèche qui avance */
+.nf-fiche, .nf-ressource { transition: background-color var(--duree-courte) ease-out; }
+.nf-fiche__arrow, .nf-ressource__go svg { transition: transform var(--duree-moyenne) var(--sortie-douce); }
+.nf-fiche:hover .nf-fiche__arrow { transform: translateX(4px); }
+.nf-ressource:hover .nf-ressource__go svg { transform: translate(3px, -3px); }
+
+/* 6. Filtres et champs : changements d'état fondus */
+.nf-chip { transition: background-color var(--duree-courte) ease-out, border-color var(--duree-courte) ease-out, color var(--duree-courte) ease-out; }
+.nf-input { transition: border-color var(--duree-courte) ease-out; }
+.nf-field__error { animation: nf-glisse var(--duree-moyenne) var(--sortie-douce); }
+.nf-fiches[aria-busy="true"] { opacity: .4; transition: opacity var(--duree-courte) ease-out; }
+@keyframes nf-glisse { from { opacity: 0; transform: translateY(-4px); } to { opacity: 1; transform: none; } }
+
+/* 7. Vidéo : le bouton grossit à peine, l'image s'approche */
+.nf-video img { transition: transform var(--duree-longue) var(--sortie-douce), opacity var(--duree-moyenne) ease-out; }
+.nf-video:hover img { transform: scale(1.02); opacity: .92; }
+.nf-video__btn { transition: transform var(--duree-moyenne) var(--sortie-douce); }
+
+/* 8. Graphiques : les barres poussent une fois, en cascade */
+.nf-motion .nf-bars .nf-bar__fill { transform: scaleX(0); transform-origin: left; transition: transform var(--duree-longue) var(--sortie-douce); }
+.nf-motion .nf-bars.is-in .nf-bar__fill { transform: scaleX(1); }
+.nf-motion .nf-bars.is-in .nf-bar:nth-child(2) .nf-bar__fill { transition-delay: var(--decalage); }
+.nf-motion .nf-bars.is-in .nf-bar:nth-child(3) .nf-bar__fill { transition-delay: calc(var(--decalage) * 2); }
+.nf-motion .nf-bars.is-in .nf-bar:nth-child(4) .nf-bar__fill { transition-delay: calc(var(--decalage) * 3); }
+.nf-motion .nf-bars.is-in .nf-bar:nth-child(5) .nf-bar__fill { transition-delay: calc(var(--decalage) * 4); }
+
+/* 9. Révélation des en-têtes de section : une fois, à peine */
+.nf-motion .nf-reveal { opacity: 0; transform: translateY(12px); transition: opacity var(--duree-longue) var(--sortie-douce), transform var(--duree-longue) var(--sortie-douce); }
+.nf-motion .nf-reveal.is-in { opacity: 1; transform: none; }
+
+/* 10. Pied de page géant : le nom monte depuis le bord */
+.nf-motion .nf-footer__big { transform: translateY(40%); transition: transform 900ms var(--sortie-douce); }
+.nf-motion .nf-footer__big.is-in { transform: none; }
+
+/* 11. Images : apparition fondue depuis le papier */
+.nf-motion img[loading="lazy"] { opacity: 0; transition: opacity var(--duree-longue) ease-out; }
+.nf-motion img[loading="lazy"].is-loaded { opacity: 1; }
+
+/* Réduire les animations : tout devient instantané, rien ne bouge */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: 0ms !important; transition-delay: 0ms !important; animation: none !important; }
+  .nf-motion .nf-reveal, .nf-motion .nf-footer__big, .nf-motion .nf-bars .nf-bar__fill { opacity: 1; transform: none; }
+  .nf-motion .nf-hl--trace { background-size: 100% 100%; }
+  .nf-btn--primaire::before { transition: none; }
+}

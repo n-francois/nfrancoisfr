@@ -1,0 +1,71 @@
+{
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Person",
+        "@id": "https://nfrancois.fr/#person",
+        "name": "Nicolas François",
+        "url": "https://nfrancois.fr/en/",
+        "image": "https://nfrancois.fr/images/Nicolas-Francois.webp",
+        "email": "hello@nfrancois.fr",
+        "jobTitle": "Digital Director",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Agence Régionale du Tourisme Grand Est",
+          "url": "https://www.art-grandest.fr"
+        },
+        "description": "AI and data strategy for tourism. Speaker. Founder of the IA, Tech & Travel Café media outlet and newsletter.",
+        "sameAs": [
+          "https://www.linkedin.com/in/n-francois/",
+          "https://www.iatechtravel.cafe"
+        ],
+        "knowsAbout": [
+          "Artificial Intelligence",
+          "Generative AI",
+          "Tourism Data",
+          "DataTourisme",
+          "Tourism",
+          "Digital Transformation"
+        ],
+        "alumniOf": {
+          "@type": "EducationalOrganization",
+          "name": "MIT Professional Education"
+        },
+        "hasCredential": {
+          "@type": "EducationalOccupationalCredential",
+          "name": "Agentic AI Applied to Enterprise Transformation",
+          "credentialCategory": "certification",
+          "recognizedBy": {
+            "@type": "EducationalOrganization",
+            "name": "MIT Professional Education"
+          },
+          "dateCreated": "2025-12"
+        },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Metz",
+          "addressRegion": "Grand Est",
+          "addressCountry": "FR"
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://nfrancois.fr/#website",
+        "url": "https://nfrancois.fr/",
+        "name": "Nicolas François",
+        "inLanguage": ["fr", "en"],
+        "publisher": { "@id": "https://nfrancois.fr/#person" }
+      },
+      {
+        "@type": "CreativeWorkSeries",
+        "@id": "https://www.iatechtravel.cafe/newsletter/#newsletter",
+        "name": "IA, Tech & Travel Café",
+        "url": "https://www.iatechtravel.cafe/newsletter/",
+        "description": "Independent media outlet and monthly newsletter on what AI is changing for tourism and travel professionals.",
+        "author": { "@id": "https://nfrancois.fr/#person" },
+        "creator": { "@id": "https://nfrancois.fr/#person" },
+        "inLanguage": "fr",
+        "dateCreated": "2024-03"
+      }
+    ]
+  }

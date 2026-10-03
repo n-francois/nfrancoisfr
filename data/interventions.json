@@ -1,0 +1,570 @@
+{
+  "_lisez_moi": "Source : tableau Google « interventions-nfrancois ». Les textes sont saisis tels quels (apostrophes droites, espaces normales) : scripts/build.py applique la typographie française. Types autorisés : Conférence, Atelier, Table ronde, Webinaire, Média. statut : Passé ou À venir. date : AAAA-MM (ou AAAA si le mois est inconnu). Version anglaise : chaque entrée peut porter un objet « en » qui remplace les champs traduits (titre, organisateur, ville, precision, date_affichee, format, editeur…) ; les autres champs, dont les noms propres, sont repris tels quels.",
+  "prises_de_parole": [
+    {
+      "id": "C-01",
+      "statut": "Passé",
+      "date": "2026-07",
+      "titre": "IA : les meilleurs usages de Claude pour les entreprises du voyage",
+      "organisateur": "Les Entreprises du Voyage · Les Mardis du Digital",
+      "ville": "En ligne",
+      "type": "Webinaire",
+      "lien": "",
+      "accueil": true,
+      "public": "Agences de voyages et tour-opérateurs, environ 120 connectés",
+      "en": {
+        "titre": "AI: getting the most out of Claude for travel businesses",
+        "ville": "Online"
+      }
+    },
+    {
+      "id": "C-02",
+      "statut": "Passé",
+      "date": "2026-06",
+      "titre": "Exister quand l'IA répond à tout",
+      "organisateur": "Next Tourisme, édition « Accélération IA »",
+      "ville": "Paris",
+      "precision": "co-organisateur de l'édition",
+      "type": "Table ronde",
+      "lien": "https://www.next-tourisme.com/exister-quand-ia-repond-a-tout/",
+      "accueil": true,
+      "public": "Professionnels du tourisme et de la travel tech",
+      "en": {
+        "titre": "Staying visible when AI answers everything",
+        "organisateur": "Next Tourisme, “Accélération IA” edition",
+        "precision": "co-organizer of the edition"
+      }
+    },
+    {
+      "id": "C-03",
+      "statut": "Passé",
+      "date": "2026-06",
+      "titre": "IA dans le tourisme : ni panique, ni naïveté",
+      "organisateur": "Les Rendez-Vous du Tourisme en Bourgogne-Franche-Comté",
+      "ville": "Saline Royale d'Arc-et-Senans",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": true,
+      "en": {
+        "titre": "AI in tourism: neither panic nor naivety"
+      }
+    },
+    {
+      "id": "C-07",
+      "statut": "Passé",
+      "date": "2025-12",
+      "titre": "IA dans le voyage : à quoi s'attendre en 2026 ?",
+      "organisateur": "Enjeux du e-tourisme · L'Echo Touristique & FEVAD",
+      "ville": "Paris",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": true,
+      "en": {
+        "titre": "AI in travel: what to expect in 2026?"
+      }
+    },
+    {
+      "id": "C-04",
+      "statut": "Passé",
+      "date": "2025-11",
+      "titre": "L'IA concrète pour les gestionnaires de golfs",
+      "organisateur": "Association des Directeurs de Golf de France",
+      "ville": "",
+      "public": "Directeurs de golfs, une soixantaine de participants",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "Practical AI for golf course managers"
+      }
+    },
+    {
+      "id": "C-09",
+      "statut": "Passé",
+      "date": "2025-11",
+      "titre": "IA dans le tourisme : démystifier, démontrer, questionner",
+      "organisateur": "Rencontres de l'Ardenne",
+      "ville": "Houffalize, Belgique",
+      "type": "Atelier",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "AI in tourism: demystify, demonstrate, question",
+        "ville": "Houffalize, Belgium"
+      }
+    },
+    {
+      "id": "C-10",
+      "statut": "Passé",
+      "date": "2025-10",
+      "titre": "Créativité dans le tourisme à l'ère de l'IA",
+      "organisateur": "Rencontres nationales du e-tourisme",
+      "ville": "Pau",
+      "precision": "plénière, format 15 minutes chrono",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": true,
+      "public": "400 participants",
+      "en": {
+        "titre": "Creativity in tourism in the age of AI",
+        "precision": "plenary, “15 minutes chrono” format"
+      }
+    },
+    {
+      "id": "C-10b",
+      "statut": "Passé",
+      "date": "2025-10",
+      "titre": "Atelier IA & juridique",
+      "organisateur": "Rencontres nationales du e-tourisme",
+      "ville": "Pau",
+      "type": "Atelier",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "AI & law workshop"
+      }
+    },
+    {
+      "id": "C-10c",
+      "statut": "Passé",
+      "date": "2025-10",
+      "titre": "Interview IA & Tourisme",
+      "organisateur": "Rencontres nationales du e-tourisme",
+      "ville": "Pau",
+      "precision": "interview sur scène",
+      "type": "Table ronde",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "AI & tourism interview",
+        "precision": "on-stage interview"
+      }
+    },
+    {
+      "id": "C-11",
+      "statut": "Passé",
+      "date": "2025-06",
+      "titre": "IA générative dans le tourisme : usages, impacts et perspectives",
+      "organisateur": "Next Tourisme",
+      "ville": "Paris",
+      "type": "Table ronde",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "Generative AI in tourism: use cases, impact, and outlook"
+      }
+    },
+    {
+      "id": "C-12",
+      "statut": "Passé",
+      "date": "2025-04",
+      "titre": "Enjeux et opportunités de l'intelligence artificielle dans le tourisme",
+      "organisateur": "Sorbonne Université",
+      "ville": "Paris",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "public": "Étudiants et enseignants en tourisme",
+      "en": {
+        "titre": "Opportunities and challenges of artificial intelligence in tourism"
+      }
+    },
+    {
+      "id": "C-13",
+      "statut": "Passé",
+      "date": "2025-04",
+      "titre": "L'IA dans le tourisme : comprendre pour agir",
+      "organisateur": "ADN Tourisme",
+      "ville": "Auxerre",
+      "type": "Atelier",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "AI in tourism: from understanding to action"
+      }
+    },
+    {
+      "id": "C-14",
+      "statut": "Passé",
+      "date": "2025-01",
+      "titre": "Vidéo touristique et IA : réalité déformée ou émotion augmentée ?",
+      "organisateur": "Grands Remous",
+      "ville": "Québec, Canada",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "public": "Professionnels du tourisme québécois",
+      "en": {
+        "titre": "Tourism video and AI: distorted reality or enhanced emotion?"
+      }
+    },
+    {
+      "id": "C-08",
+      "statut": "Passé",
+      "date": "2025",
+      "titre": "Rencontres IA & Tourisme en Grand Est",
+      "organisateur": "ART Grand Est",
+      "ville": "Grand Est",
+      "precision": "conception et animation du cycle, 9 dates, 1 000+ participants",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "precision": "designed and hosted the series, 9 dates, 1,000+ attendees"
+      }
+    },
+    {
+      "id": "C-15",
+      "statut": "Passé",
+      "date": "2024-10",
+      "date_affichee": "oct.-déc. 2024",
+      "titre": "IA générative : usages et potentiels dans le tourisme",
+      "organisateur": "École Supérieure de Tourisme Troyes-Metz",
+      "ville": "Metz",
+      "precision": "module de cours, étudiants de 1re à 3e année",
+      "type": "Atelier",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "Generative AI: uses and potential in tourism",
+        "date_affichee": "Oct–Dec 2024",
+        "precision": "course module, first- to third-year students"
+      }
+    },
+    {
+      "id": "C-19",
+      "statut": "Passé",
+      "date": "2024-10",
+      "titre": "IA & tourisme : état des lieux et perspectives",
+      "organisateur": "Rencontres nationales du e-tourisme",
+      "ville": "Pau",
+      "type": "Table ronde",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "AI & tourism: state of play and outlook"
+      }
+    },
+    {
+      "id": "C-16",
+      "statut": "Passé",
+      "date": "2024-09",
+      "titre": "L'IA générative dans le tourisme : usages et opportunités",
+      "organisateur": "IFTM · TOM.travel, émission Grand Angle",
+      "ville": "Paris",
+      "precision": "interview télévisée",
+      "type": "Média",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "Generative AI in tourism: uses and opportunities",
+        "organisateur": "IFTM · TOM.travel, Grand Angle show",
+        "precision": "TV interview"
+      }
+    },
+    {
+      "id": "C-17",
+      "statut": "Passé",
+      "date": "2024-09",
+      "titre": "L'IA générative : de la stratégie à la pratique",
+      "organisateur": "ADN Tourisme · Rencontres du Réseau",
+      "ville": "Troyes",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "Generative AI: from strategy to practice"
+      }
+    },
+    {
+      "id": "C-18",
+      "statut": "Passé",
+      "date": "2024",
+      "titre": "L'expérience utilisateur doit être la première préoccupation",
+      "organisateur": "Next Tourisme",
+      "ville": "Paris",
+      "precision": "interview et table ronde",
+      "type": "Table ronde",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "User experience must come first",
+        "precision": "interview and panel"
+      }
+    }
+  ],
+  "medias": [
+    {
+      "id": "M-01",
+      "date": "2026-07",
+      "media": "AI Experience",
+      "format": "podcast",
+      "titre": "Tourisme : l'IA prépare déjà le voyage sans vous",
+      "lien": "https://www.ai-experience.io/podcast/tourisme-lia-prepare-deja-le-voyage-sans-vous",
+      "en": {
+        "titre": "Tourism: AI is already planning the trip without you"
+      }
+    },
+    {
+      "id": "M-02",
+      "date": "2026-04",
+      "media": "Paris&Co, Cahier de Tendances Tourisme #9",
+      "format": "interview",
+      "titre": "Décrypter l'IA dans le tourisme : tendances, limites et bonnes pratiques",
+      "lien": "/interventions/Interview-Nicolas-Francois-Cahier-de-Tendances-Tourisme-2026.pdf",
+      "en": {
+        "titre": "Decoding AI in tourism: trends, limitations, and best practices"
+      }
+    },
+    {
+      "id": "M-03",
+      "date": "2025-12",
+      "media": "L'Echo Touristique",
+      "format": "article",
+      "titre": "IA dans le voyage : à quoi s'attendre en 2026",
+      "lien": "https://www.lechotouristique.com/article/ia-dans-le-voyage-a-quoi-sattendre-en-2026",
+      "en": {
+        "titre": "AI in travel: what to expect in 2026"
+      }
+    },
+    {
+      "id": "M-04",
+      "date": "2025-10",
+      "media": "Juris Tourisme · Lefebvre Dalloz",
+      "format": "article",
+      "titre": "Newsletter IA, Tech & Travel Café mise en avant dans la rubrique Initiatives",
+      "lien": "",
+      "en": {
+        "titre": "IA, Tech & Travel Café newsletter featured in the Initiatives section"
+      }
+    },
+    {
+      "id": "M-05",
+      "date": "2025-07",
+      "media": "Away We Go",
+      "format": "podcast",
+      "titre": "Utiliser l'IA à bon escient dans le tourisme",
+      "lien": "https://awaywego.fr/utiliser-ia-a-bon-escient-nicolas-francois/",
+      "en": {
+        "titre": "Using AI wisely in tourism"
+      }
+    },
+    {
+      "id": "M-06",
+      "date": "2025-03",
+      "media": "Puissance Télévision",
+      "format": "citation",
+      "titre": "Quand l'intelligence artificielle se met au service du tourisme",
+      "lien": "https://www.puissancetelevision.fr/societe/quand-lintelligence-artificielle-se-met-au-service-du-tourisme/",
+      "en": {
+        "titre": "When artificial intelligence serves tourism",
+        "format": "quoted"
+      }
+    },
+    {
+      "id": "M-07",
+      "date": "2025-02",
+      "media": "etourisme.info",
+      "format": "citation",
+      "titre": "30 mn IA tourisme, un nouveau podcast vidéo",
+      "lien": "https://www.etourisme.info/30-mn-ia-tourisme-un-nouveau-podcast-video/",
+      "en": {
+        "titre": "30 mn IA tourisme, a new video podcast",
+        "format": "quoted"
+      }
+    },
+    {
+      "id": "M-08",
+      "date": "2025-02",
+      "media": "Revue ESPACES",
+      "format": "dossier",
+      "titre": "Intelligence artificielle : animer son réseau de socioprofessionnels",
+      "lien": "https://www.tourisme-espaces.com/doc/11896.intelligence-artificielle-animer-reseau-socioprofessionnels.html",
+      "en": {
+        "titre": "Artificial intelligence: engaging your network of tourism stakeholders",
+        "format": "feature"
+      }
+    },
+    {
+      "id": "M-09",
+      "date": "2024-11",
+      "media": "etourisme.info",
+      "format": "article",
+      "titre": "L'IA dans le tourisme : un an après, où en sommes-nous ?",
+      "lien": "https://www.etourisme.info/lia-dans-le-tourisme-un-an-apres-ou-en-sommes-nous/",
+      "en": {
+        "titre": "AI in tourism: one year later, where do we stand?"
+      }
+    },
+    {
+      "id": "M-10",
+      "date": "2024-07",
+      "media": "Away We Go",
+      "format": "podcast",
+      "titre": "Utiliser l'IA à bon escient",
+      "lien": "https://open.spotify.com/episode/2jGJJ2zV7QTCUsWEpWEfuS",
+      "en": {
+        "titre": "Using AI wisely"
+      }
+    },
+    {
+      "id": "M-11",
+      "date": "2024-05",
+      "media": "Next Tourisme",
+      "format": "article",
+      "titre": "L'expérience utilisateur doit être la première préoccupation",
+      "lien": "https://www.next-tourisme.com/nicolas-francois-art-grand-est/",
+      "en": {
+        "titre": "User experience must come first"
+      }
+    }
+  ],
+  "publications": [
+    {
+      "date": "2026-09",
+      "editeur": "Juris Tourisme n° 299, Lefebvre Dalloz",
+      "titre": "Applications et impacts de l'IA dans le secteur du tourisme",
+      "nature": "Article",
+      "lien": "",
+      "en": {
+        "titre": "Applications and impacts of AI in the tourism sector",
+        "editeur": "Juris Tourisme no. 299, Lefebvre Dalloz"
+      }
+    },
+    {
+      "date": "2026-02",
+      "editeur": "ADN Tourisme × AFDAS",
+      "titre": "L'IA et l'évolution des métiers dans les organismes de tourisme",
+      "nature": "Étude",
+      "lien": "https://www.adn-tourisme.fr/etude-ia-metiers/",
+      "en": {
+        "titre": "AI and the evolution of jobs in tourism organizations"
+      }
+    },
+    {
+      "date": "2026-01",
+      "editeur": "CCI Paris Île-de-France",
+      "titre": "L'intelligence artificielle au cœur de la révolution touristique",
+      "nature": "Étude",
+      "lien": "https://www.cci-paris-idf.fr/fr/prospective/IA-tourisme",
+      "en": {
+        "titre": "Artificial intelligence at the heart of the tourism revolution"
+      }
+    },
+    {
+      "date": "2025-11",
+      "editeur": "Hauts-de-France Innovation Tourisme",
+      "titre": "IA Générative et Tourisme, 2e édition",
+      "nature": "Livre blanc",
+      "lien": "https://www.hautsdefranceinnovationtourisme.com/ressource/ia-generative-et-tourisme/",
+      "en": {
+        "titre": "Generative AI and Tourism, 2nd edition"
+      }
+    }
+  ],
+  "reconnaissances": [
+    {
+      "date": "septembre à décembre 2025",
+      "titre": "IA agentique appliquée à la transformation des entreprises",
+      "organisme": "MIT Professional Education",
+      "nature": "Certification",
+      "en": {
+        "titre": "Agentic AI Applied to Enterprise Transformation",
+        "nature": "Certification",
+        "date": "September to December 2025"
+      }
+    },
+    {
+      "date": "depuis septembre 2025",
+      "titre": "Ambassadeur du plan national « Osez l'IA » pour le secteur du tourisme",
+      "organisme": "Ministère de l'Économie",
+      "nature": "Nomination",
+      "en": {
+        "titre": "Ambassador of France’s “Osez l'IA” national initiative for the tourism sector",
+        "nature": "Appointment",
+        "organisme": "French Ministry of Economy",
+        "date": "since September 2025"
+      }
+    }
+  ],
+  "accreditations": [
+    {
+      "evenement": "Web Summit",
+      "lieu": "Lisbonne",
+      "annees": "novembre 2026",
+      "en": {
+        "lieu": "Lisbon",
+        "annees": "November 2026"
+      }
+    },
+    {
+      "evenement": "VivaTech",
+      "lieu": "Paris",
+      "annees": "2025 et 2026",
+      "en": {
+        "annees": "2025 and 2026"
+      }
+    },
+    {
+      "evenement": "Raise Summit",
+      "lieu": "Paris",
+      "annees": "2025 et 2026",
+      "en": {
+        "annees": "2025 and 2026"
+      }
+    }
+  ],
+  "prose_accueil": [
+    "Next Tourisme",
+    "Les Entreprises du Voyage",
+    "L'Echo Touristique",
+    "ADN Tourisme",
+    "Sorbonne Université",
+    "Grands Remous, Québec",
+    "Rencontres nationales du e-tourisme",
+    "Rencontres de l'Ardenne",
+    "Saline Royale d'Arc-et-Senans",
+    "Association des Directeurs de Golf de France",
+    "Syndicat des Loisirs Actifs"
+  ],
+  "galerie": [
+    {
+      "image": "totec-pupitre.jpg",
+      "largeur": 1000,
+      "hauteur": 666,
+      "evenement": "To.Tec",
+      "annee": "2022",
+      "credit": "Alexandre Nestora",
+      "alt": "Nicolas François au pupitre devant une salle, To.Tec",
+      "en": {
+        "alt": "Nicolas François at the lectern in front of an audience, To.Tec"
+      }
+    },
+    {
+      "image": "abbaye-premontres-scene.jpg",
+      "largeur": 1000,
+      "hauteur": 667,
+      "evenement": "Club Nova · Abbaye des Prémontrés",
+      "annee": "2024",
+      "credit": "",
+      "alt": "Nicolas François sur scène, micro en main, à l'Abbaye des Prémontrés",
+      "en": {
+        "alt": "Nicolas François on stage holding a microphone at the Abbaye des Prémontrés"
+      }
+    },
+    {
+      "image": "talk-bibliotheque.jpg",
+      "largeur": 750,
+      "hauteur": 1000,
+      "evenement": "Talk en bibliothèque",
+      "annee": "2023",
+      "credit": "",
+      "position": "50% 70%",
+      "alt": "Nicolas François intervenant devant un public dans une bibliothèque",
+      "en": {
+        "evenement": "Library talk",
+        "alt": "Nicolas François speaking to an audience in a library"
+      }
+    }
+  ]
+}

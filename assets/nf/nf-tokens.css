@@ -1,0 +1,44 @@
+/* nfrancois.fr · tokens (charte NF v3) */
+@font-face { font-family: 'Familjen Grotesk'; src: url('./fonts/FamiljenGrotesk-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Familjen Grotesk'; src: url('./fonts/FamiljenGroteskMedium-Regular.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Familjen Grotesk'; src: url('./fonts/FamiljenGroteskSemiBold-Regular.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Familjen Grotesk'; src: url('./fonts/FamiljenGrotesk-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'JetBrains Mono'; src: url('./fonts/JetBrainsMono-Medium.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('./fonts/HankenGrotesk-ExtraBold.woff2') format('woff2'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Hanken Grotesk'; src: url('./fonts/HankenGrotesk-Black.woff2') format('woff2'); font-weight: 900; font-style: normal; font-display: swap; }
+:root {
+  --papier: #F6F4EF;
+  --papier-clair: #FBFAF7;
+  --survol: #EDEAE3;
+  --encre: #1A1A1A;
+  --gris: #6B6964;
+  --gris-sur-encre: #A8A59E;
+  --gris-moyen: #B5B1A8;
+  --trait-champ: #8A8781;
+  --gris-clair: #D9D6CE;
+  --jaune: #FFD84D;
+  --on-jaune: var(--encre);
+  --on-encre: var(--papier);
+  --erreur: #A3261B;
+  --succes: #2E6B3F;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+  --radius-none: 0px;
+  --radius-full: 999px;
+  --container: 1200px;
+  --measure: 680px;
+  --rule-strong: 2px;
+  --rule-thin: 1px;
+  --font-sans: "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-display: "Hanken Grotesk", "Familjen Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, Menlo, monospace;
+}
+
