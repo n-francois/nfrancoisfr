@@ -1,4 +1,11 @@
 User-agent: *
 Allow: /
+# Fichiers de travail du dépôt (gabarits, script de génération, données, notes) : pas des pages du site
+Disallow: /src/
+Disallow: /scripts/
+Disallow: /data/
+Disallow: /CLAUDE.md
+Disallow: /README.md
+Disallow: /styles.css
 
 Sitemap: https://nfrancois.fr/sitemap.xml

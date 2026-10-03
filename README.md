@@ -2,7 +2,7 @@
 
 **Digital and AI Strategy Expert · Speaker · Tourism**
 
-Based in Nancy, France. I test AI for the tourism industry and share what I learn.
+Based in Metz, France. I test AI for the tourism industry and share what I learn.
 
 🌐 **Website** : [nfrancois.fr](https://nfrancois.fr/en/)
 📬 **Media & newsletter** : [IA, Tech & Travel Café](https://www.iatechtravel.cafe) · 3,000+ subscribers

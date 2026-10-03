@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 """Génère les pages du site (FR et EN) à partir de src/ et data/. Usage : python3 scripts/build.py"""
+import hashlib
 import html
 import json
 import re
@@ -369,6 +370,17 @@ def sitemap(pages):
     print("  sitemap.xml")
 
 
+def empreinte(chemin):
+    """Empreinte du contenu d'un fichier du site (10 caractères), ajoutée à son adresse : Hostinger fait garder CSS et JS
+    une semaine par les navigateurs ; l'adresse change dès que le fichier change, donc personne ne garde une version périmée."""
+    return hashlib.sha256((ROOT / chemin.lstrip("/")).read_bytes()).hexdigest()[:10]
+
+
+def versionner(page):
+    return re.sub(r'(href|src)="(/assets/[^"?]+\.(?:css|js))"',
+                  lambda m: f'{m.group(1)}="{m.group(2)}?v={empreinte(m.group(2))}"', page)
+
+
 def build():
     data = json.loads((ROOT / "data" / "interventions.json").read_text(encoding="utf-8"))
     generes = {lang: blocs(data, lang) for lang in LANGUES}
@@ -408,6 +420,10 @@ def build():
         reste = re.findall(r"\{\{[a-z_]+\}\}", page)
         if reste:
             raise SystemExit(f"{src.name} : balises non remplacées {sorted(set(reste))}")
+        page = versionner(page)
+        # Une page exclue de l'index (404) n'a pas d'adresse de référence à déclarer
+        if "noindex" in remplacements["robots"]:
+            page = re.sub(r'\n\s*<link rel="canonical"[^>]*>', "", page)
         out = ROOT / meta["out"]
         change = not out.exists() or out.read_text(encoding="utf-8") != page
         out.parent.mkdir(parents=True, exist_ok=True)
