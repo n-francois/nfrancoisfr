@@ -67,6 +67,10 @@ LANGUES = {
 
 FLECHE = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>'
 FLECHE_EXT = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg>'
+# Menu mobile : trois points (le point du tampon NF) pour ouvrir, une croix pour fermer
+POINTS = ('<svg class="nav__picto" viewBox="0 0 24 24" aria-hidden="true">'
+          '<circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg>')
+CROIX = '<svg class="nav__picto nav__picto--trait" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>'
 
 
 def fr(text):
@@ -213,8 +217,9 @@ def nav(path, lang):
         f'<a class="nf-nav__id" href="{L["accueil"]}"><img src="/assets/nf/logos/tampon-encre.svg" alt="" width="30" height="25">'
         '<span class="nav__nom">Nicolas François</span></a>'
         '<div class="nav__droite"><ul class="nf-nav__links">' + liens + contact + "</ul>"
-        '<details class="nav__menu"><summary class="nf-nav__menu nf-btn nf-btn--secondaire nf-btn--petit">'
-        f'<span class="nav__ouvrir">Menu</span><span class="nav__fermer">{L["fermer"]}</span></summary>'
+        '<details class="nav__menu"><summary class="nf-nav__menu nf-btn nf-btn--secondaire nf-btn--petit nav__bouton">'
+        f'<span class="nav__ouvrir"><span class="sr-only">Menu</span>{POINTS}</span>'
+        f'<span class="nav__fermer"><span class="sr-only">{L["fermer"]}</span>{CROIX}</span></summary>'
         '<div class="nav__panneau"><ul>' + panneau + "</ul></div></details></div></nav>"
     )
 

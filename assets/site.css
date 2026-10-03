@@ -13,7 +13,7 @@ main { padding-bottom: var(--space-16); }
 @media (min-width: 760px) { .nf-section { margin-top: var(--space-24); padding-top: var(--space-24); } }
 .nf-section__head { grid-template-columns: 1fr; gap: var(--space-3); margin-bottom: var(--space-12); }
 .nf-section__name { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 36px); line-height: 1.08; font-weight: 800; letter-spacing: -.025em; }
-.nf-section__lead { font-size: 20px; line-height: 1.45; max-width: 36em; text-wrap: balance; }
+.nf-section__lead { font-size: 20px; line-height: 1.45; max-width: 36em; }
 
 /* Navigation : groupe de droite et menu mobile plein écran (fonctionne sans JavaScript) */
 .nav__droite { display: flex; align-items: center; gap: var(--space-4); }
@@ -22,21 +22,36 @@ main { padding-bottom: var(--space-16); }
 @media (max-width: 440px) { .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } }
 .nav__menu summary { list-style: none; }
 .nav__menu summary::-webkit-details-marker { display: none; }
+/* Bouton rond à icône, de la même hauteur que « Contact » : trois points pour ouvrir, une croix pour fermer */
+.nav__bouton { box-sizing: border-box; width: 43px; height: 43px; min-height: 0; padding: 0; }
+.nav__ouvrir, .nav__fermer { display: inline-flex; }
 .nav__fermer, .nav__menu[open] .nav__ouvrir { display: none; }
-.nav__menu[open] .nav__fermer { display: inline; }
+.nav__menu[open] .nav__fermer { display: inline-flex; }
+.nav__picto { width: 22px; height: 22px; fill: currentColor; }
+.nav__picto--trait { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; }
 @media (min-width: 861px) { .nav__menu { display: none; } }
-.nav__menu[open] summary { position: fixed; top: 20px; right: var(--space-4); z-index: 60; background: var(--papier); }
+/* Ouvert, le bouton reste exactement à sa place (centré dans la barre de 80 px) au-dessus du panneau */
+.nav__menu[open] summary { position: fixed; top: calc((80px - 43px) / 2); right: var(--space-4); z-index: 60; background: var(--papier); }
 @media (min-width: 760px) { .nav__menu[open] summary { right: var(--space-6); } }
 .nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
 .nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
 .nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
 .nav__panneau a[aria-current="page"] { text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 6px; }
 html:has(.nav__menu[open]) { overflow: hidden; }
+/* Le panneau glisse de la droite vers la gauche à l'ouverture, et repart vers la droite à la fermeture (site.js) */
+@media (prefers-reduced-motion: no-preference) {
+  .nav__menu[open] .nav__panneau { animation: menu-entree .4s cubic-bezier(.2, .8, .2, 1); }
+  .nav__menu.is-fermeture .nav__panneau { animation: menu-sortie .3s cubic-bezier(.5, 0, .75, 0) forwards; }
+}
+@keyframes menu-entree { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes menu-sortie { from { transform: none; } to { transform: translateX(100%); } }
 
 /* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
 .page-head { padding-block: var(--space-16) 0; }
 .page-title { font-family: var(--font-display); font-size: clamp(36px, 5.2vw, 56px); line-height: 1; letter-spacing: -.03em; font-weight: 800; margin: var(--space-4) 0 0; max-width: 16em; text-wrap: balance; }
-.page-lead { font-size: 22px; line-height: 1.4; margin: var(--space-6) 0 0; max-width: 34em; text-wrap: balance; }
+.page-lead { font-size: 22px; line-height: 1.4; margin: var(--space-6) 0 0; max-width: 34em; }
+/* Introductions : lignes équilibrées sur grand écran ; sur mobile, l'équilibrage raccourcissait trop les lignes */
+@media (min-width: 760px) { .page-lead, .nf-section__lead { text-wrap: balance; } }
 /* Pas de mot seul sur la dernière ligne d'un paragraphe (navigateurs récents ; les autres l'ignorent) */
 p { text-wrap: pretty; }
 
@@ -209,3 +224,29 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* Pied de page : le grand nom recule de l'approche de son N (6,3 % du corps) pour que le trait du N
    tombe sur celui du « b » de l'adresse e-mail au-dessus (1 px d'approche à 16 px) */
 .nf-footer__big { margin-left: calc(1px - .063em); }
+
+/* ── Mobile ─────────────────────────────────────────────────────────────────── */
+@media (max-width: 759px) {
+  /* Titre de l'accueil : une idée par ligne (les <br class="hero__br"> ne servent que sur mobile) */
+  .nf-hero__title { font-size: min(40px, 11.5vw); text-wrap: wrap; }
+  /* Le surlignage commence une ligne : on compense son petit débord pour que le texte reste aligné à gauche */
+  .nf-hero__title .nf-hl { margin-left: -.06em; }
+  /* Bande newsletter : le logo juste au-dessus dit déjà le nom ; le titre reste pour les lecteurs d'écran */
+  .newsletter .nf-section__name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; }
+  /* Listes d'interventions : la flèche monte en haut à droite, sur la ligne de la date, au lieu d'occuper une ligne */
+  .nf-fiche { position: relative; }
+  .nf-fiche .fiche__quand { padding-right: var(--space-8); }
+  .nf-fiche > .nf-fiche__arrow { position: absolute; top: calc(var(--space-6) - 2px); right: var(--space-2); }
+  .nf-fiche--statique > span:last-child { display: none; }
+  /* Chiffres d'À propos : une ligne par chiffre, le libellé à droite, séparés par des filets fins */
+  .nf-preuve--3 { grid-template-columns: 1fr; gap: 0; }
+  .nf-preuve--3 > div { display: grid; grid-template-columns: 8.75rem minmax(0, 1fr); align-items: center; gap: var(--space-4); padding-block: var(--space-6); border-bottom: var(--rule-thin) solid var(--gris-clair); }
+  .nf-preuve--3 > div:first-child { padding-top: 0; }
+  .nf-preuve--3 > div:last-child { border-bottom: 0; padding-bottom: 0; }
+  .nf-preuve--3 .nf-preuve__l { margin-top: 0; }
+  /* Pied de page : les trois liens en colonne, puis une ligne discrète pour les mentions, la langue et l'année */
+  .nf-footer__top { flex-direction: column; gap: var(--space-8); }
+  .nf-footer__top > .nf-footer__cols:first-child { flex-direction: column; align-items: flex-start; gap: var(--space-4); font-size: 18px; }
+  .nf-footer__top > .nf-footer__cols:last-child { gap: var(--space-2) var(--space-6); padding-top: var(--space-6); border-top: var(--rule-thin) solid rgba(26, 26, 26, .25); font-size: 14px; }
+}
+@media (min-width: 760px) { .hero__br { display: none; } }
