@@ -72,6 +72,10 @@ html:has(.nav__menu[open]) { overflow: hidden; }
 
 /* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
 .page-head { padding-block: var(--space-16) 0; }
+/* Surtitres (accueil, Interventions, À propos, mentions, 404) : ils portent le nom ou le sujet de la page, donc un cran
+   au-dessus des petites étiquettes (14 px) ; la taille du texte courant sur ordinateur, toujours en gris sous le titre */
+.nf-hero__title .nf-hero__label, .page-head .nf-label { font-size: 15px; }
+@media (min-width: 760px) { .nf-hero__title .nf-hero__label, .page-head .nf-label { font-size: 18px; } }
 .page-title { font-family: var(--font-display); font-size: clamp(36px, 5.2vw, 56px); line-height: 1; letter-spacing: -.03em; font-weight: 800; margin: var(--space-4) 0 0; max-width: 16em; text-wrap: balance; }
 /* Le surlignage du titre reste d'un seul tenant (« réalité du terrain », « real-world practice ») ; sous 360 px, il peut
    passer sur deux lignes pour ne pas déborder */
