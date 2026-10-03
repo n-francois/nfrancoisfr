@@ -20,8 +20,8 @@ main { padding-bottom: var(--space-16); }
 @media (max-width: 520px) { .nf-nav { gap: var(--space-3); } .nav__droite { gap: var(--space-2); } }
 /* Tampon NF un peu plus présent que dans le design system : 34 px à côté du nom, 40 px quand il est seul (mobile),
    presque à la hauteur des boutons de la barre */
-.nf-nav__id img { width: 34px; }
-@media (max-width: 440px) { .nf-nav__id img { width: 40px; } }
+.nf-nav__id .tampon { width: 34px; }
+@media (max-width: 440px) { .nf-nav__id .tampon { width: 40px; } }
 /* Sur petit écran, le tampon seul porte l'identité ; le nom reste lu par les lecteurs d'écran */
 @media (max-width: 440px) { .nav__nom { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; } }
 .nav__menu summary { list-style: none; }
@@ -305,19 +305,28 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 @keyframes page-sortie { to { opacity: 0; } }
 @keyframes page-entree { from { opacity: 0; transform: translateY(16px); } }
 
-/* ── Page 404 ───────────────────────────────────────────────────────────────── */
-/* Le tampon en grand, posé de biais comme un coup de tampon ; il « tombe » sur la page à l'ouverture */
+
+/* ── Tampon NF dessiné ──────────────────────────────────────────────────────── */
+/* Le tampon est un seul trait continu (le N, puis la barre du F) et un point : on le trace comme une ligne d'encre.
+   En-tête : il se dessine en 0,75 s à chaque page. Page 404 : « tampon--lent », en grand, comme une signature. */
+.tampon { display: block; width: 34px; height: auto; overflow: visible; color: var(--encre); }
+.tampon__trait { fill: none; stroke: currentColor; stroke-width: 65.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; }
+.tampon__point { fill: currentColor; transform-box: fill-box; transform-origin: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .tampon__trait { animation: tampon-trace .75s cubic-bezier(.65, 0, .35, 1) .15s backwards; }
+  .tampon__point { animation: tampon-point .38s cubic-bezier(.2, .8, .2, 1) .84s backwards; }
+  .tampon--lent .tampon__trait { animation-duration: 1.9s; animation-delay: .3s; }
+  .tampon--lent .tampon__point { animation-delay: 2.14s; }
+}
+@keyframes tampon-trace { from { stroke-dashoffset: 1; } }
+@keyframes tampon-point { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.18); opacity: 1; } 100% { transform: scale(1); opacity: 1; } }
+/* Changement de page : la barre du haut apparaît telle quelle, pour que son tampon se dessine sans fondu par-dessus */
+::view-transition-old(entete) { display: none; }
+::view-transition-new(entete) { animation: none; }
+/* Page 404 : le message à gauche, le tampon tracé à droite (dessous sur mobile) */
 .page-head--404 { display: grid; gap: var(--space-8); }
-.tampon-404 { display: block; width: 104px; height: auto; transform: rotate(-8deg); }
+.page-head--404 .tampon { width: clamp(120px, 32vw, 160px); }
 @media (min-width: 760px) {
   .page-head--404 { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-16); }
-  .tampon-404 { grid-column: 2; grid-row: 1; width: clamp(180px, 22vw, 280px); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .tampon-404 { animation: coup-de-tampon .55s cubic-bezier(.2, .8, .2, 1) .25s both; }
-}
-@keyframes coup-de-tampon {
-  0% { opacity: 0; transform: rotate(-14deg) scale(1.35); }
-  60% { opacity: 1; transform: rotate(-7deg) scale(.95); }
-  100% { opacity: 1; transform: rotate(-8deg) scale(1); }
+  .page-head--404 .tampon { width: clamp(160px, 20vw, 260px); }
 }

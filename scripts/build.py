@@ -69,6 +69,11 @@ LANGUES = {
 
 FLECHE = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>'
 FLECHE_EXT = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg>'
+# Tampon NF dessiné comme une ligne d'encre : le N, la barre du F, puis le point (animé en CSS, voir site.css)
+TRAIT_NF = "M32.8,332.5 V72 C32.8,47 50,33.3 70,33.3 C89,33.3 104,45 109.3,63.4 L180.7,303.5 C186,322 202,332.7 221.5,332.7 C241,332.7 257.9,317 257.9,294 V88 C257.9,57.5 282,33 312,33 H398.4"
+def tampon(classe=""):
+    return (f'<svg class="tampon{(" " + classe) if classe else ""}" viewBox="0 0 431 366" aria-hidden="true" focusable="false">'
+            f'<path class="tampon__trait" pathLength="1" d="{TRAIT_NF}"/><circle class="tampon__point" cx="352.9" cy="188.6" r="33"/></svg>')
 # Menu mobile : trois points (le point du tampon NF) pour ouvrir, une croix pour fermer
 POINTS = ('<svg class="nav__picto" viewBox="0 0 24 24" aria-hidden="true">'
           '<circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg>')
@@ -216,7 +221,7 @@ def nav(path, lang):
                       for l, h in [(L["accueil_lib"], L["accueil"])] + L["nav"] + [("Contact", L["contact"])])
     return (
         f'<nav class="nf-nav" aria-label="{L["nav_label"]}">'
-        f'<a class="nf-nav__id" href="{L["accueil"]}"><img src="/assets/nf/logos/tampon-encre.svg" alt="" width="30" height="25">'
+        f'<a class="nf-nav__id" href="{L["accueil"]}">' + tampon() +
         '<span class="nav__nom">Nicolas François</span></a>'
         '<div class="nav__droite"><ul class="nf-nav__links">' + liens + contact + "</ul>"
         '<details class="nav__menu"><summary class="nf-nav__menu nf-btn nf-btn--secondaire nf-btn--petit nav__bouton">'
