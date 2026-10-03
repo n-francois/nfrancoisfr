@@ -225,8 +225,18 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
    tombe sur celui du « b » de l'adresse e-mail au-dessus (1 px d'approche à 16 px) */
 .nf-footer__big { margin-left: calc(1px - .063em); }
 
+/* Flèche des lignes d'interventions : un peu plus grande et plus marquée que celle du design system */
+.nf-fiche__arrow { width: 24px; height: 24px; stroke-width: 2.25; }
+
 /* ── Mobile ─────────────────────────────────────────────────────────────────── */
 @media (max-width: 759px) {
+  /* Rythme vertical : 32 px entre un titre et son contenu, entre deux blocs d'une section et avant un bouton ;
+     48 px avant une photo, pour qu'un bouton reste rattaché à son texte et non à l'image qui suit */
+  .nf-section__head, .duo:not(.newsletter) .nf-section__head { margin-bottom: var(--space-8); }
+  .actions, .bloc { margin-top: var(--space-8); }
+  .photo { margin-bottom: var(--space-8); }
+  .duo:not(.newsletter) { row-gap: var(--space-12); }
+  .bande__pied { margin-top: var(--space-8); }
   /* Titre de l'accueil : une idée par ligne (les <br class="hero__br"> ne servent que sur mobile) */
   .nf-hero__title { font-size: min(40px, 11.5vw); text-wrap: wrap; }
   /* Le surlignage commence une ligne : on compense son petit débord pour que le texte reste aligné à gauche */
@@ -236,7 +246,7 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   /* Listes d'interventions : la flèche monte en haut à droite, sur la ligne de la date, au lieu d'occuper une ligne */
   .nf-fiche { position: relative; }
   .nf-fiche .fiche__quand { padding-right: var(--space-8); }
-  .nf-fiche > .nf-fiche__arrow { position: absolute; top: calc(var(--space-6) - 2px); right: var(--space-2); }
+  .nf-fiche > .nf-fiche__arrow { position: absolute; top: calc(var(--space-6) - 4px); right: var(--space-2); }
   .nf-fiche--statique > span:last-child { display: none; }
   /* Chiffres d'À propos : une ligne par chiffre, le libellé à droite, séparés par des filets fins */
   .nf-preuve--3 { grid-template-columns: 1fr; gap: 0; }

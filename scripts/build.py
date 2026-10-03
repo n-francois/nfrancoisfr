@@ -37,6 +37,7 @@ LANGUES = {
         "onglet": " (nouvel onglet)",
         "email": "bonjour@nfrancois.fr",
         "accueil": "/",
+        "accueil_lib": "Accueil",
         "nav": [("Interventions", "/interventions/"), ("À propos", "/a-propos/")],
         "contact": "/#contact",  # le bloc e-mail en bas de l'accueil
         "legal": ("Mentions légales", "/mentions-legales/"),
@@ -55,6 +56,7 @@ LANGUES = {
         "onglet": " (opens in a new tab)",
         "email": "hello@nfrancois.fr",
         "accueil": "/en/",
+        "accueil_lib": "Home",
         "nav": [("Talks", "/en/talks/"), ("About", "/en/about/")],
         "contact": "/en/#contact",
         "legal": ("Legal notice", "/en/legal-notice/"),
@@ -66,7 +68,7 @@ LANGUES = {
 }
 
 FLECHE = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>'
-FLECHE_EXT = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 16 16 8M9 8h7v7"/></svg>'
+FLECHE_EXT = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg>'
 # Menu mobile : trois points (le point du tampon NF) pour ouvrir, une croix pour fermer
 POINTS = ('<svg class="nav__picto" viewBox="0 0 24 24" aria-hidden="true">'
           '<circle cx="5" cy="12" r="2.2"/><circle cx="12" cy="12" r="2.2"/><circle cx="19" cy="12" r="2.2"/></svg>')
@@ -211,7 +213,7 @@ def nav(path, lang):
     contact = (f'<li><a class="nf-btn nf-btn--primaire nf-btn--petit" href="{L["contact"]}"'
                f'{courant if path == L["contact"] else ""}><span class="nf-btn__lbl">Contact</span></a></li>')
     panneau = "".join(f'<li><a href="{h}"{courant if path == h else ""}>{l}</a></li>'
-                      for l, h in L["nav"] + [("Contact", L["contact"])])
+                      for l, h in [(L["accueil_lib"], L["accueil"])] + L["nav"] + [("Contact", L["contact"])])
     return (
         f'<nav class="nf-nav" aria-label="{L["nav_label"]}">'
         f'<a class="nf-nav__id" href="{L["accueil"]}"><img src="/assets/nf/logos/tampon-encre.svg" alt="" width="30" height="25">'
