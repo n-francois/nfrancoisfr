@@ -242,9 +242,9 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 .nf-footer__cadre { container-type: inline-size; }
 .nf-footer__big { font-size: 15.3cqi; }
 .nf-footer__big { margin-left: calc(1px - .063em); }
-/* Le grand nom est le dernier plan de la page : plus d'air au-dessus des liens, et les lettres entières
-   (le bas du « ç » n'est plus coupé par le bord de la page) */
-.nf-footer__big { padding-bottom: .18em; }
+/* Le grand nom est le dernier plan de la page : plus d'air au-dessus des liens, et coupé net par le bas de la page,
+   comme une affiche, au cinquième de la hauteur des lettres (le pied de page masque ce qui dépasse) */
+.nf-footer__big { padding-bottom: 0; margin-bottom: -.141em; }
 @media (min-width: 760px) { .nf-footer__big { margin-top: var(--space-24); } }
 /* Ton sur ton : le nom en jaune doré, comme une signature gravée dans le jaune ; les liens restent lus en premier
    (un jaune mélangé à l'encre tournait au kaki). Texte décoratif, masqué aux lecteurs d'écran. */
@@ -304,3 +304,20 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 @media (prefers-reduced-motion: reduce) { @view-transition { navigation: none; } }
 @keyframes page-sortie { to { opacity: 0; } }
 @keyframes page-entree { from { opacity: 0; transform: translateY(16px); } }
+
+/* ── Page 404 ───────────────────────────────────────────────────────────────── */
+/* Le tampon en grand, posé de biais comme un coup de tampon ; il « tombe » sur la page à l'ouverture */
+.page-head--404 { display: grid; gap: var(--space-8); }
+.tampon-404 { display: block; width: 104px; height: auto; transform: rotate(-8deg); }
+@media (min-width: 760px) {
+  .page-head--404 { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-16); }
+  .tampon-404 { grid-column: 2; grid-row: 1; width: clamp(180px, 22vw, 280px); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tampon-404 { animation: coup-de-tampon .55s cubic-bezier(.2, .8, .2, 1) .25s both; }
+}
+@keyframes coup-de-tampon {
+  0% { opacity: 0; transform: rotate(-14deg) scale(1.35); }
+  60% { opacity: 1; transform: rotate(-7deg) scale(.95); }
+  100% { opacity: 1; transform: rotate(-8deg) scale(1); }
+}
