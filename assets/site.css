@@ -4,6 +4,10 @@
 .skip-link { position: absolute; left: var(--space-4); top: -80px; z-index: 100; background: var(--encre); color: var(--on-encre); padding: var(--space-3) var(--space-4); font-weight: 600; text-decoration: none; }
 .skip-link:focus { top: var(--space-4); }
 
+/* Marges sur les côtés, sur mobile : 20 px au lieu des 16 px du design system, plus confortables avec les grands titres
+   et les photos pleine largeur. Le panneau du menu suit, pour rester aligné sur le tampon. */
+@media (max-width: 759px) { .nf-page { padding-inline: 20px; } }
+
 main { padding-bottom: var(--space-16); }
 @media (min-width: 760px) { main { padding-bottom: var(--space-24); } }
 
@@ -54,6 +58,7 @@ main { padding-bottom: var(--space-16); }
 /* En-tête compact (tampon et menu) : pas de bouton « Contact », il est déjà dans le menu et dans les pages */
 @media (max-width: 860px) { .nf-nav__links { display: none; } }
 .nav__panneau { position: fixed; inset: 0; z-index: 50; overflow-y: auto; background: var(--papier); padding: 112px var(--space-4) var(--space-12); }
+@media (max-width: 759px) { .nav__panneau { padding-inline: 20px; } }
 .nav__panneau ul { list-style: none; margin: 0; padding: 0; border-top: var(--rule-strong) solid var(--encre); }
 .nav__panneau a { display: block; padding: var(--space-4) 0; border-bottom: var(--rule-thin) solid var(--gris-clair); color: var(--encre); text-decoration: none; font-size: 32px; line-height: 1.1; font-weight: 700; letter-spacing: -.025em; }
 /* Page active : surlignée en jaune, comme le titre de l'accueil ; la bande se trace une fois le menu ouvert.
