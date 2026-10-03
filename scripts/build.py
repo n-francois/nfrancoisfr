@@ -69,6 +69,8 @@ LANGUES = {
 
 FLECHE = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>'
 FLECHE_EXT = '<svg class="nf-fiche__arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 18 18 6M8 6h10v10"/></svg>'
+# Flèche inclinée des liens texte externes (même tracé que celle du bouton « S'abonner à ma newsletter »)
+FLECHE_LIEN = '<svg class="lien-ext" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M5 4h7v7"/></svg>'
 # Tampon NF dessiné comme une ligne d'encre : le N, la barre du F, puis le point (animé en CSS, voir site.css)
 TRAIT_NF = "M32.8,332.5 V72 C32.8,47 50,33.3 70,33.3 C89,33.3 104,45 109.3,63.4 L180.7,303.5 C186,322 202,332.7 221.5,332.7 C241,332.7 257.9,317 257.9,294 V88 C257.9,57.5 282,33 312,33 H398.4"
 def tampon(classe=""):
@@ -234,11 +236,13 @@ def nav(path, lang):
 def footer(lang, autre_path, signature=True):
     L = LANGUES[lang]
     libelle, autre_lang = L["autre"]
+    # Liens externes : ouverts dans un nouvel onglet, signalés par la flèche inclinée (et dit aux lecteurs d'écran)
+    ext = f'<span class="sr-only">{L["onglet"]}</span>{FLECHE_LIEN}'
     return (
         '<footer class="nf-footer">\n<div class="nf-page nf-footer__cadre">\n  <div class="nf-footer__top">\n    <div class="nf-footer__cols">\n'
         f'      <a href="mailto:{L["email"]}">{L["email"]}</a>\n'
-        '      <a href="https://www.linkedin.com/in/n-francois/" rel="me">LinkedIn</a>\n'
-        '      <a href="https://www.iatechtravel.cafe">IA, Tech &amp; Travel Café</a>\n'
+        f'      <a href="https://www.linkedin.com/in/n-francois/" target="_blank" rel="noopener me">LinkedIn{ext}</a>\n'
+        f'      <a href="https://www.iatechtravel.cafe" target="_blank" rel="noopener">IA, Tech &amp; Travel Café{ext}</a>\n'
         '    </div>\n    <div class="nf-footer__cols">\n'
         f'      <a href="{L["legal"][1]}">{L["legal"][0]}</a>\n'
         f'      <a href="{autre_path}" hreflang="{autre_lang}" lang="{autre_lang}">{libelle}</a>\n'

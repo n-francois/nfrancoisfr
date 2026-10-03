@@ -258,6 +258,11 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
   .nf-footer__cadre:has(.tampon--pied) .nf-footer__top { flex: 1; align-items: center; }
 }
 
+/* Flèche inclinée des liens externes du pied de page : collée au mot, hors du soulignement, elle monte d'un cran au survol */
+.lien-ext { display: inline-block; width: .75em; height: .75em; margin-left: .3em; vertical-align: -.04em; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .2s cubic-bezier(.2, .7, .2, 1); }
+a:hover > .lien-ext { transform: translate(2px, -2px); }
+@media (prefers-reduced-motion: reduce) { .lien-ext { transition: none; } }
+
 /* Flèche des lignes d'interventions : un peu plus grande et plus marquée que celle du design system */
 .nf-fiche__arrow { width: 24px; height: 24px; stroke-width: 2.25; }
 
