@@ -267,12 +267,14 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
    trace quand il arrive à l'écran (classes posées par site.js) ; sans JavaScript, il est simplement affiché. Sur mobile,
    il vient sous les liens, avec en dessous la même marge qu'en haut du pied de page. */
 .nf-footer__cadre { padding-bottom: var(--space-12); }
-.nf-footer .tampon--pied { width: 141px; margin-top: var(--space-16); color: var(--on-jaune); }
+/* Mobile : 72 px de haut, seul sur sa ligne sous les liens (environ deux fois le tampon de la barre du haut) */
+.nf-footer .tampon--pied { width: 85px; margin-top: var(--space-16); color: var(--on-jaune); }
 /* Dès la tablette, une seule bande : les liens à gauche, les mentions à droite, et le tampon tout au bout, comme une
    signature au bas d'une lettre (sans tampon, comme sur la page 404, la ligne de liens reste seule) */
 @media (min-width: 760px) {
   .nf-footer__cadre:has(.tampon--pied) { display: flex; align-items: center; gap: var(--space-12); }
-  .nf-footer .tampon--pied { flex: none; width: 94px; margin: 0; }
+  /* 56 px de haut, une fois et demie le tampon de la barre du haut : une signature, pas un second logo */
+  .nf-footer .tampon--pied { flex: none; width: 66px; margin: 0; }
   .nf-footer__cadre:has(.tampon--pied) .nf-footer__top { flex: 1; align-items: center; }
 }
 
