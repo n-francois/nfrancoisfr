@@ -13,7 +13,7 @@ main { padding-bottom: var(--space-16); }
 @media (min-width: 760px) { .nf-section { margin-top: var(--space-24); padding-top: var(--space-24); } }
 .nf-section__head { grid-template-columns: 1fr; gap: var(--space-3); margin-bottom: var(--space-12); }
 .nf-section__name { margin: 0; font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 36px); line-height: 1.08; font-weight: 800; letter-spacing: -.025em; }
-.nf-section__lead { font-size: 20px; line-height: 1.45; max-width: 36em; }
+.nf-section__lead { font-size: 20px; line-height: 1.45; max-width: 36em; text-wrap: balance; }
 
 /* Navigation : groupe de droite et menu mobile plein écran (fonctionne sans JavaScript) */
 .nav__droite { display: flex; align-items: center; gap: var(--space-4); }
