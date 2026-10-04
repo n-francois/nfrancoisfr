@@ -4,6 +4,7 @@ import hashlib
 import html
 import json
 import re
+import shutil
 from datetime import date
 from pathlib import Path
 
@@ -389,11 +390,24 @@ def versionner(page):
                   lambda m: f'{m.group(1)}="{m.group(2)}?v={empreinte(m.group(2))}"', page)
 
 
+APERCU = ROOT / ".apercu"   # pages inactives, visibles seulement dans l'aperçu local (dossier ignoré par git)
+
+
+def bloc_prive(chemin):
+    """Contenu gardé hors du dépôt public (dossier prive/, ignoré par git), par exemple des résultats pas encore publiables."""
+    f = ROOT / chemin
+    if not f.exists():
+        raise SystemExit(f"{chemin} introuvable : ce contenu vit hors du dépôt, dans prive/")
+    return f.read_text(encoding="utf-8")
+
+
 def build():
     data = json.loads((ROOT / "data" / "interventions.json").read_text(encoding="utf-8"))
     generes = {lang: blocs(data, lang) for lang in LANGUES}
     layout = (ROOT / "src" / "layout.html").read_text(encoding="utf-8")
     indexables = []
+    sorties = {}
+    shutil.rmtree(APERCU, ignore_errors=True)
     for src in sorted((ROOT / "src" / "pages").rglob("*.html")):
         raw = src.read_text(encoding="utf-8")
         m = re.match(r"\s*<!--(.*?)-->\s*", raw, re.S)
@@ -403,42 +417,73 @@ def build():
         contenu = raw[m.end():]
         for cle, valeur in generes[lang].items():
             contenu = contenu.replace("{{" + cle + "}}", valeur)
+        # Page inactive (« actif »: false) : générée dans .apercu/ pour l'aperçu local, jamais sur le site.
+        # Deux pages peuvent viser la même adresse (page d'attente, page finale) ; une seule est active à la fois.
+        actif = meta.get("actif", True)
+        if actif:
+            if meta["out"] in sorties:
+                raise SystemExit(f"{src.name} et {sorties[meta['out']]} sont actives sur la même adresse {meta['out']}")
+            sorties[meta["out"]] = src.name
+        racine = ROOT if actif else APERCU
+        # Bloc gardé hors du dépôt public jusqu'à son feu vert (« questionnaire ») : inclus seulement s'il est publié ;
+        # l'aperçu montre aussi la variante « avec » (sous avec/) dès que son contenu est dans prive/
+        variantes = [("", contenu.replace("{{questionnaire}}", ""))]
+        q = meta.get("questionnaire")
+        if q:
+            dossier = (ROOT / meta["out"]).parent
+            page_resultats = dossier / "questionnaire" / "index.html"
+            if q["publie"]:
+                variantes = [("", contenu.replace("{{questionnaire}}", bloc_prive(q["section"])))]
+                if actif:
+                    page_resultats.parent.mkdir(parents=True, exist_ok=True)
+                    page_resultats.write_text(bloc_prive(q["page"]), encoding="utf-8")
+            else:
+                # pas publié : aucun résultat ne doit traîner sur le site
+                if actif and page_resultats.exists():
+                    shutil.rmtree(page_resultats.parent)
+                if (ROOT / q["section"]).exists():
+                    variantes.append(("avec/", contenu.replace("{{questionnaire}}", bloc_prive(q["section"]))))
+                    apercu = APERCU / Path(meta["out"]).parent / "avec" / "questionnaire" / "index.html"
+                    apercu.parent.mkdir(parents=True, exist_ok=True)
+                    apercu.write_text(bloc_prive(q["page"]), encoding="utf-8")
         path = meta["path"]
         p = paire(meta, path, lang)
         autre_path = p["en" if lang == "fr" else "fr"] if p else LANGUES["en" if lang == "fr" else "fr"]["accueil"]
-        page = layout
-        remplacements = {
-            "lang": lang,
-            "title": attr(meta["title"]),
-            "description": attr(meta["description"]),
-            "canonical": SITE + path,
-            "robots": meta.get("robots", "index, follow"),
-            "alternates": alternates(meta, path, lang),
-            "og_image": f'{SITE}/images/{L["og_image"]}',
-            "og_alt": attr(L["og_alt"]),
-            "og_locale": L["og_locale"],
-            "jsonld": jsonld(meta, path, lang, data),
-            "skip": L["skip"],
-            "nav": nav(path, lang, autre_path),
-            "contenu": contenu.strip(),
-            "footer": footer(lang, autre_path, signature="tampon--lent" not in contenu),
-        }
-        for cle, valeur in remplacements.items():
-            page = page.replace("{{" + cle + "}}", valeur)
-        reste = re.findall(r"\{\{[a-z_]+\}\}", page)
-        if reste:
-            raise SystemExit(f"{src.name} : balises non remplacées {sorted(set(reste))}")
-        page = versionner(page)
-        # Une page exclue de l'index (404) n'a pas d'adresse de référence à déclarer
-        if "noindex" in remplacements["robots"]:
-            page = re.sub(r'\n\s*<link rel="canonical"[^>]*>', "", page)
-        out = ROOT / meta["out"]
-        change = not out.exists() or out.read_text(encoding="utf-8") != page
-        out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(page, encoding="utf-8")
-        print(f"  {meta['out']}")
-        if "noindex" not in remplacements["robots"]:
-            indexables.append((path, lang, p, change))
+        for suffixe, corps in variantes:
+            page = layout
+            remplacements = {
+                "lang": lang,
+                "title": attr(meta["title"]),
+                "description": attr(meta["description"]),
+                "canonical": SITE + path,
+                "robots": meta.get("robots", "index, follow"),
+                "alternates": alternates(meta, path, lang),
+                "og_image": f'{SITE}/images/{L["og_image"]}',
+                "og_alt": attr(L["og_alt"]),
+                "og_locale": L["og_locale"],
+                "jsonld": jsonld(meta, path, lang, data),
+                "skip": L["skip"],
+                "nav": nav(path, lang, autre_path),
+                "contenu": corps.strip(),
+                "footer": footer(lang, autre_path, signature="tampon--lent" not in corps),
+            }
+            for cle, valeur in remplacements.items():
+                page = page.replace("{{" + cle + "}}", valeur)
+            reste = re.findall(r"\{\{[a-z_]+\}\}", page)
+            if reste:
+                raise SystemExit(f"{src.name} : balises non remplacées {sorted(set(reste))}")
+            page = versionner(page)
+            # Une page exclue de l'index (404, pages d'événement) n'a pas d'adresse de référence à déclarer
+            if "noindex" in remplacements["robots"]:
+                page = re.sub(r'\n\s*<link rel="canonical"[^>]*>', "", page)
+            cible = Path(meta["out"])
+            out = racine / cible.parent / suffixe / cible.name
+            change = not out.exists() or out.read_text(encoding="utf-8") != page
+            out.parent.mkdir(parents=True, exist_ok=True)
+            out.write_text(page, encoding="utf-8")
+            print(f"  {out.relative_to(ROOT)}")
+            if actif and not suffixe and "noindex" not in remplacements["robots"]:
+                indexables.append((path, lang, p, change))
     sitemap(indexables)
 
 

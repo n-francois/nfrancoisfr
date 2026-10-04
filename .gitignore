@@ -6,3 +6,8 @@ Thumbs.db
 .idea/
 .vscode/
 node_modules/
+
+# Aperçu local des pages inactives (généré par scripts/build.py)
+/.apercu/
+# Contenus pas encore publiables (ex. résultats de questionnaire en attente d’accord) : jamais dans le dépôt public
+/prive/

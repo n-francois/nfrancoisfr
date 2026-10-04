@@ -301,6 +301,62 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 a:hover > .lien-ext { transform: translate(2px, -2px); }
 @media (prefers-reduced-motion: reduce) { .lien-ext { transition: none; } }
 
+/* ── Pages d'événement (/cotesdarmor/) : les ressources d'une conférence, données en salle par QR code ─────────── */
+/* Page d'attente : ce que la page contiendra après la conférence */
+/* Photo d'ouverture (phare de Ploumanac'h) : la bande 21/9 de l'accueil, cadrée assez haut pour garder le phare entier */
+.evenement-photo { margin: var(--space-12) 0 0; }
+.evenement-photo .nf-section__media img { object-position: 50% 20%; }
+/* Sur mobile, la bande 21/9 serait trop mince : la photo entière, en 3/2 */
+@media (max-width: 759px) { .evenement-photo .nf-section__media { aspect-ratio: 3 / 2; } }
+.evenement-attente__liste { margin: var(--space-6) 0 0; padding-left: 1.2em; display: grid; gap: var(--space-2); font-size: 20px; line-height: 1.45; max-width: 36em; }
+/* Les trois actions : le numéro discret des convictions de l'accueil, puis le titre et le texte, séparées d'un filet fin */
+.etapes { list-style: none; margin: 0; padding: 0; display: grid; }
+.etape { display: grid; gap: var(--space-2) var(--space-8); padding-block: var(--space-8); border-top: var(--rule-thin) solid var(--gris-clair); }
+.etape:first-child { border-top: 0; padding-top: 0; }
+@media (min-width: 760px) { .etape { grid-template-columns: 112px minmax(0, 1fr); } .etape .credo__n { margin: 8px 0 0; } }
+.etape__corps { display: grid; gap: var(--space-4); max-width: 40em; min-width: 0; }
+.etape__corps .nf-col__title { margin: 0; }
+.etape__corps > p, .etape__liste { margin: 0; font-size: 18px; line-height: 1.55; }
+.etape__liste { padding-left: 1.2em; display: grid; gap: var(--space-1); }
+.etape__corps > .etape__astuce { font-size: 15px; line-height: 1.45; color: var(--gris); }
+/* Exemple à copier ou à reprendre : un encart clair, comme un champ de saisie */
+.exemple { display: grid; gap: var(--space-3); justify-items: start; padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
+.exemple .nf-label, .exemple__texte { margin: 0; }
+.exemple__texte { font-size: 20px; line-height: 1.4; font-weight: 500; }
+/* Les sources : le chiffre, ce qu'il dit, d'où il vient */
+.chiffres { list-style: none; margin: 0; padding: 0; }
+.chiffre { display: grid; gap: var(--space-2) var(--space-8); padding-block: var(--space-6); border-bottom: var(--rule-thin) solid var(--gris-clair); }
+.chiffre:first-child { padding-top: 0; }
+@media (min-width: 760px) { .chiffre { grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; } .chiffre__source { grid-column: 2; } }
+.chiffre__v { font-family: var(--font-display); font-weight: 800; font-size: clamp(32px, 4vw, 44px); line-height: 1; letter-spacing: -.03em; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.chiffre__texte { margin: 0; font-size: 18px; line-height: 1.5; max-width: 40em; }
+.chiffre__source { margin: 0; font-size: 15px; line-height: 1.45; color: var(--gris); }
+/* Pour aller plus loin : chaque colonne est un lien externe, avec la flèche inclinée */
+.lectures { list-style: none; margin: 0; padding: 0; }
+.lecture { display: grid; gap: var(--space-2); color: var(--encre); text-decoration: none; }
+.lecture .nf-col__title { margin: 0; }
+.lecture:hover .nf-col__title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.lecture:hover .lien-ext { transform: translate(2px, -2px); }
+.lecture:focus-visible { outline: 2px solid var(--encre); outline-offset: 4px; }
+/* Votre avis : la note en cinq cases (encre une fois choisie, comme un filtre actif), puis les champs du design system */
+.avis { display: grid; gap: var(--space-8); max-width: 560px; }
+.avis__notes { border: 0; margin: 0; padding: 0; min-width: 0; }
+.avis__notes legend { padding: 0; margin-bottom: var(--space-3); }
+.avis__echelle { display: flex; gap: var(--space-2); }
+.avis__echelle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.avis__echelle label { display: grid; place-items: center; width: 52px; height: 52px; border: 1.5px solid var(--trait-champ); background: var(--papier-clair); font: 800 20px/1 var(--font-display); cursor: pointer; }
+.avis__echelle label:hover { border-color: var(--encre); }
+.avis__echelle input:checked + label { background: var(--encre); border-color: var(--encre); color: var(--on-encre); }
+.avis__echelle input:focus-visible + label { outline: 2px solid var(--encre); outline-offset: 3px; }
+.avis__bornes { display: flex; justify-content: space-between; width: calc(5 * 52px + 4 * var(--space-2)); max-width: 100%; margin: var(--space-2) 0 0; font-size: 14px; color: var(--gris); }
+.avis__facultatif { font-weight: 400; color: var(--gris); }
+.avis__piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.avis .note { margin: 0; }
+.avis .nf-msg { max-width: none; }
+/* Résultats du questionnaire (version « avec ») : le bandeau de chiffres, sans second filet sous le titre */
+.nf-section .resultats { border-top: 0; padding-top: 0; }
+.resultats__base { display: block; margin-top: var(--space-2); font-family: var(--font-mono); font-size: 12px; color: var(--gris); }
+
 /* Flèche des lignes d'interventions : un peu plus grande et plus marquée que celle du design system */
 .nf-fiche__arrow { width: 24px; height: 24px; stroke-width: 2.25; }
 
