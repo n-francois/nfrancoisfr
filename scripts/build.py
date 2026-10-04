@@ -482,6 +482,17 @@ def build():
             out.parent.mkdir(parents=True, exist_ok=True)
             out.write_text(page, encoding="utf-8")
             print(f"  {out.relative_to(ROOT)}")
+            # Adresse d'essai cachée (« essai ») : la page inactive, en ligne pour la tester avant sa bascule
+            # (exclue de l'index, liée nulle part) ; supprimée dès que la page devient active
+            essai = meta.get("essai")
+            if essai and not suffixe:
+                dossier_essai = ROOT / Path(essai).parent
+                if actif:
+                    shutil.rmtree(dossier_essai, ignore_errors=True)
+                else:
+                    dossier_essai.mkdir(parents=True, exist_ok=True)
+                    (ROOT / essai).write_text(page, encoding="utf-8")
+                    print(f"  {essai} (essai)")
             if actif and not suffixe and "noindex" not in remplacements["robots"]:
                 indexables.append((path, lang, p, change))
     sitemap(indexables)
