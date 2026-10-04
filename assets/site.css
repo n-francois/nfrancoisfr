@@ -89,6 +89,8 @@ html:has(.nav__menu[open]) { overflow: hidden; }
 
 /* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
 .page-head { padding-block: var(--space-16) 0; }
+/* Sur mobile, 32 px entre le filet de l'en-tête et le surtitre (79 px auparavant : la page semblait commencer trop bas) */
+@media (max-width: 759px) { .page-head { padding-top: var(--space-8); } .page-head .nf-label:first-child { margin-top: 0; } }
 /* Surtitres (accueil, Interventions, À propos, mentions, 404) : ils portent le nom ou le sujet de la page, donc un cran
    au-dessus des petites étiquettes (14 px) ; la taille du texte courant sur ordinateur, toujours en gris sous le titre */
 .nf-hero__title .nf-hero__label, .page-head .nf-label { font-size: 15px; }
@@ -148,6 +150,8 @@ p { text-wrap: pretty; }
 @media (min-width: 760px) { .bande { margin-top: var(--space-24); } }
 .bande .nf-section { margin-top: 0; padding-top: 0; border-top: 0; }
 .nf-dark .nf-btn--primaire .nf-btn__fleche, .nf-dark .nf-btn--primaire:hover .nf-btn__fleche { stroke: var(--on-jaune); }
+/* Flèche vers le bas (lien vers une section de la même page, téléchargement) : au survol, elle descend au lieu d'avancer */
+.nf-btn:hover .nf-btn__fleche.nf-btn__fleche--bas { transform: translateY(3px); }
 .nf-dark .nf-btn--secondaire:hover { background: var(--on-encre); color: var(--encre); }
 
 /* Photo et texte côte à côte */
@@ -309,11 +313,12 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 /* Sur mobile, la bande 21/9 serait trop mince : la photo entière, en 3/2 */
 @media (max-width: 759px) { .evenement-photo .nf-section__media { aspect-ratio: 3 / 2; } }
 .evenement-attente__liste { margin: var(--space-6) 0 0; padding-left: 1.2em; display: grid; gap: var(--space-2); font-size: 20px; line-height: 1.45; max-width: 36em; }
-/* Les trois actions : le numéro discret des convictions de l'accueil, puis le titre et le texte, séparées d'un filet fin */
+/* Les trois actions : le numéro sur son pavé jaune (nf-numero), puis le titre et le texte, séparées d'un filet fin */
 .etapes { list-style: none; margin: 0; padding: 0; display: grid; }
 .etape { display: grid; gap: var(--space-2) var(--space-8); padding-block: var(--space-8); border-top: var(--rule-thin) solid var(--gris-clair); }
 .etape:first-child { border-top: 0; padding-top: 0; }
-@media (min-width: 760px) { .etape { grid-template-columns: 112px minmax(0, 1fr); } .etape .credo__n { margin: 8px 0 0; } }
+.etape { gap: var(--space-4) var(--space-8); }
+@media (min-width: 760px) { .etape { grid-template-columns: 112px minmax(0, 1fr); align-items: start; } }
 .etape__corps { display: grid; gap: var(--space-4); max-width: 40em; min-width: 0; }
 .etape__corps .nf-col__title { margin: 0; }
 .etape__corps > p, .etape__liste { margin: 0; font-size: 18px; line-height: 1.55; }
@@ -338,7 +343,7 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .lecture:hover .nf-col__title { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .lecture:hover .lien-ext { transform: translate(2px, -2px); }
 .lecture:focus-visible { outline: 2px solid var(--encre); outline-offset: 4px; }
-/* Votre avis : la note en cinq cases (encre une fois choisie, comme un filtre actif), puis les champs du design system */
+/* Votre avis : la note en cinq cases (jaune une fois choisie, chiffre et contour encre), puis les champs du design system */
 .avis { display: grid; gap: var(--space-8); max-width: 560px; }
 .avis__notes { border: 0; margin: 0; padding: 0; min-width: 0; }
 .avis__notes legend { padding: 0; margin-bottom: var(--space-3); }
@@ -346,10 +351,14 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .avis__echelle input { position: absolute; opacity: 0; width: 1px; height: 1px; }
 .avis__echelle label { display: grid; place-items: center; width: 52px; height: 52px; border: 1.5px solid var(--trait-champ); background: var(--papier-clair); font: 800 20px/1 var(--font-display); cursor: pointer; }
 .avis__echelle label:hover { border-color: var(--encre); }
-.avis__echelle input:checked + label { background: var(--encre); border-color: var(--encre); color: var(--on-encre); }
+.avis__echelle input:checked + label { background: var(--jaune); border-color: var(--encre); color: var(--on-jaune); }
 .avis__echelle input:focus-visible + label { outline: 2px solid var(--encre); outline-offset: 3px; }
 .avis__bornes { display: flex; justify-content: space-between; width: calc(5 * 52px + 4 * var(--space-2)); max-width: 100%; margin: var(--space-2) 0 0; font-size: 14px; color: var(--gris); }
 .avis__facultatif { font-weight: 400; color: var(--gris); }
+/* Chaque case sous ce qu'elle concerne : commentaire et citation, e-mail et newsletter. La signature n'apparaît qu'une
+   fois la citation autorisée */
+.avis__groupe { display: grid; gap: var(--space-4); }
+.avis__groupe:not(:has(#avis-citation:checked)) .avis__signature { display: none; }
 .avis__piege { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
 .avis .note { margin: 0; }
 .avis .nf-msg { max-width: none; }
@@ -445,10 +454,13 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 /* Changement de page : la barre du haut apparaît telle quelle, pour que son tampon se dessine sans fondu par-dessus */
 ::view-transition-old(entete) { display: none; }
 ::view-transition-new(entete) { animation: none; }
-/* Page 404 : le message à gauche, le tampon tracé à droite (dessous sur mobile) */
+/* Page 404 : le message à gauche, le tampon tracé à droite (ordinateur seulement) */
 .page-head--404 { display: grid; gap: var(--space-8); }
-.page-head--404 .tampon { width: clamp(120px, 32vw, 160px); }
+/* Sur mobile, le grand tampon n'apporte rien sous le texte : la page garde la signature du pied, comme les autres */
+@media (max-width: 759px) { .page-head--404 .tampon { display: none; } }
 @media (min-width: 760px) {
   .page-head--404 { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-16); }
   .page-head--404 .tampon { width: clamp(160px, 20vw, 260px); }
+  /* Le grand tampon signe déjà la page : pas de second dans le pied */
+  body:has(.page-head--404) .tampon--pied { display: none; }
 }

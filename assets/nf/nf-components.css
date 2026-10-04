@@ -13,6 +13,10 @@ body { font-family: var(--font-sans); font-size: 18px; line-height: 1.55; margin
 .nf-titre-1 { font-family: var(--font-display); font-size: clamp(36px, 5vw, 56px); line-height: 1; letter-spacing: -.03em; font-weight: 800; margin: 0; }
 .nf-titre-2 { font-family: var(--font-display); font-size: clamp(28px, 3.4vw, 36px); line-height: 1.08; letter-spacing: -.025em; font-weight: 800; margin: 0; }
 .nf-chiffre { font-family: var(--font-display); font-size: clamp(48px, 6vw, 72px); line-height: .9; letter-spacing: -.04em; font-weight: 900; font-variant-numeric: tabular-nums; }
+/* Numéro d'étape (marche à suivre, actions dans l'ordre) : le chiffre seul, sans zéro, en 900 sur un pavé jaune carré,
+   comme la case choisie d'une note. Balisage : <p class="nf-numero" aria-hidden="true">1</p> dans un <ol> */
+.nf-numero { display: grid; place-items: center; width: 64px; height: 64px; margin: 0; background: var(--jaune); color: var(--on-jaune); font-family: var(--font-display); font-size: 38px; line-height: 1; font-weight: 900; font-variant-numeric: tabular-nums; }
+@media (min-width: 760px) { .nf-numero { width: 80px; height: 80px; font-size: 48px; } }
 /* Surlignage : bande basse, texte encre ≥ 24 px uniquement */
 .nf-hl { background: linear-gradient(transparent 56%, var(--jaune) 56%, var(--jaune) 92%, transparent 92%); padding: 0 .06em; -webkit-box-decoration-break: clone; box-decoration-break: clone; color: var(--encre); }
 

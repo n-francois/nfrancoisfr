@@ -14,11 +14,11 @@
 -->
 <header class="page-head">
   <p class="nf-label">Trophées du tourisme en Côtes d’Armor · <span class="sans-coupure">Saint-Brieuc</span> · 5&nbsp;octobre 2026</p>
-  <h1 class="page-title">L’IA, nouveau <span class="nf-hl nf-hl--trace">point de contact</span> avec les clientèles touristiques</h1>
+  <h1 class="page-title">L’IA, nouveau <span class="nf-hl nf-hl--trace">point de contact</span> avec&nbsp;les&nbsp;clientèles touristiques</h1>
   <p class="page-lead">Merci pour votre écoute. Vous trouverez ici la présentation, les trois actions à lancer cette semaine et les sources de tous les chiffres cités.</p>
   <div class="actions">
-    <a class="nf-btn nf-btn--primaire" href="/cotesdarmor/presentation-trophees-tourisme-cotes-armor.pdf" download><span class="nf-btn__lbl">Télécharger la présentation (PDF)<svg class="nf-btn__fleche" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M4 9l4 4 4-4"/></svg></span></a>
-    <a class="nf-btn nf-btn--secondaire" href="#avis">Donner mon avis (30&nbsp;s)<svg class="nf-btn__fleche" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M4 9l4 4 4-4"/></svg></a>
+    <a class="nf-btn nf-btn--primaire" href="/cotesdarmor/presentation-trophees-tourisme-cotes-armor.pdf" download><span class="nf-btn__lbl">Télécharger la présentation (PDF)<svg class="nf-btn__fleche nf-btn__fleche--bas" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M4 9l4 4 4-4"/></svg></span></a>
+    <a class="nf-btn nf-btn--secondaire" href="#avis">Donner mon avis (30&nbsp;s)<svg class="nf-btn__fleche nf-btn__fleche--bas" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2v11M4 9l4 4 4-4"/></svg></a>
   </div>
 </header>
 
@@ -34,7 +34,7 @@
   </div>
   <ol class="etapes">
     <li class="etape">
-      <p class="credo__n">01</p>
+      <p class="nf-numero" aria-hidden="true">1</p>
       <div class="etape__corps">
         <h3 class="nf-col__title">Cherchez-vous comme un client, pas par votre nom</h3>
         <p>Un client qui ne vous connaît pas ne tape pas votre nom. Il pose une question avec un lieu, un moment et une envie. Posez-la dans ChatGPT et dans le Mode IA de Google, puis regardez si vous êtes cité, ce qu’on dit de vous et d’où vient l’information.</p>
@@ -47,7 +47,7 @@
       </div>
     </li>
     <li class="etape">
-      <p class="credo__n">02</p>
+      <p class="nf-numero" aria-hidden="true">2</p>
       <div class="etape__corps">
         <h3 class="nf-col__title">Ouvrez votre fiche Google et corrigez-la</h3>
         <p>C’est souvent ce que l’IA de Google lit en premier. Vérifiez en dix minutes&#8239;:</p>
@@ -63,7 +63,7 @@
       </div>
     </li>
     <li class="etape">
-      <p class="credo__n">03</p>
+      <p class="nf-numero" aria-hidden="true">3</p>
       <div class="etape__corps">
         <h3 class="nf-col__title">Demandez des avis qui décrivent</h3>
         <p>L’IA relie les mots de vos avis aux questions des voyageurs. «&#8239;Super&#8239;!&#8239;» ne lui sert à rien. Un avis qui raconte, si.</p>
@@ -94,19 +94,29 @@
       </div>
       <p class="avis__bornes" aria-hidden="true"><span>Pas utile</span><span>Très utile</span></p>
     </fieldset>
-    <div class="nf-field">
-      <label class="nf-field__label" for="avis-commentaire">Ce que vous retenez, ou ce qui vous a manqué <span class="avis__facultatif">(facultatif)</span></label>
-      <textarea class="nf-input" id="avis-commentaire" name="commentaire" maxlength="2000"></textarea>
+    <div class="avis__groupe">
+      <div class="nf-field">
+        <label class="nf-field__label" for="avis-commentaire">Ce que vous retenez, ou ce qui vous a manqué <span class="avis__facultatif">(facultatif)</span></label>
+        <textarea class="nf-input" id="avis-commentaire" name="commentaire" maxlength="2000"></textarea>
+      </div>
+      <label class="nf-check"><input type="checkbox" id="avis-citation" name="citation"><span>Vous pouvez citer mon commentaire sur nfrancois.fr, LinkedIn ou dans vos présentations.</span></label>
+      <div class="nf-field avis__signature">
+        <label class="nf-field__label" for="avis-signature">Signature de la citation <span class="avis__facultatif">(facultatif)</span></label>
+        <input class="nf-input" type="text" id="avis-signature" name="signature" maxlength="120" autocomplete="off" placeholder="Ex.&#8239;: Marie Martin, OT de Dinan" aria-describedby="avis-signature-aide">
+        <p class="nf-field__hint" id="avis-signature-aide">Sans signature&#8239;: «&#8239;Un participant des Trophées du tourisme en Côtes d’Armor 2026&#8239;».</p>
+      </div>
     </div>
-    <div class="nf-field">
-      <label class="nf-field__label" for="avis-email">Votre e-mail <span class="avis__facultatif">(facultatif)</span></label>
-      <input class="nf-input" type="email" id="avis-email" name="email" autocomplete="email" inputmode="email">
+    <div class="avis__groupe">
+      <div class="nf-field">
+        <label class="nf-field__label" for="avis-email">Votre e-mail <span class="avis__facultatif">(facultatif)</span></label>
+        <input class="nf-input" type="email" id="avis-email" name="email" autocomplete="email" inputmode="email">
+      </div>
+      <label class="nf-check"><input type="checkbox" id="avis-newsletter" name="newsletter"><span>Je veux recevoir IA, Tech &amp; Travel Café, la newsletter mensuelle de Nicolas François sur l’IA dans le tourisme. Désinscription en un clic, à tout moment.</span></label>
     </div>
-    <label class="nf-check"><input type="checkbox" id="avis-newsletter" name="newsletter"><span>J’accepte de recevoir par e-mail les prochaines ressources et interventions de Nicolas François. Désinscription en un clic.</span></label>
     <div class="avis__piege" aria-hidden="true"><label for="avis-site">Site</label><input type="text" id="avis-site" name="site" tabindex="-1" autocomplete="off"></div>
     <div><button class="nf-btn nf-btn--primaire" type="submit" id="avis-envoyer"><span class="nf-btn__lbl">Envoyer mon avis<svg class="nf-btn__fleche" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></button></div>
     <div id="avis-message" role="status" aria-live="polite"></div>
-    <p class="note">Sans e-mail, votre avis reste anonyme. Si vous laissez votre adresse et cochez la case, vous recevrez un e-mail pour confirmer votre inscription. Vos données sont traitées par Brevo pour le compte de Nicolas François et ne sont jamais revendues. Pour les supprimer&#8239;: <a class="nf-link" href="mailto:bonjour@nfrancois.fr">bonjour@nfrancois.fr</a>.</p>
+    <p class="note">Sans e-mail ni signature, votre avis reste anonyme. Si vous laissez votre adresse et cochez la case newsletter, vous recevrez un e-mail pour confirmer votre inscription. Si vous autorisez la citation, votre commentaire peut être repris avec la signature de votre choix. Vos données sont traitées pour le compte de Nicolas François par Brevo (avis et confirmation) et, si vous vous inscrivez, par Ghost, qui envoie la newsletter. Elles ne sont jamais revendues. Pour retirer un accord ou supprimer vos données, à tout moment&#8239;: <a class="nf-link" href="mailto:bonjour@nfrancois.fr">bonjour@nfrancois.fr</a>.</p>
   </form>
 </section>
 
@@ -170,13 +180,16 @@ document.querySelectorAll('button[data-copie]').forEach(function (b) {
   f.addEventListener('submit', function (e) {
     e.preventDefault();
     var note = (f.querySelector('input[name=note]:checked') || {}).value;
+    var commentaire = f.commentaire.value.trim(), citation = f.citation.checked;
     var email = f.email.value.trim(), inscription = f.newsletter.checked;
     if (!note) { dire('Il manque votre note', 'Choisissez une note de 1 à 5.'); return; }
-    if (inscription && !email) { dire('Il manque votre e-mail', 'Indiquez votre e-mail pour recevoir les prochaines ressources.'); f.email.focus(); return; }
+    if (citation && !commentaire) { dire('Il manque votre commentaire', 'Écrivez votre commentaire pour qu’il puisse être cité.'); f.commentaire.focus(); return; }
+    if (inscription && !email) { dire('Il manque votre e-mail', 'Indiquez votre e-mail pour recevoir la newsletter.'); f.email.focus(); return; }
     if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { dire('E-mail à vérifier', 'Cette adresse e-mail ne semble pas valide.'); f.email.focus(); return; }
     bouton.disabled = true; zone.innerHTML = '<p class="note">Envoi en cours…</p>';
     fetch(f.action, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ note: Number(note), commentaire: f.commentaire.value.trim(), email: email, newsletter: inscription, site: f.site.value }) })
+      body: JSON.stringify({ note: Number(note), commentaire: commentaire, citation: citation, signature: citation ? f.signature.value.trim() : '',
+        email: email, newsletter: inscription, site: f.site.value }) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
         if (res.ok) { f.reset(); dire('Merci pour votre avis', inscription ? 'Un e-mail vient de partir pour confirmer votre inscription.' : 'Il m’aidera à préparer les prochaines interventions.', true); }

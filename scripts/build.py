@@ -245,7 +245,7 @@ def nav(path, lang, autre_path):
     )
 
 
-def footer(lang, autre_path, signature=True):
+def footer(lang, autre_path):
     L = LANGUES[lang]
     libelle, autre_lang = L["autre"]
     # Liens externes : ouverts dans un nouvel onglet, signalés par la flèche inclinée (et dit aux lecteurs d'écran)
@@ -260,8 +260,9 @@ def footer(lang, autre_path, signature=True):
         f'      <a href="{autre_path}" hreflang="{autre_lang}" lang="{autre_lang}">{libelle}</a>\n'
         f'      <span>© {date.today().year}</span>\n'
         '    </div>\n  </div>\n'
-        # Le tampon signe la page, tracé quand le pied de page arrive à l'écran (site.js) ; pas sur une page qui l'a déjà en grand
-        + (f'  {tampon("tampon--pied")}\n' if signature else "")
+        # Le tampon signe la page, tracé quand le pied de page arrive à l'écran (site.js) ; sur la 404, qui l'a déjà en grand
+        # sur ordinateur, site.css le cache
+        + f'  {tampon("tampon--pied")}\n'
         + '</div>\n</footer>'
     )
 
@@ -465,7 +466,7 @@ def build():
                 "skip": L["skip"],
                 "nav": nav(path, lang, autre_path),
                 "contenu": corps.strip(),
-                "footer": footer(lang, autre_path, signature="tampon--lent" not in corps),
+                "footer": footer(lang, autre_path),
             }
             for cle, valeur in remplacements.items():
                 page = page.replace("{{" + cle + "}}", valeur)
