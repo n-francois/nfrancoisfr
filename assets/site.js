@@ -27,8 +27,9 @@
       var delta = y - dernier;
       var epinglee = entete.classList.contains('est-epinglee');
       var enBas = y + window.innerHeight >= document.documentElement.scrollHeight - 2;
-      if (y <= 0) {
-        /* tout en haut : il reprend sa place dans la page, sans finir un éventuel glissement en cours */
+      if (y <= 2) {
+        /* tout en haut (à 2 px près : certains navigateurs intégrés, comme celui d'Instagram, s'arrêtent à un pixel
+           du haut) : il reprend sa place dans la page, sans finir un éventuel glissement en cours */
         if (epinglee) {
           entete.classList.remove('est-epinglee', 'is-cachee');
           if (entete.getAnimations) entete.getAnimations().forEach(function (a) { a.cancel(); });

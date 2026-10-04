@@ -195,6 +195,8 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 /* Chiffres clés d'À propos centrés entre leur filet et celui de la section suivante, comme le bandeau de l'accueil */
 .preuve-page { margin-top: var(--space-12); padding-block: var(--space-12); }
 .preuve-page + .nf-section { margin-top: 0; }
+/* Groupe de mots à ne pas couper (fin de légende des chiffres) : la ligne se coupe juste avant */
+.sans-coupure { white-space: nowrap; }
 
 /* Note en pied de section */
 .note { margin: var(--space-8) 0 0; max-width: var(--measure); font-size: 15px; line-height: 1.45; color: var(--gris); }
@@ -247,7 +249,6 @@ figure .nf-label { display: block; margin-top: var(--space-2); }
 .newsletter__chiffre { margin: 0; border-top: var(--rule-thin) solid var(--gris); padding-top: var(--space-6); }
 .nf-dark .nf-preuve__l { color: var(--gris-sur-encre); }
 .bande__pied { margin: var(--space-16) 0 0; font-size: 16px; line-height: 1.5; color: var(--gris-sur-encre); }
-.bande__pied .nf-link { margin-left: var(--space-2); }
 
 /* Photo de section avec légende */
 .photo { margin: 0 0 var(--space-12); }
