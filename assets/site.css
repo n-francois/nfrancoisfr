@@ -89,8 +89,8 @@ html:has(.nav__menu[open]) { overflow: hidden; }
 
 /* En-tête des pages intérieures (style titre-1, Hanken Grotesk comme tous les titres à partir de 28 px) */
 .page-head { padding-block: var(--space-16) 0; }
-/* Sur mobile, 32 px entre le filet de l'en-tête et le surtitre (79 px auparavant : la page semblait commencer trop bas) */
-@media (max-width: 759px) { .page-head { padding-top: var(--space-8); } .page-head .nf-label:first-child { margin-top: 0; } }
+/* Sur mobile, 64 px entre le filet de l'en-tête et le surtitre, comme sur l'accueil */
+@media (max-width: 759px) { .page-head .nf-label:first-child { margin-top: 0; } }
 /* Surtitres (accueil, Interventions, À propos, mentions, 404) : ils portent le nom ou le sujet de la page, donc un cran
    au-dessus des petites étiquettes (14 px) ; la taille du texte courant sur ordinateur, toujours en gris sous le titre */
 .nf-hero__title .nf-hero__label, .page-head .nf-label { font-size: 15px; }
