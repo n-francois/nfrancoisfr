@@ -1,0 +1,25 @@
+<!--
+{
+  "out": "cotesdarmor/questionnaire/acces.html",
+  "path": "/cotesdarmor/questionnaire/",
+  "_note": "Page d’accès aux résultats du questionnaire, servie par cotesdarmor/questionnaire/index.php tant que le bon code n’a pas été saisi (le script place ses messages à l’endroit marqué « message » dans le formulaire).",
+  "robots": "noindex, nofollow",
+  "jsonld": "aucun",
+  "title": "Résultats du questionnaire · Trophées du tourisme en Côtes d’Armor",
+  "description": "Les résultats du questionnaire IA des Trophées du tourisme en Côtes d’Armor 2026, réservés aux participants de la conférence."
+}
+-->
+<header class="page-head">
+  <p class="nf-label">Trophées du tourisme en Côtes d’Armor · <span class="sans-coupure">Saint-Brieuc</span> · 5&nbsp;octobre 2026</p>
+  <h1 class="page-title">Les résultats <span class="nf-hl nf-hl--trace">du questionnaire</span></h1>
+  <p class="page-lead">Ils sont réservés aux participants de la conférence. Entrez le code donné pendant la soirée.</p>
+  <form class="acces" method="post" action="/cotesdarmor/questionnaire/">
+    <!--message-->
+    <div class="nf-field">
+      <label class="nf-field__label" for="acces-code">Code d’accès</label>
+      <input class="nf-input acces__code" type="text" id="acces-code" name="code" required maxlength="40" autocomplete="off" autocapitalize="characters" autocorrect="off" spellcheck="false" enterkeyhint="go">
+    </div>
+    <div><button class="nf-btn nf-btn--primaire" type="submit"><span class="nf-btn__lbl">Voir les résultats<svg class="nf-btn__fleche" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></button></div>
+  </form>
+  <p class="note">Pas de code&#8239;? Écrivez-moi&#8239;: <a class="nf-link" href="mailto:bonjour@nfrancois.fr">bonjour@nfrancois.fr</a>. Retour à <a class="nf-link" href="/cotesdarmor/">la page de la conférence</a>.</p>
+</header>

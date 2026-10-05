@@ -427,26 +427,15 @@ def build():
             sorties[meta["out"]] = src.name
         racine = ROOT if actif else APERCU
         # Bloc gardé hors du dépôt public jusqu'à son feu vert (« questionnaire ») : inclus seulement s'il est publié ;
-        # l'aperçu montre aussi la variante « avec » (sous avec/) dès que son contenu est dans prive/
+        # l'aperçu montre aussi la variante « avec » (sous avec/) dès que son contenu est dans prive/. Le rapport complet,
+        # lui, n'est jamais généré ici : cotesdarmor/questionnaire/index.php le sert, avec un code, depuis Hostinger.
         variantes = [("", contenu.replace("{{questionnaire}}", ""))]
         q = meta.get("questionnaire")
         if q:
-            dossier = (ROOT / meta["out"]).parent
-            page_resultats = dossier / "questionnaire" / "index.html"
             if q["publie"]:
                 variantes = [("", contenu.replace("{{questionnaire}}", bloc_prive(q["section"])))]
-                if actif:
-                    page_resultats.parent.mkdir(parents=True, exist_ok=True)
-                    page_resultats.write_text(bloc_prive(q["page"]), encoding="utf-8")
-            else:
-                # pas publié : aucun résultat ne doit traîner sur le site
-                if actif and page_resultats.exists():
-                    shutil.rmtree(page_resultats.parent)
-                if (ROOT / q["section"]).exists():
-                    variantes.append(("avec/", contenu.replace("{{questionnaire}}", bloc_prive(q["section"]))))
-                    apercu = APERCU / Path(meta["out"]).parent / "avec" / "questionnaire" / "index.html"
-                    apercu.parent.mkdir(parents=True, exist_ok=True)
-                    apercu.write_text(bloc_prive(q["page"]), encoding="utf-8")
+            elif (ROOT / q["section"]).exists():
+                variantes.append(("avec/", contenu.replace("{{questionnaire}}", bloc_prive(q["section"]))))
         path = meta["path"]
         p = paire(meta, path, lang)
         autre_path = p["en" if lang == "fr" else "fr"] if p else LANGUES["en" if lang == "fr" else "fr"]["accueil"]

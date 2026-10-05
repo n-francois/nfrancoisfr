@@ -365,6 +365,9 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 /* Résultats du questionnaire (version « avec ») : le bandeau de chiffres, sans second filet sous le titre */
 .nf-section .resultats { border-top: 0; padding-top: 0; }
 .resultats__base { display: block; margin-top: var(--space-2); font-family: var(--font-mono); font-size: 12px; color: var(--gris); }
+/* Accès aux résultats complets : le code, en capitales et bien espacé, puis le bouton */
+.acces { display: grid; gap: var(--space-6); max-width: 420px; margin-top: var(--space-12); }
+.acces__code { text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
 
 /* Flèche des lignes d'interventions : un peu plus grande et plus marquée que celle du design system */
 .nf-fiche__arrow { width: 24px; height: 24px; stroke-width: 2.25; }
