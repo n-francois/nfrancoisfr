@@ -394,14 +394,6 @@ def versionner(page):
 APERCU = ROOT / ".apercu"   # pages inactives, visibles seulement dans l'aperçu local (dossier ignoré par git)
 
 
-def bloc_prive(chemin):
-    """Contenu gardé hors du dépôt public (dossier prive/, ignoré par git), par exemple des résultats pas encore publiables."""
-    f = ROOT / chemin
-    if not f.exists():
-        raise SystemExit(f"{chemin} introuvable : ce contenu vit hors du dépôt, dans prive/")
-    return f.read_text(encoding="utf-8")
-
-
 def build():
     data = json.loads((ROOT / "data" / "interventions.json").read_text(encoding="utf-8"))
     generes = {lang: blocs(data, lang) for lang in LANGUES}
@@ -426,16 +418,7 @@ def build():
                 raise SystemExit(f"{src.name} et {sorties[meta['out']]} sont actives sur la même adresse {meta['out']}")
             sorties[meta["out"]] = src.name
         racine = ROOT if actif else APERCU
-        # Bloc gardé hors du dépôt public jusqu'à son feu vert (« questionnaire ») : inclus seulement s'il est publié ;
-        # l'aperçu montre aussi la variante « avec » (sous avec/) dès que son contenu est dans prive/. Le rapport complet,
-        # lui, n'est jamais généré ici : cotesdarmor/questionnaire/index.php le sert, avec un code, depuis Hostinger.
-        variantes = [("", contenu.replace("{{questionnaire}}", ""))]
-        q = meta.get("questionnaire")
-        if q:
-            if q["publie"]:
-                variantes = [("", contenu.replace("{{questionnaire}}", bloc_prive(q["section"])))]
-            elif (ROOT / q["section"]).exists():
-                variantes.append(("avec/", contenu.replace("{{questionnaire}}", bloc_prive(q["section"]))))
+        variantes = [("", contenu)]
         path = meta["path"]
         p = paire(meta, path, lang)
         autre_path = p["en" if lang == "fr" else "fr"] if p else LANGUES["en" if lang == "fr" else "fr"]["accueil"]

@@ -1,7 +1,7 @@
 <?php
 /*
- * Résultats du questionnaire IA des Trophées du tourisme en Côtes d'Armor 2026, réservés aux participants : le rapport
- * s'affiche tel quel une fois le code donné en salle saisi.
+ * Résultats du questionnaire IA des Trophées du tourisme en Côtes d'Armor 2026, en accès réservé : le rapport s'affiche
+ * tel quel une fois le bon code saisi. Aucune page du site n'y mène.
  *
  * Ni le rapport ni le code ne sont dans le dépôt, qui est public : ils vivent chez Hostinger, hors de portée du web, à côté
  * de nfrancois-config.php (fichier questionnaire-cotesdarmor-2026.html, réglage 'questionnaire_code').
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     file_put_contents($compteur, (string) ($essais + 1), LOCK_EX);
     sleep(1);
-    page_acces(403, 'Ce code ne fonctionne pas', 'Vérifiez-le et réessayez : il a été donné pendant la conférence.');
+    page_acces(403, 'Ce code ne fonctionne pas', 'Vérifiez-le et réessayez.');
 }
 
 if (hash_equals($jeton, (string) ($_COOKIE[COOKIE] ?? ''))) {
