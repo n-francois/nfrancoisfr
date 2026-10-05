@@ -1,11 +1,9 @@
 <?php
 /*
  * Avis sur la conférence des Trophées du tourisme en Côtes d'Armor, envoyés depuis nfrancois.fr/cotesdarmor/.
- * 1. Si une adresse est donnée et la case cochée : double opt-in Brevo vers la liste de la conférence (le contact n'y
- *    entre qu'après avoir cliqué sur le lien de confirmation). La newsletter IA, Tech & Travel Café part de Ghost :
- *    Nicolas y importe ensuite les contacts confirmés.
- * 2. Envoie l'avis par e-mail à Nicolas (e-mail transactionnel Brevo), avec l'accord de citation s'il est donné et le
- *    résultat de l'inscription : cet e-mail daté en garde la trace.
+ * Envoie l'avis par e-mail à Nicolas (e-mail transactionnel Brevo), avec l'accord de citation et la demande d'inscription
+ * à la newsletter s'ils sont donnés : cet e-mail daté en garde la trace. Aucun e-mail ne part vers le participant :
+ * Nicolas inscrit lui-même les demandeurs dans Ghost, d'où part la newsletter IA, Tech & Travel Café.
  *
  * Les réglages (clé API Brevo, adresses, identifiants) ne sont pas dans le dépôt, qui est public : ils vivent dans
  * nfrancois-config.php, posé chez Hostinger hors de portée du web, à côté du dossier public_html (domains/nfrancois.fr/)
@@ -100,28 +98,6 @@ function brevo(array $config, string $chemin, array $charge): void
 }
 
 try {
-    // 1. L'inscription en double opt-in d'abord : son vrai résultat figure dans l'e-mail de l'avis. Si Brevo la refuse,
-    //    l'avis part quand même, avec la raison du refus, et le participant est prévenu sans croire que tout a échoué.
-    $statut = 'non';
-    $inscriptionRatee = false;
-    if ($inscription) {
-        try {
-            brevo($config, '/contacts/doubleOptinConfirmation', [
-                'email' => $email,
-                'includeListIds' => [(int) $config['brevo_liste_id']],
-                'templateId' => (int) $config['brevo_doi_template_id'],
-                'redirectionUrl' => $config['brevo_doi_redirection'],
-                'attributes' => ['SOURCE' => EVENEMENT],
-            ]);
-            $statut = 'oui (confirmation envoyée ; à importer dans Ghost une fois confirmé)';
-        } catch (Throwable $e) {
-            error_log('avis.php : ' . $e->getMessage());
-            $inscriptionRatee = true;
-            $statut = 'DEMANDÉE MAIS REFUSÉE PAR BREVO, à inscrire à la main. Raison : ' . $e->getMessage();
-        }
-    }
-
-    // 2. L'avis, par e-mail
     $recu = (new DateTime('now', new DateTimeZone('Europe/Paris')))->format('d/m/Y à H:i');
     $lignes = [
         "Note : $note/5",
@@ -130,13 +106,13 @@ try {
             ? ($signature !== '' ? "oui, signée « $signature »" : 'oui, sans signature (« Un participant des ' . EVENEMENT . ' »)')
             : 'non'),
         'E-mail : ' . ($email !== '' ? $email : '(anonyme)'),
-        "Inscription à la newsletter : $statut",
+        'Inscription à la newsletter : ' . ($inscription ? 'OUI, à inscrire dans Ghost' : 'non'),
         "Reçu le : $recu",
     ];
     $message = [
         'sender' => ['email' => $config['avis_expediteur'], 'name' => 'nfrancois.fr'],
         'to' => [['email' => $config['avis_destinataire']]],
-        'subject' => "Avis $note/5" . ($citation ? ' · citation autorisée' : '') . ($inscriptionRatee ? ' · inscription à reprendre' : '')
+        'subject' => "Avis $note/5" . ($citation ? ' · citation autorisée' : '') . ($inscription ? ' · newsletter' : '')
             . ' · ' . EVENEMENT,
         'textContent' => implode("\n", $lignes),
     ];
@@ -144,7 +120,7 @@ try {
         $message['replyTo'] = ['email' => $email];
     }
     brevo($config, '/smtp/email', $message);
-    repondre($inscriptionRatee ? ['ok' => true, 'inscription' => false] : ['ok' => true]);
+    repondre(['ok' => true]);
 } catch (Throwable $e) {
     error_log('avis.php : ' . $e->getMessage());
     repondre(['error' => 'L’envoi n’a pas fonctionné. Réessayez dans un instant.'], 502);

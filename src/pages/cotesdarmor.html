@@ -115,7 +115,7 @@
     <div class="avis__piege" aria-hidden="true"><label for="avis-site">Site</label><input type="text" id="avis-site" name="site" tabindex="-1" autocomplete="off"></div>
     <div><button class="nf-btn nf-btn--primaire" type="submit" id="avis-envoyer"><span class="nf-btn__lbl">Envoyer mon avis<svg class="nf-btn__fleche" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></button></div>
     <div id="avis-message" role="status" aria-live="polite"></div>
-    <p class="note">Sans e-mail ni signature, votre avis reste anonyme. Si vous laissez votre adresse et cochez la case newsletter, vous recevrez un e-mail pour confirmer votre inscription. Si vous autorisez la citation, votre commentaire peut être repris avec la signature de votre choix. Vos données sont traitées pour le compte de Nicolas François par Brevo (avis et confirmation) et, si vous vous inscrivez, par Ghost, qui envoie la newsletter. Elles ne sont jamais revendues. Pour retirer un accord ou supprimer vos données, à tout moment&#8239;: <a class="nf-link" href="mailto:bonjour@nfrancois.fr">bonjour@nfrancois.fr</a>.</p>
+    <p class="note">Sans e-mail ni signature, votre avis reste anonyme. Si vous laissez votre adresse et cochez la case newsletter, je vous inscris moi-même. Si vous autorisez la citation, votre commentaire peut être repris avec la signature de votre choix. Vos données sont traitées pour le compte de Nicolas François par Brevo, qui m’achemine votre avis, et, si vous vous inscrivez, par Ghost, qui envoie la newsletter. Elles ne sont jamais revendues. Pour retirer un accord ou supprimer vos données, à tout moment&#8239;: <a class="nf-link" href="mailto:bonjour@nfrancois.fr">bonjour@nfrancois.fr</a>.</p>
   </form>
 </section>
 
@@ -200,8 +200,7 @@ document.querySelectorAll('button[data-copie]').forEach(function (b) {
         email: email, newsletter: inscription, site: f.site.value }) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
-        if (res.ok && res.j.inscription === false) { f.reset(); dire('Merci, votre avis est bien arrivé', 'L’inscription à la newsletter n’a pas pu se faire. Écrivez-moi à bonjour@nfrancois.fr et je vous inscris.', true); }
-        else if (res.ok) { f.reset(); dire('Merci pour votre avis', inscription ? 'Un e-mail vient de partir pour confirmer votre inscription.' : 'Il m’aidera à préparer les prochaines interventions.', true); }
+        if (res.ok) { f.reset(); dire('Merci pour votre avis', inscription ? 'Il est bien arrivé. Je vous inscris à la newsletter dans les prochains jours.' : 'Il m’aidera à préparer les prochaines interventions.', true); }
         else dire('L’envoi n’a pas fonctionné', res.j && res.j.error ? res.j.error : 'Réessayez dans un instant.');
       })
       .catch(function () { dire('L’envoi n’a pas fonctionné', 'Vérifiez votre connexion et réessayez.'); })
