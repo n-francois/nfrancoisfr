@@ -200,7 +200,8 @@ document.querySelectorAll('button[data-copie]').forEach(function (b) {
         email: email, newsletter: inscription, site: f.site.value }) })
       .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
       .then(function (res) {
-        if (res.ok) { f.reset(); dire('Merci pour votre avis', inscription ? 'Un e-mail vient de partir pour confirmer votre inscription.' : 'Il m’aidera à préparer les prochaines interventions.', true); }
+        if (res.ok && res.j.inscription === false) { f.reset(); dire('Merci, votre avis est bien arrivé', 'L’inscription à la newsletter n’a pas pu se faire. Écrivez-moi à bonjour@nfrancois.fr et je vous inscris.', true); }
+        else if (res.ok) { f.reset(); dire('Merci pour votre avis', inscription ? 'Un e-mail vient de partir pour confirmer votre inscription.' : 'Il m’aidera à préparer les prochaines interventions.', true); }
         else dire('L’envoi n’a pas fonctionné', res.j && res.j.error ? res.j.error : 'Réessayez dans un instant.');
       })
       .catch(function () { dire('L’envoi n’a pas fonctionné', 'Vérifiez votre connexion et réessayez.'); })
