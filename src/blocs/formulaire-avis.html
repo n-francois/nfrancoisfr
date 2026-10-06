@@ -1,0 +1,47 @@
+<!-- Formulaire d'avis des pages d'événement : la page déclare son événement (« evenement » dans ses méta, label de
+     data/evenements.json) et place {{formulaire_avis}} sous le titre de sa section #avis. Envoi : assets/avis.js → api/avis.php -->
+  <form class="avis" id="form-avis" action="/api/avis.php" method="post" novalidate>
+    <input type="hidden" name="evenement" value="{{evenement}}">
+    <fieldset class="avis__notes" id="avis-notes" aria-describedby="note-erreur">
+      <legend class="nf-field__label">Votre note<span class="sr-only">, de 1 (pas utile) à 5 (très utile)</span></legend>
+      <div class="avis__echelle">
+        <input type="radio" name="note" id="note-1" value="1"><label for="note-1">1<span class="sr-only"> (pas utile)</span></label>
+        <input type="radio" name="note" id="note-2" value="2"><label for="note-2">2</label>
+        <input type="radio" name="note" id="note-3" value="3"><label for="note-3">3</label>
+        <input type="radio" name="note" id="note-4" value="4"><label for="note-4">4</label>
+        <input type="radio" name="note" id="note-5" value="5"><label for="note-5">5<span class="sr-only"> (très utile)</span></label>
+      </div>
+      <p class="avis__bornes" aria-hidden="true"><span>Pas utile</span><span>Très utile</span></p>
+      <p class="nf-field__error" id="note-erreur" hidden></p>
+    </fieldset>
+    <div class="avis__groupe">
+      <div class="nf-field" id="champ-commentaire">
+        <label class="nf-field__label" for="avis-commentaire">Ce que vous retenez, ou ce qui vous a manqué <span class="avis__facultatif">(facultatif)</span></label>
+        <textarea class="nf-input" id="avis-commentaire" name="commentaire" maxlength="2000"></textarea>
+      </div>
+      <div class="avis__citation" id="avis-bloc-citation" hidden>
+        <label class="nf-check"><input type="checkbox" id="avis-citation" name="citation"><span>J’accepte que mon commentaire soit cité sur votre site, vos réseaux sociaux ou dans vos présentations.</span></label>
+        <div class="nf-field avis__signature">
+          <label class="nf-field__label" for="avis-signature">Signature de la citation <span class="avis__facultatif">(facultatif)</span></label>
+          <input class="nf-input" type="text" id="avis-signature" name="signature" maxlength="120" autocomplete="off" placeholder="Ex.&#8239;: Marie Martin, OT de Dinan" aria-describedby="avis-signature-aide">
+          <p class="nf-field__hint" id="avis-signature-aide">Sans signature&#8239;: «&#8239;{{signature_defaut}}&#8239;».</p>
+        </div>
+      </div>
+    </div>
+    <div class="avis__groupe avis__contact" role="group" aria-labelledby="avis-contact-titre">
+      <h3 class="avis__intertitre" id="avis-contact-titre">Rester en contact <span class="avis__facultatif">(facultatif)</span></h3>
+      <div class="nf-field" id="champ-email">
+        <label class="nf-field__label" for="avis-email">Votre e-mail</label>
+        <input class="nf-input" type="email" id="avis-email" name="email" autocomplete="email" inputmode="email" aria-describedby="avis-email-aide avis-email-erreur">
+        <p class="nf-field__hint" id="avis-email-aide">Si vous voulez une réponse, ou recevoir la newsletter.</p>
+        <p class="nf-field__error" id="avis-email-erreur" hidden></p>
+      </div>
+      <label class="nf-check"><input type="checkbox" id="avis-newsletter" name="newsletter"><span>Je veux recevoir IA, Tech &amp; Travel Café, la newsletter mensuelle de Nicolas François sur l’IA dans le tourisme. Désinscription en un clic, à tout moment.</span></label>
+    </div>
+    <div class="avis__piege" aria-hidden="true"><label for="avis-site">Site</label><input type="text" id="avis-site" name="site" tabindex="-1" autocomplete="off"></div>
+    <div><button class="nf-btn nf-btn--primaire" type="submit" id="avis-envoyer"><span class="nf-btn__lbl">Envoyer mon avis<svg class="nf-btn__fleche" viewBox="0 0 16 16" aria-hidden="true"><path d="M2 8h11M9 4l4 4-4 4"/></svg></span></button></div>
+    <div id="avis-message" role="alert"></div>
+    <p class="note">Sans e-mail ni signature, votre avis reste anonyme. Si vous autorisez la citation, votre commentaire peut être repris avec la signature de votre choix. Vos données ne sont jamais revendues&#8239;; pour retirer un accord ou les supprimer, écrivez à <a class="nf-link" href="mailto:bonjour@nfrancois.fr">bonjour@nfrancois.fr</a>. Détails dans les <a class="nf-link" href="/mentions-legales/">mentions légales</a>.</p>
+  </form>
+  <div class="avis__merci" id="avis-merci" tabindex="-1" hidden></div>
+  <script defer src="/assets/avis.js"></script>

@@ -41,7 +41,7 @@
   <link rel="stylesheet" href="/assets/nf/nf-tokens.css?v=8edcc11625">
   <link rel="stylesheet" href="/assets/nf/nf-components.css?v=48d7189212">
   <link rel="stylesheet" href="/assets/nf/nf-motion.css?v=86940c4a9f">
-  <link rel="stylesheet" href="/assets/site.css?v=b669380def">
+  <link rel="stylesheet" href="/assets/site.css?v=b211c69c7c">
   <script defer src="/assets/nf/nf-motion.js?v=c72bb9ceaa"></script>
   <script defer src="/assets/site.js?v=e21c3d66dc"></script>
 
@@ -127,7 +127,8 @@
     <h2 class="nf-section__name" id="titre-avis">Comment avez-vous trouvé cette conférence&#8239;?</h2>
     <p class="nf-section__lead">Trente secondes, deux questions. Ça m’aide à faire mieux la prochaine fois.</p>
   </div>
-  <form class="avis" id="form-avis" action="/cotesdarmor/avis.php" method="post" novalidate>
+  <form class="avis" id="form-avis" action="/api/avis.php" method="post" novalidate>
+    <input type="hidden" name="evenement" value="cotesdarmor-2026">
     <fieldset class="avis__notes" id="avis-notes" aria-describedby="note-erreur">
       <legend class="nf-field__label">Votre note<span class="sr-only">, de 1 (pas utile) à 5 (très utile)</span></legend>
       <div class="avis__echelle">
@@ -170,6 +171,7 @@
     <p class="note">Sans e-mail ni signature, votre avis reste anonyme. Si vous autorisez la citation, votre commentaire peut être repris avec la signature de votre choix. Vos données ne sont jamais revendues&#8239;; pour retirer un accord ou les supprimer, écrivez à <a class="nf-link" href="mailto:bonjour@nfrancois.fr">bonjour@nfrancois.fr</a>. Détails dans les <a class="nf-link" href="/mentions-legales/">mentions légales</a>.</p>
   </form>
   <div class="avis__merci" id="avis-merci" tabindex="-1" hidden></div>
+  <script defer src="/assets/avis.js?v=852efc9d90"></script>
 </section>
 
 
@@ -231,7 +233,7 @@
 </section>
 
 <script>
-/* Copier l'exemple de question, puis envoyer l'avis au script du serveur (cotesdarmor/avis.php) */
+/* Copier l'exemple de question */
 document.querySelectorAll('button[data-copie]').forEach(function (b) {
   b.addEventListener('click', function () {
     var texte = document.getElementById(b.getAttribute('data-copie')).textContent;
@@ -239,62 +241,6 @@ document.querySelectorAll('button[data-copie]').forEach(function (b) {
     if (navigator.clipboard) navigator.clipboard.writeText(texte).then(fait, fait); else fait();
   });
 });
-(function () {
-  var f = document.getElementById('form-avis'); if (!f) return;
-  var zone = document.getElementById('avis-message'), bouton = document.getElementById('avis-envoyer');
-  var merci = document.getElementById('avis-merci'), blocCitation = document.getElementById('avis-bloc-citation');
-  function message(cible, titre, texte, ok) {
-    cible.innerHTML = '<div class="nf-msg ' + (ok ? 'nf-msg--succes' : 'nf-msg--erreur') + '"><svg viewBox="0 0 24 24" aria-hidden="true">' +
-      (ok ? '<path d="M5 12.5l4.5 4.5L19 7.5"/>' : '<path d="M12 8v5M12 16.5v.5"/><circle cx="12" cy="12" r="9"/>') +
-      '</svg><div><p class="nf-msg__title"></p><p class="nf-msg__text"></p></div></div>';
-    cible.querySelector('.nf-msg__title').textContent = titre;
-    cible.querySelector('.nf-msg__text').textContent = texte;
-  }
-  // Erreur au plus près du champ : contour rouge, message dessous, la page y remonte
-  var champs = { note: ['avis-notes', 'note-erreur', 'note-1'], email: ['champ-email', 'avis-email-erreur', 'avis-email'] };
-  function signaler(nom, texte) {
-    var c = champs[nom], bloc = document.getElementById(c[0]), msg = document.getElementById(c[1]), cible = document.getElementById(c[2]);
-    bloc.classList.add(nom === 'note' ? 'avis__notes--erreur' : 'nf-field--erreur');
-    msg.textContent = texte; msg.hidden = false;
-    if (nom === 'email') cible.setAttribute('aria-invalid', 'true');
-    bloc.scrollIntoView({ block: 'center' }); cible.focus({ preventScroll: true });
-  }
-  function effacer(nom) {
-    var c = champs[nom], bloc = document.getElementById(c[0]), msg = document.getElementById(c[1]);
-    bloc.classList.remove('avis__notes--erreur', 'nf-field--erreur'); msg.hidden = true; msg.textContent = '';
-    document.getElementById(c[2]).removeAttribute('aria-invalid');
-  }
-  f.querySelectorAll('input[name=note]').forEach(function (r) { r.addEventListener('change', function () { effacer('note'); }); });
-  f.email.addEventListener('input', function () { effacer('email'); });
-  f.newsletter.addEventListener('change', function () { if (!f.newsletter.checked) effacer('email'); });
-  // La case « citer » n'apparaît qu'une fois le commentaire commencé
-  f.commentaire.addEventListener('input', function () { blocCitation.hidden = !f.commentaire.value.trim(); });
-  f.addEventListener('submit', function (e) {
-    e.preventDefault();
-    zone.innerHTML = '';
-    var note = (f.querySelector('input[name=note]:checked') || {}).value;
-    var commentaire = f.commentaire.value.trim(), citation = f.citation.checked && commentaire !== '';
-    var email = f.email.value.trim(), inscription = f.newsletter.checked;
-    if (!note) { signaler('note', 'Choisissez une note de 1 à 5.'); return; }
-    if (inscription && !email) { signaler('email', 'Indiquez votre e-mail pour recevoir la newsletter.'); return; }
-    if (email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { signaler('email', 'Cette adresse e-mail ne semble pas valide.'); return; }
-    bouton.disabled = true; zone.innerHTML = '<p class="note">Envoi en cours…</p>';
-    fetch(f.action, { method: 'POST', headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ note: Number(note), commentaire: commentaire, citation: citation, signature: citation ? f.signature.value.trim() : '',
-        email: email, newsletter: inscription, site: f.site.value }) })
-      .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
-      .then(function (res) {
-        if (res.ok) {
-          // Le remerciement remplace le formulaire : l'envoi est confirmé, et on ne renvoie pas son avis par réflexe
-          message(merci, 'Merci pour votre avis', inscription ? 'Il est bien arrivé. Je vous inscris à la newsletter dans les prochains jours.' : 'Il m’aidera à préparer les prochaines interventions.', true);
-          f.reset(); f.hidden = true; merci.hidden = false;
-          merci.scrollIntoView({ block: 'center' }); merci.focus({ preventScroll: true });
-        } else message(zone, 'L’envoi n’a pas fonctionné', res.j && res.j.error ? res.j.error : 'Réessayez dans un instant.');
-      })
-      .catch(function () { message(zone, 'L’envoi n’a pas fonctionné', 'Vérifiez votre connexion et réessayez.'); })
-      .finally(function () { bouton.disabled = false; });
-  });
-})();
 </script>
 </main>
 </div>

@@ -217,6 +217,17 @@ def blocs(d, lang):
     }
 
 
+def formulaire_avis(label):
+    """Formulaire d'avis commun aux pages d'événement (src/blocs/formulaire-avis.html), pour un label de data/evenements.json."""
+    evenements = json.loads((ROOT / "data" / "evenements.json").read_text(encoding="utf-8"))
+    if label not in evenements or label.startswith("_"):
+        raise SystemExit(f"événement « {label} » absent de data/evenements.json")
+    e = evenements[label]
+    bloc = re.sub(r"<!--.*?-->\s*", "", (ROOT / "src" / "blocs" / "formulaire-avis.html").read_text(encoding="utf-8"), count=1, flags=re.S)
+    signature = html.escape(e.get("signature_defaut", "Un participant · " + e["nom"]), quote=False)
+    return bloc.replace("{{evenement}}", label).replace("{{signature_defaut}}", signature).strip()
+
+
 def nav(path, lang, autre_path):
     L = LANGUES[lang]
     courant = ' aria-current="page"'
@@ -410,6 +421,9 @@ def build():
         contenu = raw[m.end():]
         for cle, valeur in generes[lang].items():
             contenu = contenu.replace("{{" + cle + "}}", valeur)
+        # Page d'événement : son formulaire d'avis, avec le label de l'événement
+        if "evenement" in meta:
+            contenu = contenu.replace("{{formulaire_avis}}", formulaire_avis(meta["evenement"]))
         # Page inactive (« actif »: false) : générée dans .apercu/ pour l'aperçu local, jamais sur le site.
         # Deux pages peuvent viser la même adresse (page d'attente, page finale) ; une seule est active à la fois.
         actif = meta.get("actif", True)

@@ -378,6 +378,35 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 /* Résultats du questionnaire (version « avec ») : le bandeau de chiffres, sans second filet sous le titre */
 .nf-section .resultats { border-top: 0; padding-top: 0; }
 .resultats__base { display: block; margin-top: var(--space-2); font-family: var(--font-mono); font-size: 12px; color: var(--gris); }
+/* Tableau de bord privé des avis (/tableau-de-bord/) : une carte par événement, puis le détail de ses avis */
+.tdb .nf-msg, .tdb .acces { margin-top: 0; }
+.tdb__outils { margin: 0 0 var(--space-8); font-size: 15px; color: var(--gris); }
+.tdb__retour { margin: 0 0 var(--space-6); font-size: 15px; }
+.tdb .nf-section__name { margin: 0 0 var(--space-8); }
+.tdb__evenements, .tdb__repartition, .tdb__liste { list-style: none; margin: 0; padding: 0; }
+.tdb__evenements { display: grid; gap: var(--space-8); }
+.tdb__evenement { display: grid; gap: var(--space-3); padding-top: var(--space-6); border-top: var(--rule-thin) solid var(--gris-clair); }
+.tdb__evenement:first-child { border-top: 0; padding-top: 0; }
+.tdb__evenement .nf-col__title, .tdb__evenement .nf-label { margin: 0; }
+.tdb__lien { color: var(--encre); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.tdb__chiffres { display: grid; gap: var(--space-4); margin-bottom: var(--space-6); }
+@media (min-width: 760px) { .tdb__chiffres { grid-template-columns: auto minmax(0, 320px) minmax(0, 1fr); align-items: center; column-gap: var(--space-12); } }
+.tdb__moyenne { margin: 0; display: flex; align-items: baseline; gap: var(--space-1); }
+.tdb__sur { font-family: var(--font-display); font-weight: 800; font-size: 22px; color: var(--gris); }
+.tdb__repartition { display: grid; gap: 6px; }
+.tdb__repartition li { display: grid; grid-template-columns: 16px minmax(0, 1fr) 32px; align-items: center; gap: var(--space-3); font-size: 14px; }
+.tdb__barre-note { font-weight: 700; }
+.tdb__barre { height: 10px; background: var(--survol); }
+.tdb__barre span { display: block; height: 100%; background: var(--jaune); }
+.tdb__barre-n { color: var(--gris); text-align: right; font-variant-numeric: tabular-nums; }
+.tdb__compteurs { margin: 0; font-size: 15px; line-height: 1.5; color: var(--gris); }
+.tdb__vide { margin: 0; color: var(--gris); }
+.tdb__liste { display: grid; }
+.tdb__avis-ligne { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: var(--space-4); padding-block: var(--space-6); border-top: var(--rule-thin) solid var(--gris-clair); }
+.tdb__note { display: grid; place-items: center; width: 44px; height: 44px; background: var(--jaune); color: var(--on-jaune); font: 900 22px/1 var(--font-display); }
+.tdb__commentaire { margin: 0 0 var(--space-2); font-size: 18px; line-height: 1.5; max-width: 40em; }
+.tdb__infos { margin: 0; font-size: 14px; line-height: 1.5; color: var(--gris); }
+.tdb__infos strong { color: var(--encre); font-weight: 600; }
 /* Accès aux résultats complets : le code, en capitales et bien espacé, puis le bouton */
 .acces { display: grid; gap: var(--space-6); max-width: 420px; margin-top: var(--space-12); }
 .acces__code { text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }
