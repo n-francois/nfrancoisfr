@@ -1,4 +1,4 @@
-/* Tableau de bord des avis (tableau-de-bord/index.php) : carrousel des citations autorisées et copie d'une citation */
+/* Tableau de bord des avis (dashboard/index.php) : carrousel des citations autorisées et copie d'une citation */
 (function () {
   document.querySelectorAll('.tdb__carrousel').forEach(function (bloc) {
     var liste = bloc.querySelector('.tdb__citations'), compteur = bloc.querySelector('.tdb__compteur');

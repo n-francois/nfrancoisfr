@@ -378,7 +378,7 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 /* Résultats du questionnaire (version « avec ») : le bandeau de chiffres, sans second filet sous le titre */
 .nf-section .resultats { border-top: 0; padding-top: 0; }
 .resultats__base { display: block; margin-top: var(--space-2); font-family: var(--font-mono); font-size: 12px; color: var(--gris); }
-/* Tableau de bord privé des avis (/tableau-de-bord/) : une carte par événement, puis le détail de ses avis */
+/* Tableau de bord privé des avis (/dashboard/) : une carte par événement, puis le détail de ses avis */
 .tdb .nf-msg, .tdb .acces { margin-top: 0; }
 .tdb__outils { margin: 0 0 var(--space-8); font-size: 15px; color: var(--gris); }
 .tdb__retour { margin: 0 0 var(--space-6); font-size: 15px; }
@@ -403,7 +403,7 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__vide { margin: 0; color: var(--gris); }
 .tdb__liste { display: grid; }
 .tdb__avis-ligne { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: var(--space-4); padding-block: var(--space-6); border-top: var(--rule-thin) solid var(--gris-clair); }
-.tdb__note { display: grid; place-items: center; width: 44px; height: 44px; background: var(--jaune); color: var(--on-jaune); font: 900 22px/1 var(--font-display); }
+.tdb__note { box-sizing: border-box; display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid var(--encre); color: var(--encre); font: 900 22px/1 var(--font-display); }
 .tdb__commentaire { margin: 0 0 var(--space-2); font-size: 18px; line-height: 1.5; max-width: 40em; }
 .tdb__infos { margin: 0; font-size: 14px; line-height: 1.5; color: var(--gris); }
 .tdb__infos strong { color: var(--encre); font-weight: 600; }
@@ -441,7 +441,7 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__fil { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); margin-top: var(--space-6); font-size: 14px; color: var(--gris); }
 .tdb__fil [aria-current] { color: var(--encre); font-weight: 500; }
 .tdb__nom { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -.025em; margin: 0 0 var(--space-4); max-width: 22em; }
-.tdb__fiche { display: grid; gap: var(--space-2); justify-items: start; margin: 0 0 var(--space-12); padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); border-left: 4px solid var(--jaune); }
+.tdb__fiche { display: grid; gap: var(--space-2); justify-items: start; margin: 0 0 var(--space-12); padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
 .tdb__fiche p { margin: 0; }
 .tdb__titre-intervention { font-size: 20px; line-height: 1.35; font-weight: 600; max-width: 34em; }
 .tdb__lien-page { font-size: 15px; }
@@ -449,11 +449,15 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 /* Carrousel des citations : défilement horizontal aimanté, une citation par vue sur mobile */
 .tdb__fleches { display: flex; align-items: center; gap: var(--space-3); }
 .tdb__fleche { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid var(--encre); border-radius: var(--radius-full); background: transparent; color: var(--encre); font: 600 18px/1 var(--font-sans); cursor: pointer; }
+.tdb__fleche svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; transition: transform .16s cubic-bezier(.2, .7, .2, 1); }
 .tdb__fleche:hover { background: var(--encre); color: var(--on-encre); }
+.tdb__fleche[data-sens="-1"]:hover svg { transform: translateX(-2px); }
+.tdb__fleche[data-sens="1"]:hover svg { transform: translateX(2px); }
+@media (prefers-reduced-motion: reduce) { .tdb__fleche svg { transition: none; } }
 .tdb__fleche:focus-visible, .tdb__citations:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
 .tdb__compteur { min-width: 3.5em; text-align: center; font-size: 15px; color: var(--gris); font-variant-numeric: tabular-nums; }
 .tdb__citations { list-style: none; margin: 0; padding: 0 0 var(--space-2); display: grid; grid-auto-flow: column; grid-auto-columns: min(100%, 520px); gap: var(--space-4); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; }
-.tdb__citation { scroll-snap-align: start; display: grid; align-content: start; gap: var(--space-4); justify-items: start; padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); border-top: 4px solid var(--jaune); }
+.tdb__citation { scroll-snap-align: start; display: grid; align-content: start; gap: var(--space-4); justify-items: start; padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
 .tdb__citation blockquote { margin: 0; }
 .tdb__citation blockquote p { margin: 0; font-size: 20px; line-height: 1.45; font-weight: 500; }
 .tdb__citation blockquote p::before { content: "« "; }

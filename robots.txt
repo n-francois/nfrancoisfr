@@ -9,6 +9,6 @@ Disallow: /README.md
 Disallow: /styles.css
 # Script du formulaire d'avis et tableau de bord privé
 Disallow: /api/
-Disallow: /tableau-de-bord/
+Disallow: /dashboard/
 
 Sitemap: https://nfrancois.fr/sitemap.xml

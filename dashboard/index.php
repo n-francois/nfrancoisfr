@@ -13,6 +13,7 @@
 require dirname(__DIR__) . '/api/lib.php';
 
 const COOKIE = 'nf_tableau';
+const ADRESSE = '/dashboard/';
 
 header('X-Robots-Tag: noindex, nofollow');
 header('Cache-Control: private, no-store');
@@ -44,7 +45,7 @@ function message(string $titre, string $texte): string
 function connexion(string $erreur = '', int $statut = 200): void
 {
     $cible = isset($_GET['evenement']) ? '?evenement=' . rawurlencode((string) $_GET['evenement']) : '';
-    page('<section class="nf-section tdb"><form class="acces" method="post" action="/tableau-de-bord/' . e($cible) . '">'
+    page('<section class="nf-section tdb"><form class="acces" method="post" action="' . ADRESSE . e($cible) . '">'
         . ($erreur !== '' ? message('Connexion refusée', $erreur) : '')
         . '<div class="nf-field"><label class="nf-field__label" for="tdb-mot-de-passe">Mot de passe</label>'
         . '<input class="nf-input" type="password" id="tdb-mot-de-passe" name="mot_de_passe" required autocomplete="current-password"></div>'
@@ -129,6 +130,9 @@ function csv(array $avis, array $evenements, string $nomFichier): void
 const JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
 const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
 const MOIS_COURTS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+// Flèches du carrousel : celle des boutons de la charte (nf-btn__fleche), et son reflet
+const FLECHE_PRECEDENTE = '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M14 8H3M7 4 3 8l4 4"/></svg>';
+const FLECHE_SUIVANTE = '<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 8h11M9 4l4 4-4 4"/></svg>';
 const LIEN_EXT = '<svg class="lien-ext" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M5 4h7v7"/></svg>';
 
 /** « 2026-10-05 » → « lundi 5 octobre 2026 » ; $court : « lun. 5 oct. ». */
@@ -259,9 +263,9 @@ function bloc_citations(array $avis, string $signatureDefaut): string
             . '<button class="nf-btn nf-btn--secondaire nf-btn--petit" type="button" data-copier="'
             . e('« ' . preg_replace('/\s*\n\s*/u', ' ', $a['commentaire']) . ' » ' . $signature) . '">Copier la citation</button></li>';
     }
-    $fleches = $n > 1 ? '<div class="tdb__fleches"><button class="tdb__fleche" type="button" data-sens="-1" aria-label="Citation précédente">←</button>'
+    $fleches = $n > 1 ? '<div class="tdb__fleches"><button class="tdb__fleche" type="button" data-sens="-1" aria-label="Citation précédente">' . FLECHE_PRECEDENTE . '</button>'
         . '<span class="tdb__compteur" aria-live="polite">1 / ' . $n . '</span>'
-        . '<button class="tdb__fleche" type="button" data-sens="1" aria-label="Citation suivante">→</button></div>' : '';
+        . '<button class="tdb__fleche" type="button" data-sens="1" aria-label="Citation suivante">' . FLECHE_SUIVANTE . '</button></div>' : '';
     return '<section class="tdb__bloc tdb__carrousel" aria-labelledby="tdb-citations"><div class="tdb__bloc-tete"><h3 class="tdb__titre" id="tdb-citations">'
         . ($n > 1 ? "Les $n citations autorisées" : 'La citation autorisée') . '</h3>' . $fleches . '</div>'
         . '<ul class="tdb__citations" tabindex="0" aria-label="Citations autorisées">' . $items . '</ul></section>';
@@ -365,12 +369,12 @@ if ($motDePasse === '' || !nf_configure($config, ['supabase_url', 'supabase_cle_
     page('<section class="nf-section tdb">' . message('Pas encore branché', 'Les réglages du tableau de bord manquent dans nfrancois-config.php.') . '</section>', 503);
 }
 // Le jeton du cookie dépend du mot de passe : en changer ferme toutes les sessions ouvertes
-$jeton = hash_hmac('sha256', 'tableau-de-bord', $motDePasse . $config['avis_cle']);
-$cookie = ['path' => '/tableau-de-bord/', 'secure' => true, 'httponly' => true, 'samesite' => 'Lax'];
+$jeton = hash_hmac('sha256', 'dashboard', $motDePasse . $config['avis_cle']);
+$cookie = ['path' => ADRESSE, 'secure' => true, 'httponly' => true, 'samesite' => 'Lax'];
 
 if (isset($_GET['sortir'])) {
     setcookie(COOKIE, '', ['expires' => 1] + $cookie);
-    header('Location: /tableau-de-bord/', true, 303);
+    header('Location: ' . ADRESSE, true, 303);
     exit;
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -382,7 +386,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         @unlink($compteur);
         setcookie(COOKIE, $jeton, ['expires' => time() + 30 * 86400] + $cookie);
         $cible = isset($_GET['evenement']) ? '?evenement=' . rawurlencode((string) $_GET['evenement']) : '';
-        header('Location: /tableau-de-bord/' . $cible, true, 303);
+        header('Location: ' . ADRESSE . $cible, true, 303);
         exit;
     }
     file_put_contents($compteur, (string) ($essais + 1), LOCK_EX);
@@ -428,7 +432,7 @@ if ($label !== '') {
             . '<p class="tdb__infos">' . implode(' · ', $infos) . '</p></div></li>';
     }
     $evenement = $evenements[$label] ?? [];
-    $fil = '<nav class="tdb__fil" aria-label="Fil d’Ariane"><a class="nf-link" href="/tableau-de-bord/">Tableau de bord</a>'
+    $fil = '<nav class="tdb__fil" aria-label="Fil d’Ariane"><a class="nf-link" href="' . ADRESSE . '">Tableau de bord</a>'
         . '<span aria-hidden="true">/</span><span aria-current="page">' . e($nom) . '</span></nav>';
     page('<section class="tdb tdb--conference"><h1 class="tdb__nom">' . e($nom) . '</h1>' . fiche_evenement($evenement) . chiffres(bilan($avis))
         . bloc_citations($avis, $evenement['signature_defaut'] ?? "Un participant · $nom") . bloc_temps($avis)

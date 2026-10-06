@@ -1,6 +1,6 @@
 <?php
 /*
- * Outils communs du formulaire d'avis (api/avis.php) et du tableau de bord (tableau-de-bord/index.php).
+ * Outils communs du formulaire d'avis (api/avis.php) et du tableau de bord (dashboard/index.php).
  * Les réglages (clés Brevo, Supabase, Ghost, mot de passe) ne sont pas dans le dépôt, qui est public : ils vivent dans
  * nfrancois-config.php, chez Hostinger, hors de portée du web (à côté du dossier public_html ou à la racine du compte).
  */

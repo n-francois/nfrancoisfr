@@ -135,7 +135,7 @@ try {
         "Base des avis : $base",
         "Reçu le : $recu",
         '',
-        'Tableau de bord : https://nfrancois.fr/tableau-de-bord/?evenement=' . rawurlencode($label),
+        'Tableau de bord : https://nfrancois.fr/dashboard/?evenement=' . rawurlencode($label),
     ];
     $aReprendre = $id === null || $newsletter === 'a_faire';
     $message = [
