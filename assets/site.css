@@ -408,16 +408,33 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__infos { margin: 0; font-size: 14px; line-height: 1.5; color: var(--gris); }
 .tdb__infos strong { color: var(--encre); font-weight: 600; }
 /* Tableau de bord : indicateurs de tête, blocs (mots, citations, temps), fiche de l'événement */
-.tdb__indicateurs { margin: 0 0 var(--space-16); }
+/* Moins d'air entre le titre et le contenu que sur les pages du site : c'est un outil */
+.nf-section.tdb { margin-top: var(--space-12); padding-top: var(--space-8); }
+.tdb__outils--pied { margin: var(--space-12) 0 0; }
+/* Indicateurs : trois cartes, le pictogramme sur un carré jaune (comme les numéros d'étape) */
+.tdb__indicateurs { list-style: none; margin: 0 0 var(--space-16); padding: 0; display: grid; gap: var(--space-4); }
+@media (min-width: 760px) { .tdb__indicateurs { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.tdb__indicateur { display: grid; gap: var(--space-3); align-content: start; padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
+.tdb__picto { display: grid; place-items: center; width: 44px; height: 44px; background: var(--jaune); }
+.tdb__picto svg { width: 24px; height: 24px; fill: none; stroke: var(--on-jaune); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tdb__indicateur-l { font-size: 15px; line-height: 1.4; color: var(--gris); }
+@media (max-width: 759px) {
+  .tdb__indicateur { grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--space-4); row-gap: var(--space-1); align-items: center; padding: var(--space-4); }
+  .tdb__picto { grid-row: span 2; }
+  .tdb__indicateur .nf-preuve__n { font-size: 40px; }
+}
 .tdb__valeur { display: flex; align-items: baseline; gap: var(--space-1); }
+.tdb__moyenne-bloc { display: grid; gap: var(--space-1); }
+.tdb__moyenne-n { margin: 0; font-size: 14px; color: var(--gris); }
+/* Nuage de mots : la taille suit la fréquence (--poids de 0 à 1), le plus fréquent surligné */
+.tdb__nuage { list-style: none; margin: 0; padding: var(--space-8) var(--space-6); display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: var(--space-2) var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
+.tdb__nuage-mot { font-family: var(--font-display); font-size: calc(17px + var(--poids) * 31px); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; color: color-mix(in srgb, var(--encre) calc(55% + var(--poids) * 45%), var(--papier)); }
+@media (max-width: 759px) { .tdb__nuage { padding: var(--space-6) var(--space-4); gap: var(--space-1) var(--space-4); } .tdb__nuage-mot { font-size: calc(15px + var(--poids) * 19px); } }
 .tdb__bloc { margin: 0 0 var(--space-16); }
 .tdb__bloc-tete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-6); margin-bottom: var(--space-4); }
 .tdb__bloc-tete .tdb__titre { margin: 0; }
 .tdb__titre { font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 var(--space-2); }
 .tdb__aide { margin: 0 0 var(--space-4); font-size: 14px; color: var(--gris); }
-.tdb__mots { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
-.tdb__mot { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 36px; padding: 0 6px 0 14px; border: 1px solid var(--encre); border-radius: var(--radius-full); font-size: 15px; font-weight: 500; }
-.tdb__mot-n { display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; box-sizing: border-box; border-radius: var(--radius-full); background: var(--jaune); color: var(--on-jaune); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
 .tdb__fiche { display: grid; gap: var(--space-2); margin: calc(-1 * var(--space-4)) 0 var(--space-8); }
 .tdb__fiche p { margin: 0; }
 .tdb__titre-intervention { font-size: 20px; line-height: 1.35; font-weight: 600; max-width: 34em; }

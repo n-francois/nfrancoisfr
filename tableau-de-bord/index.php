@@ -96,9 +96,10 @@ function chiffres(array $b): string
             . round($compte / $max * 100) . '%"></span></span><span class="tdb__barre-n">' . $compte . '</span></li>';
     }
     $nb = fn(int $n, string $un, string $plusieurs) => $n . ' ' . ($n > 1 ? $plusieurs : $un);
-    return '<div class="tdb__chiffres"><p class="tdb__moyenne"><span class="nf-preuve__n">' . nombre($b['moyenne'])
-        . '</span><span class="tdb__sur">/5</span></p><ul class="tdb__repartition" aria-label="Répartition des notes">' . $barres . '</ul>'
-        . '<p class="tdb__compteurs">' . $nb($b['n'], 'avis', 'avis') . ' · ' . $nb($b['commentaires'], 'commentaire', 'commentaires')
+    return '<div class="tdb__chiffres"><div class="tdb__moyenne-bloc"><p class="tdb__moyenne"><span class="nf-preuve__n">' . nombre($b['moyenne'])
+        . '</span><span class="tdb__sur">/5</span></p><p class="tdb__moyenne-n">' . $nb($b['n'], 'avis', 'avis') . '</p></div>'
+        . '<ul class="tdb__repartition" aria-label="Répartition des notes">' . $barres . '</ul>'
+        . '<p class="tdb__compteurs">' . $nb($b['commentaires'], 'commentaire', 'commentaires')
         . ' · ' . $nb($b['citations'], 'citation autorisée', 'citations autorisées') . ' · '
         . $nb($b['abonnes'], 'abonné', 'abonnés') . ' à la newsletter</p></div>';
 }
@@ -137,19 +138,25 @@ function date_longue(DateTimeInterface $d, bool $court = false): string
         : $jour . ' ' . $d->format('j') . ' ' . $mois . ' ' . $d->format('Y');
 }
 
-/** Indicateurs de tête de la vue d'ensemble : conférences avec des avis, avis cumulés, moyenne de tous les avis. */
+/** Indicateurs de tête de la vue d'ensemble, en cartes : conférences avec des avis, avis cumulés, moyenne de tous les avis. */
 function indicateurs(int $conferences, array $avis): string
 {
     $n = count($avis);
     $moyenne = $n ? array_sum(array_column($avis, 'note')) / $n : 0;
+    $pictos = [
+        'micro' => '<rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0M12 17.5V21M8.5 21h7"/>',
+        'bulle' => '<path d="M4 5h16v11h-9l-5 4v-4H4z"/>',
+        'etoile' => '<path d="m12 3.6 2.6 5.3 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8-4.2-4.1 5.8-.8z"/>',
+    ];
     // Le chiffre seul dans nf-preuve__n : l'animation des compteurs du site réécrit son contenu
-    $tuile = fn(string $valeur, string $libelle, string $suite = '') => '<div><span class="tdb__valeur"><span class="nf-preuve__n">' . $valeur
-        . '</span>' . $suite . '</span><span class="nf-preuve__l">' . $libelle . '</span></div>';
-    return '<div class="nf-preuve nf-preuve--3 tdb__indicateurs">'
-        . $tuile((string) $conferences, $conferences > 1 ? 'conférences avec des avis' : 'conférence avec des avis')
-        . $tuile((string) $n, 'avis au total')
-        . $tuile($n ? nombre($moyenne) : '–', 'note moyenne, tous avis confondus', $n ? '<span class="tdb__sur">/5</span>' : '')
-        . '</div>';
+    $carte = fn(string $picto, string $valeur, string $libelle, string $suite = '') => '<li class="tdb__indicateur"><span class="tdb__picto">'
+        . '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' . $pictos[$picto] . '</svg></span><span class="tdb__valeur">'
+        . '<span class="nf-preuve__n">' . $valeur . '</span>' . $suite . '</span><span class="tdb__indicateur-l">' . $libelle . '</span></li>';
+    return '<ul class="tdb__indicateurs">'
+        . $carte('micro', (string) $conferences, $conferences > 1 ? 'conférences avec des avis' : 'conférence avec des avis')
+        . $carte('bulle', (string) $n, 'avis au total')
+        . $carte('etoile', $n ? nombre($moyenne) : '–', 'note moyenne, tous avis confondus', $n ? '<span class="tdb__sur">/5</span>' : '')
+        . '</ul>';
 }
 
 /**
@@ -201,16 +208,34 @@ function mots_cles(array $avis, int $max = 12): array
     return $resultat;
 }
 
+/** Nuage des mots qui reviennent : plus un mot revient, plus il est grand ; le plus fréquent au centre, surligné. */
 function bloc_mots(array $avis, string $niveau = 'h2'): string
 {
-    $mots = mots_cles($avis);
+    $mots = mots_cles($avis, 16);
     if (!$mots) {
         return '';
     }
-    $liste = implode('', array_map(fn($m) => '<li class="tdb__mot">' . e($m[0]) . '<span class="tdb__mot-n">' . $m[1] . '</span></li>', $mots));
+    $max = $mots[0][1];
+    $min = end($mots)[1];
+    // Du plus fréquent au moins fréquent, posés alternativement à droite et à gauche : les plus grands au milieu
+    $ordre = [];
+    foreach ($mots as $i => $m) {
+        if ($i % 2) {
+            array_unshift($ordre, $m);
+        } else {
+            $ordre[] = $m;
+        }
+    }
+    $liste = '';
+    foreach ($ordre as [$mot, $n]) {
+        $poids = $max > $min ? ($n - $min) / ($max - $min) : 1;
+        $texte = $n === $max ? '<span class="nf-hl">' . e($mot) . '</span>' : e($mot);
+        $liste .= '<li class="tdb__nuage-mot" style="--poids: ' . round($poids, 2) . '">' . $texte
+            . '<span class="sr-only"> (' . $n . ' commentaires)</span></li>';
+    }
     return '<section class="tdb__bloc" aria-labelledby="tdb-mots"><' . $niveau . ' class="tdb__titre" id="tdb-mots">Les mots qui reviennent</'
-        . $niveau . '><p class="tdb__aide">Dans les commentaires. Le chiffre : combien de commentaires emploient le mot.</p>'
-        . '<ul class="tdb__mots">' . $liste . '</ul></section>';
+        . $niveau . '><p class="tdb__aide">Dans les commentaires : plus un mot revient, plus il est grand.</p>'
+        . '<ul class="tdb__nuage">' . $liste . '</ul></section>';
 }
 
 /** Carrousel des citations autorisées, chacune avec sa signature et un bouton pour la copier. */
@@ -430,7 +455,8 @@ foreach ($parEvenement as $cle => $liste) {
         . ($b['dernier'] ? ' · dernier avis le ' . date_fr($b['dernier'], 'd/m/Y') : '') . '</p>' . chiffres($b) . '</li>';
 }
 $conferences = count(array_filter($parEvenement, fn($liste) => $liste));
-page('<section class="nf-section tdb"><p class="tdb__outils"><a class="nf-link" href="?format=csv">Tout exporter (CSV)</a> · '
-    . '<a class="nf-link" href="?sortir=1">Se déconnecter</a></p>' . indicateurs($conferences, $avis) . bloc_mots($avis)
+page('<section class="nf-section tdb">' . indicateurs($conferences, $avis) . bloc_mots($avis)
     . '<section class="tdb__bloc" aria-labelledby="tdb-conferences"><h2 class="tdb__titre" id="tdb-conferences">Les conférences</h2>'
-    . '<ul class="tdb__evenements">' . $cartes . '</ul></section></section>');
+    . '<ul class="tdb__evenements">' . $cartes . '</ul></section>'
+    . '<p class="tdb__outils tdb__outils--pied"><a class="nf-link" href="?format=csv">Tout exporter (CSV)</a> · '
+    . '<a class="nf-link" href="?sortir=1">Se déconnecter</a></p></section>');
