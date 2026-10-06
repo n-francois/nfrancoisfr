@@ -424,7 +424,7 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
   .tdb__indicateur .nf-preuve__n { font-size: 40px; }
 }
 .tdb__valeur { display: flex; align-items: baseline; gap: var(--space-1); }
-.tdb__moyenne-bloc { display: grid; gap: var(--space-1); }
+.tdb__moyenne-bloc { display: grid; gap: var(--space-1); justify-items: center; justify-self: start; }
 .tdb__moyenne-n { margin: 0; font-size: 14px; color: var(--gris); }
 /* Nuage de mots : la taille suit la fréquence (--poids de 0 à 1), le plus fréquent surligné */
 .tdb__nuage { list-style: none; margin: 0; padding: var(--space-8) var(--space-6); display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: var(--space-2) var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
@@ -435,7 +435,13 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__bloc-tete .tdb__titre { margin: 0; }
 .tdb__titre { font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 var(--space-2); }
 .tdb__aide { margin: 0 0 var(--space-4); font-size: 14px; color: var(--gris); }
-.tdb__fiche { display: grid; gap: var(--space-2); margin: calc(-1 * var(--space-4)) 0 var(--space-8); }
+/* Page d'une conférence : fil d'Ariane compact, puis le nom et sa fiche dans un encadré clair */
+.tdb--conference { margin-top: var(--space-8); }
+.tdb--conference .tdb__chiffres { margin-bottom: var(--space-12); }
+.tdb__fil { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); margin-top: var(--space-6); font-size: 14px; color: var(--gris); }
+.tdb__fil [aria-current] { color: var(--encre); font-weight: 500; }
+.tdb__nom { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -.025em; margin: 0 0 var(--space-4); max-width: 22em; }
+.tdb__fiche { display: grid; gap: var(--space-2); justify-items: start; margin: 0 0 var(--space-12); padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); border-left: 4px solid var(--jaune); }
 .tdb__fiche p { margin: 0; }
 .tdb__titre-intervention { font-size: 20px; line-height: 1.35; font-weight: 600; max-width: 34em; }
 .tdb__lien-page { font-size: 15px; }

@@ -23,11 +23,14 @@ function e($texte): string
     return htmlspecialchars((string) $texte, ENT_QUOTES);
 }
 
-function page(string $contenu, int $statut = 200): void
+const GRAND_TITRE = '<header class="page-head"><p class="nf-label">Espace privé</p><h1 class="page-title">Tableau de bord</h1></header>';
+
+/** La page : en-tête (grand titre par défaut, fil d'Ariane sur la page d'une conférence), puis le contenu. */
+function page(string $contenu, int $statut = 200, string $entete = GRAND_TITRE): void
 {
     http_response_code($statut);
     header('Content-Type: text/html; charset=utf-8');
-    echo str_replace('<!--tableau-->', $contenu, (string) file_get_contents(__DIR__ . '/gabarit.html'));
+    echo str_replace('<!--tableau-->', $entete . $contenu, (string) file_get_contents(__DIR__ . '/gabarit.html'));
     exit;
 }
 
@@ -170,7 +173,9 @@ function mots_cles(array $avis, int $max = 12): array
         . ' très trop bien plus moins peu beaucoup assez cette ceux celle celles cela ceci quoi dont leur leurs notre nôtre votre vôtre'
         . ' elle elles nous vous ils sont était étaient être avoir avait avez avons fait faire peut peuvent sera seront serait quand'
         . ' alors après avant pendant lors chaque autre autres quel quelle quels quelles ainsi enfin juste vraiment merci merciii avis'
-        . ' bcp quid cela permis mesurer apprend envie donne savoir déjà'));
+        . ' bcp quid cela permis mesurer apprend envie donne savoir déjà'
+        . ' conférence conférences conférencier conférencière présentation présentations intervention interventions intervenant'
+        . ' intervenante atelier ateliers table ronde soirée trophées événement événements sujet'));
     $compte = [];
     $formes = [];
     foreach ($avis as $a) {
@@ -423,13 +428,14 @@ if ($label !== '') {
             . '<p class="tdb__infos">' . implode(' · ', $infos) . '</p></div></li>';
     }
     $evenement = $evenements[$label] ?? [];
-    page('<section class="nf-section tdb"><p class="tdb__retour"><a class="nf-link" href="/tableau-de-bord/">← Toutes les conférences</a></p>'
-        . '<h2 class="nf-section__name">' . e($nom) . '</h2>' . fiche_evenement($evenement) . chiffres(bilan($avis))
+    $fil = '<nav class="tdb__fil" aria-label="Fil d’Ariane"><a class="nf-link" href="/tableau-de-bord/">Tableau de bord</a>'
+        . '<span aria-hidden="true">/</span><span aria-current="page">' . e($nom) . '</span></nav>';
+    page('<section class="tdb tdb--conference"><h1 class="tdb__nom">' . e($nom) . '</h1>' . fiche_evenement($evenement) . chiffres(bilan($avis))
         . bloc_citations($avis, $evenement['signature_defaut'] ?? "Un participant · $nom") . bloc_temps($avis)
         . ($avis ? '<section class="tdb__bloc" aria-labelledby="tdb-tous"><div class="tdb__bloc-tete"><h3 class="tdb__titre" id="tdb-tous">Tous les avis</h3>'
             . '<a class="nf-link tdb__export" href="?evenement=' . e(rawurlencode($label)) . '&amp;format=csv">Exporter en CSV</a></div>'
             . '<ol class="tdb__liste">' . $lignes . '</ol></section>' : '')
-        . '</section>');
+        . '</section>', 200, $fil);
 }
 
 if (($_GET['format'] ?? '') === 'csv') {
