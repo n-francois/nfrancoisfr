@@ -26,6 +26,16 @@ function nf_evenements(): array
     return is_array($liste) ? array_filter($liste, fn($cle) => $cle[0] !== '_', ARRAY_FILTER_USE_KEY) : [];
 }
 
+/** En-têtes d'une requête : ceux donnés remplacent ceux par défaut du même nom. */
+function nf_entetes(array $entetes): array
+{
+    $liste = [];
+    foreach (array_merge(['Content-Type: application/json', 'Accept: application/json', 'User-Agent: nfrancois.fr (formulaire d\'avis)'], $entetes) as $ligne) {
+        $liste[strtolower(strtok($ligne, ':'))] = $ligne;
+    }
+    return array_values($liste);
+}
+
 /** Requête HTTP en JSON : [code, corps décodé ou brut]. */
 function nf_http(string $methode, string $url, array $entetes, ?array $charge = null): array
 {
@@ -34,7 +44,7 @@ function nf_http(string $methode, string $url, array $entetes, ?array $charge = 
         CURLOPT_CUSTOMREQUEST => $methode,
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_TIMEOUT => 15,
-        CURLOPT_HTTPHEADER => array_merge(['Content-Type: application/json', 'Accept: application/json'], $entetes),
+        CURLOPT_HTTPHEADER => nf_entetes($entetes),
     ]);
     if ($charge !== null) {
         curl_setopt($requete, CURLOPT_POSTFIELDS, json_encode($charge, JSON_UNESCAPED_UNICODE));
@@ -118,28 +128,39 @@ function nf_ghost_abonner(array $config, string $email, string $label): array
     $entetes = ['Authorization: Ghost ' . nf_ghost_jeton($config['ghost_admin_key']), 'Accept-Version: v5.0'];
     [$code, $corps] = nf_http('GET', $admin . '?limit=1&filter=' . rawurlencode("email:'" . str_replace("'", "\\'", $email) . "'"), $entetes);
     if ($code !== 200) {
-        throw nf_echec('Ghost', $code, $corps);
+        throw nf_echec('Ghost (recherche du membre)', $code, $corps);
     }
     $membre = $corps['members'][0] ?? null;
     if ($membre) {
         $labels = array_values(array_unique(array_merge(array_column($membre['labels'] ?? [], 'name'), [$label])));
         [$code, $corps] = nf_http('PUT', $admin . $membre['id'] . '/', $entetes, ['members' => [['labels' => $labels]]]);
         if ($code < 200 || $code >= 300) {
-            throw nf_echec('Ghost', $code, $corps);
+            throw nf_echec('Ghost (ajout du label)', $code, $corps);
         }
         return empty($membre['newsletters'])
             ? ['a_faire', 'déjà membre mais désabonné, label ajouté : à réabonner à la main']
             : ['inscrit', 'déjà abonné, label ajouté'];
     }
-    // Inscription publique : jeton anti-robot de Ghost (versions récentes), puis lien d'inscription
-    $charge = ['email' => $email, 'emailType' => 'signup', 'labels' => [$label]];
-    [$code, $jeton] = nf_http('GET', $site . '/members/api/integrity-token/', ['Accept: text/plain']);
-    if ($code === 200 && is_string($jeton) && $jeton !== '') {
-        $charge['integrityToken'] = trim($jeton);
+    // Inscription publique, sur l'adresse publique du site : avec Ghost(Pro), l'API d'administration répond sur
+    // xxx.ghost.io, mais l'inscription n'y fonctionne pas (redirection vers le domaine du site)
+    [$code, $corps] = nf_http('GET', $site . '/ghost/api/admin/site/', ['Accept-Version: v5.0']);
+    $public = rtrim((string) ($corps['site']['url'] ?? ''), '/');
+    if ($code !== 200 || $public === '') {
+        throw nf_echec('Ghost (adresse du site)', $code, $corps);
     }
-    [$code, $corps] = nf_http('POST', $site . '/members/api/send-magic-link/', [], $charge);
+    // Comme un formulaire d'inscription intégré à un autre site (Ghost doit autoriser les inscriptions externes) : jeton
+    // anti-robot, puis demande du lien d'inscription, en disant d'où vient la demande
+    $navigateur = ['Origin: https://nfrancois.fr', 'Referer: https://nfrancois.fr/'];
+    $charge = ['email' => $email, 'emailType' => 'signup', 'labels' => [$label]];
+    [$code, $jeton] = nf_http('GET', $public . '/members/api/integrity-token/', array_merge($navigateur, ['Accept: text/plain, */*']));
+    if ($code === 200 && is_string($jeton) && trim($jeton) !== '') {
+        $charge['integrityToken'] = trim($jeton);
+    } else {
+        throw nf_echec('Ghost (jeton anti-robot)', $code, $jeton);
+    }
+    [$code, $corps] = nf_http('POST', $public . '/members/api/send-magic-link/', $navigateur, $charge);
     if ($code < 200 || $code >= 300) {
-        throw nf_echec('Ghost', $code, $corps);
+        throw nf_echec('Ghost (inscription)', $code, $corps);
     }
     return ['confirmation', 'e-mail de confirmation envoyé par Ghost (abonné dès qu’il clique)'];
 }
