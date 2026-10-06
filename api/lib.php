@@ -103,32 +103,45 @@ function nf_ghost_jeton(string $cleAdmin): string
 }
 
 /**
- * Abonne une adresse à la newsletter dans Ghost, avec le label de l'événement. Si elle y est déjà, ajoute seulement le
- * label. Rend le résultat en clair (pour l'e-mail et la base) ; lève une exception en cas d'échec.
+ * Inscription à la newsletter dans Ghost, avec le label de l'événement :
+ * - adresse inconnue de Ghost : déclenche l'inscription publique de Ghost (comme le formulaire du site de la newsletter).
+ *   La personne reçoit l'e-mail de confirmation de Ghost ; elle est abonnée en cliquant, puis reçoit l'e-mail de
+ *   bienvenue de Ghost s'il est activé ;
+ * - adresse déjà dans Ghost : ajoute seulement le label (sinon Ghost lui enverrait un e-mail de connexion).
+ * Rend [code, texte] : code 'confirmation', 'inscrit' ou 'a_faire' (à reprendre à la main) ; lève une exception en cas
+ * d'échec.
  */
-function nf_ghost_abonner(array $config, string $email, string $label, string $note): string
+function nf_ghost_abonner(array $config, string $email, string $label): array
 {
-    $api = rtrim($config['ghost_url'], '/') . '/ghost/api/admin/members/';
+    $site = rtrim($config['ghost_url'], '/');
+    $admin = $site . '/ghost/api/admin/members/';
     $entetes = ['Authorization: Ghost ' . nf_ghost_jeton($config['ghost_admin_key']), 'Accept-Version: v5.0'];
-    [$code, $corps] = nf_http('POST', $api, $entetes, ['members' => [['email' => $email, 'labels' => [$label], 'note' => $note]]]);
-    if ($code >= 200 && $code < 300) {
-        return 'inscrit';
-    }
-    $dejaLa = $code === 422 && stripos(json_encode($corps), 'already exist') !== false;
-    if (!$dejaLa) {
+    [$code, $corps] = nf_http('GET', $admin . '?limit=1&filter=' . rawurlencode("email:'" . str_replace("'", "\\'", $email) . "'"), $entetes);
+    if ($code !== 200) {
         throw nf_echec('Ghost', $code, $corps);
     }
-    [$code, $corps] = nf_http('GET', $api . '?limit=1&filter=' . rawurlencode("email:'" . str_replace("'", "\\'", $email) . "'"), $entetes);
     $membre = $corps['members'][0] ?? null;
-    if ($code !== 200 || !$membre) {
-        throw nf_echec('Ghost', $code, $corps);
+    if ($membre) {
+        $labels = array_values(array_unique(array_merge(array_column($membre['labels'] ?? [], 'name'), [$label])));
+        [$code, $corps] = nf_http('PUT', $admin . $membre['id'] . '/', $entetes, ['members' => [['labels' => $labels]]]);
+        if ($code < 200 || $code >= 300) {
+            throw nf_echec('Ghost', $code, $corps);
+        }
+        return empty($membre['newsletters'])
+            ? ['a_faire', 'déjà membre mais désabonné, label ajouté : à réabonner à la main']
+            : ['inscrit', 'déjà abonné, label ajouté'];
     }
-    $labels = array_values(array_unique(array_merge(array_column($membre['labels'] ?? [], 'name'), [$label])));
-    [$code, $corps] = nf_http('PUT', $api . $membre['id'] . '/', $entetes, ['members' => [['labels' => $labels]]]);
+    // Inscription publique : jeton anti-robot de Ghost (versions récentes), puis lien d'inscription
+    $charge = ['email' => $email, 'emailType' => 'signup', 'labels' => [$label]];
+    [$code, $jeton] = nf_http('GET', $site . '/members/api/integrity-token/', ['Accept: text/plain']);
+    if ($code === 200 && is_string($jeton) && $jeton !== '') {
+        $charge['integrityToken'] = trim($jeton);
+    }
+    [$code, $corps] = nf_http('POST', $site . '/members/api/send-magic-link/', [], $charge);
     if ($code < 200 || $code >= 300) {
         throw nf_echec('Ghost', $code, $corps);
     }
-    return empty($membre['newsletters']) ? 'déjà membre mais désabonné : à réabonner à la main' : 'déjà abonné, label ajouté';
+    return ['confirmation', 'e-mail de confirmation envoyé par Ghost (abonné dès qu’il clique)'];
 }
 
 /** Compteur d'essais par adresse IP (mots de passe, codes), dans le dossier temporaire du serveur. */

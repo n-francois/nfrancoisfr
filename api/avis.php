@@ -2,8 +2,8 @@
 /*
  * Formulaire d'avis des pages d'événement (bloc {{formulaire_avis}} de build.py). Pour chaque avis :
  * 1. l'enregistre dans la base Supabase, avec le label de l'événement (data/evenements.json) ;
- * 2. si l'adresse est donnée et la case cochée : abonne la personne à la newsletter IA, Tech & Travel Café dans Ghost,
- *    avec le label Ghost de l'événement ;
+ * 2. si l'adresse est donnée et la case cochée : inscription à la newsletter IA, Tech & Travel Café dans Ghost, avec le
+ *    label Ghost de l'événement (e-mail de confirmation de Ghost pour une nouvelle adresse, voir nf_ghost_abonner) ;
  * 3. envoie l'avis par e-mail à Nicolas (Brevo), avec le résultat des deux étapes : cet e-mail daté garde aussi la trace
  *    des accords (citation, newsletter).
  * Chaque étape est indépendante : si l'une échoue, les autres ont lieu et l'e-mail dit quoi reprendre à la main.
@@ -102,8 +102,7 @@ if ($inscription) {
     $newsletter = 'a_faire';
     if (nf_configure($config, ['ghost_url', 'ghost_admin_key'])) {
         try {
-            $ghost = nf_ghost_abonner($config, $email, $evenement['ghost_label'] ?? $nom, "Inscrit via le formulaire d’avis : $nom");
-            $newsletter = 'inscrit';
+            [$newsletter, $ghost] = nf_ghost_abonner($config, $email, $evenement['ghost_label'] ?? $nom);
         } catch (Throwable $e) {
             error_log('avis : ' . $e->getMessage());
             $ghost = 'ÉCHEC, à inscrire à la main. Raison : ' . $e->getMessage();
@@ -138,7 +137,7 @@ try {
         '',
         'Tableau de bord : https://nfrancois.fr/tableau-de-bord/?evenement=' . rawurlencode($label),
     ];
-    $aReprendre = $id === null || ($inscription && $newsletter !== 'inscrit');
+    $aReprendre = $id === null || $newsletter === 'a_faire';
     $message = [
         'sender' => ['email' => $config['avis_expediteur'], 'name' => 'nfrancois.fr'],
         'to' => [['email' => $config['avis_destinataire']]],

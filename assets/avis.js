@@ -48,7 +48,8 @@
         if (res.ok) {
           // Le remerciement remplace le formulaire : l'envoi est confirmé, et on ne renvoie pas son avis par réflexe
           message(merci, 'Merci pour votre avis', !inscription ? 'Il m’aidera à préparer les prochaines interventions.'
-            : res.j.newsletter === 'inscrit' ? 'Il est bien arrivé, et vous êtes inscrit à la newsletter.'
+            : res.j.newsletter === 'confirmation' ? 'Il est bien arrivé. Pour recevoir la newsletter, confirmez votre adresse : IA, Tech & Travel Café vient de vous envoyer un e-mail.'
+            : res.j.newsletter === 'inscrit' ? 'Il est bien arrivé, et vous êtes bien abonné à la newsletter.'
             : 'Il est bien arrivé. Je vous inscris à la newsletter dans les prochains jours.', true);
           f.reset(); f.hidden = true; merci.hidden = false;
           merci.scrollIntoView({ block: 'center' }); merci.focus({ preventScroll: true });
