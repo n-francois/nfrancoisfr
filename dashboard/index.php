@@ -100,12 +100,15 @@ function chiffres(array $b): string
             . round($compte / $max * 100) . '%"></span></span><span class="tdb__barre-n">' . $compte . '</span></li>';
     }
     $nb = fn(int $n, string $un, string $plusieurs) => $n . ' ' . ($n > 1 ? $plusieurs : $un);
+    // Commentaires, citations, abonnés : chaque chiffre au-dessus de son libellé
+    $stat = fn(int $n, string $un, string $plusieurs) => '<li><span class="tdb__stat-n">' . $n . '</span><span class="tdb__stat-l">'
+        . ($n > 1 ? $plusieurs : $un) . '</span></li>';
     return '<div class="tdb__chiffres"><div class="tdb__moyenne-bloc"><p class="tdb__moyenne"><span class="nf-preuve__n">' . nombre($b['moyenne'])
         . '</span><span class="tdb__sur">/5</span></p><p class="tdb__moyenne-n">' . $nb($b['n'], 'avis', 'avis') . '</p></div>'
         . '<ul class="tdb__repartition" aria-label="Répartition des notes">' . $barres . '</ul>'
-        . '<p class="tdb__compteurs">' . $nb($b['commentaires'], 'commentaire', 'commentaires')
-        . ' · ' . $nb($b['citations'], 'citation autorisée', 'citations autorisées') . ' · '
-        . $nb($b['abonnes'], 'abonné', 'abonnés') . ' à la newsletter</p></div>';
+        . '<ul class="tdb__stats">' . $stat($b['commentaires'], 'commentaire', 'commentaires')
+        . $stat($b['citations'], 'citation autorisée', 'citations autorisées')
+        . $stat($b['abonnes'], 'abonné à la newsletter', 'abonnés à la newsletter') . '</ul></div>';
 }
 
 function csv(array $avis, array $evenements, string $nomFichier): void

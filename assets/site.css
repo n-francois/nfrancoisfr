@@ -399,7 +399,11 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__barre { height: 10px; background: var(--survol); }
 .tdb__barre span { display: block; height: 100%; background: var(--jaune); }
 .tdb__barre-n { color: var(--gris); text-align: right; font-variant-numeric: tabular-nums; }
-.tdb__compteurs { margin: 0; font-size: 15px; line-height: 1.5; color: var(--gris); }
+.tdb__stats { list-style: none; margin: 0; padding: var(--space-4) 0 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); border-top: var(--rule-thin) solid var(--gris-clair); }
+@media (min-width: 760px) { .tdb__stats { padding-top: 0; border-top: 0; } }
+.tdb__stats li { display: grid; align-content: start; gap: var(--space-1); }
+.tdb__stat-n { font: 800 32px/1 var(--font-display); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+.tdb__stat-l { font-size: 14px; line-height: 1.35; color: var(--gris); }
 .tdb__vide { margin: 0; color: var(--gris); }
 .tdb__liste { display: grid; }
 .tdb__avis-ligne { display: grid; grid-template-columns: 44px minmax(0, 1fr); gap: var(--space-4); padding-block: var(--space-6); border-top: var(--rule-thin) solid var(--gris-clair); }
@@ -419,8 +423,9 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__picto svg { width: 24px; height: 24px; fill: none; stroke: var(--on-jaune); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
 .tdb__indicateur-l { font-size: 15px; line-height: 1.4; color: var(--gris); }
 @media (max-width: 759px) {
-  .tdb__indicateur { grid-template-columns: 44px minmax(0, 1fr); column-gap: var(--space-4); row-gap: var(--space-1); align-items: center; padding: var(--space-4); }
-  .tdb__picto { grid-row: span 2; }
+  .tdb__indicateur { grid-template-columns: 64px minmax(0, 1fr); column-gap: var(--space-4); row-gap: var(--space-1); align-items: center; padding: var(--space-4); }
+  .tdb__picto { grid-row: span 2; width: 64px; height: 64px; }
+  .tdb__picto svg { width: 30px; height: 30px; stroke-width: 1.6; }
   .tdb__indicateur .nf-preuve__n { font-size: 40px; }
 }
 .tdb__valeur { display: flex; align-items: baseline; gap: var(--space-1); }
@@ -438,8 +443,10 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 /* Page d'une conférence : fil d'Ariane compact, puis le nom et sa fiche dans un encadré clair */
 .tdb--conference { margin-top: var(--space-8); }
 .tdb--conference .tdb__chiffres { margin-bottom: var(--space-12); }
-.tdb__fil { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-2); margin-top: var(--space-6); font-size: 14px; color: var(--gris); }
-.tdb__fil [aria-current] { color: var(--encre); font-weight: 500; }
+/* Fil d'Ariane sur une ligne : le nom de la conférence, repris en entier juste en dessous, se coupe au besoin */
+.tdb__fil { display: flex; align-items: baseline; gap: var(--space-2); margin-top: var(--space-6); font-size: 14px; color: var(--gris); white-space: nowrap; }
+.tdb__fil a { flex-shrink: 0; }
+.tdb__fil [aria-current] { min-width: 0; overflow: hidden; text-overflow: ellipsis; color: var(--encre); font-weight: 500; }
 .tdb__nom { font-family: var(--font-display); font-weight: 800; font-size: clamp(28px, 3.4vw, 40px); line-height: 1.1; letter-spacing: -.025em; margin: 0 0 var(--space-4); max-width: 22em; }
 .tdb__fiche { display: grid; gap: var(--space-2); justify-items: start; margin: 0 0 var(--space-12); padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
 .tdb__fiche p { margin: 0; }
