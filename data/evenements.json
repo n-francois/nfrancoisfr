@@ -1,7 +1,11 @@
 {
-  "_note": "Événements dont le formulaire d'avis accepte des réponses. La clé est le label (minuscules, chiffres, tirets), repris dans la base des avis et par la page de l'événement (« evenement » dans ses méta). nom : affiché dans le formulaire, les e-mails et le tableau de bord. signature_defaut : la signature d'une citation laissée sans nom. ghost_label : posé sur les abonnés à la newsletter venus de cet événement. ouvert à false : le formulaire n'accepte plus d'avis.",
+  "_note": "Événements dont le formulaire d'avis accepte des réponses. La clé est le label (minuscules, chiffres, tirets), repris dans la base des avis et par la page de l'événement (« evenement » dans ses méta). nom : affiché dans le formulaire, les e-mails et le tableau de bord. date (AAAA-MM-JJ), lieu, titre (de l'intervention) et page : repris dans le tableau de bord. signature_defaut : la signature d'une citation laissée sans nom. ghost_label : posé sur les abonnés à la newsletter venus de cet événement. ouvert à false : le formulaire n'accepte plus d'avis.",
   "cotesdarmor-2026": {
     "nom": "Trophées du tourisme en Côtes d’Armor 2026",
+    "date": "2026-10-05",
+    "lieu": "Saint-Brieuc",
+    "titre": "L’IA, nouveau point de contact avec les clientèles touristiques",
+    "page": "/cotesdarmor/",
     "signature_defaut": "Un participant des Trophées du tourisme en Côtes d’Armor 2026",
     "ghost_label": "Conf · Côtes d’Armor 2026",
     "ouvert": true

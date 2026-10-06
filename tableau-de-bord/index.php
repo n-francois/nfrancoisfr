@@ -1,8 +1,10 @@
 <?php
 /*
  * Tableau de bord privé des avis laissés après les conférences (base Supabase, voir api/avis.php) :
- * - vue d'ensemble : une ligne par événement (moyenne, répartition des notes, abonnés, citations) ;
- * - détail d'un événement (?evenement=label) : tous les avis, du plus récent au plus ancien ;
+ * - vue d'ensemble : trois indicateurs (conférences, avis, moyenne), les mots qui reviennent dans les commentaires, puis une
+ *   carte par événement (moyenne, répartition des notes, abonnés, citations) ;
+ * - détail d'un événement (?evenement=label) : date, lieu, titre et page de l'intervention, chiffres, carrousel des
+ *   citations autorisées, avis heure par heure, puis tous les avis, du plus récent au plus ancien ;
  * - export CSV (?format=csv, pour un événement ou pour tous).
  * Protégé par le mot de passe 'tableau_mot_de_passe' de nfrancois-config.php (cookie de 30 jours, 10 essais par quart
  * d'heure). La page n'est liée nulle part et exclue des moteurs de recherche.
@@ -120,6 +122,212 @@ function csv(array $avis, array $evenements, string $nomFichier): void
     exit;
 }
 
+const JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+const MOIS_COURTS = ['janv.', 'févr.', 'mars', 'avr.', 'mai', 'juin', 'juil.', 'août', 'sept.', 'oct.', 'nov.', 'déc.'];
+const LIEN_EXT = '<svg class="lien-ext" viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 12 12 4M5 4h7v7"/></svg>';
+
+/** « 2026-10-05 » → « lundi 5 octobre 2026 » ; $court : « lun. 5 oct. ». */
+function date_longue(DateTimeInterface $d, bool $court = false): string
+{
+    $jour = JOURS[(int) $d->format('w')];
+    $mois = MOIS[(int) $d->format('n') - 1];
+    return $court
+        ? mb_substr($jour, 0, 3) . '. ' . $d->format('j') . ' ' . MOIS_COURTS[(int) $d->format('n') - 1]
+        : $jour . ' ' . $d->format('j') . ' ' . $mois . ' ' . $d->format('Y');
+}
+
+/** Indicateurs de tête de la vue d'ensemble : conférences avec des avis, avis cumulés, moyenne de tous les avis. */
+function indicateurs(int $conferences, array $avis): string
+{
+    $n = count($avis);
+    $moyenne = $n ? array_sum(array_column($avis, 'note')) / $n : 0;
+    // Le chiffre seul dans nf-preuve__n : l'animation des compteurs du site réécrit son contenu
+    $tuile = fn(string $valeur, string $libelle, string $suite = '') => '<div><span class="tdb__valeur"><span class="nf-preuve__n">' . $valeur
+        . '</span>' . $suite . '</span><span class="nf-preuve__l">' . $libelle . '</span></div>';
+    return '<div class="nf-preuve nf-preuve--3 tdb__indicateurs">'
+        . $tuile((string) $conferences, $conferences > 1 ? 'conférences avec des avis' : 'conférence avec des avis')
+        . $tuile((string) $n, 'avis au total')
+        . $tuile($n ? nombre($moyenne) : '–', 'note moyenne, tous avis confondus', $n ? '<span class="tdb__sur">/5</span>' : '')
+        . '</div>';
+}
+
+/**
+ * Les mots qui reviennent dans les commentaires : un mot compte une fois par commentaire, les formes proches sont réunies
+ * (intéressant, intéressante, intéressantes), les mots vides écartés. Rend [[mot, nombre de commentaires], …].
+ */
+function mots_cles(array $avis, int $max = 12): array
+{
+    static $vides = null;
+    $vides ??= array_flip(explode(' ', 'avec sans pour dans sous chez vers entre mais donc comme aussi encore déjà même tout tous toute toutes'
+        . ' très trop bien plus moins peu beaucoup assez cette ceux celle celles cela ceci quoi dont leur leurs notre nôtre votre vôtre'
+        . ' elle elles nous vous ils sont était étaient être avoir avait avez avons fait faire peut peuvent sera seront serait quand'
+        . ' alors après avant pendant lors chaque autre autres quel quelle quels quelles ainsi enfin juste vraiment merci merciii avis'
+        . ' bcp quid cela permis mesurer apprend envie donne savoir déjà'));
+    $compte = [];
+    $formes = [];
+    foreach ($avis as $a) {
+        if (empty($a['commentaire'])) {
+            continue;
+        }
+        $texte = mb_strtolower(str_replace(['’', '‘'], "'", $a['commentaire']));
+        $texte = preg_replace("/(?<!\\p{L})(?:l|d|qu|j|c|n|s|m|t)'/u", ' ', $texte);
+        $vus = [];
+        foreach (preg_split('/[^\p{L}]+/u', $texte, -1, PREG_SPLIT_NO_EMPTY) as $mot) {
+            if (isset($vides[$mot]) || (mb_strlen($mot) < 4 && $mot !== 'ia')) {
+                continue;
+            }
+            $cle = preg_replace('/s$/u', '', $mot);
+            $cle = mb_strlen($cle) > 4 ? preg_replace('/e$/u', '', $cle) : $cle;
+            if (isset($vus[$cle])) {
+                continue;
+            }
+            $vus[$cle] = true;
+            $compte[$cle] = ($compte[$cle] ?? 0) + 1;
+            $formes[$cle][$mot] = ($formes[$cle][$mot] ?? 0) + 1;
+        }
+    }
+    arsort($compte);
+    $resultat = [];
+    foreach ($compte as $cle => $n) {
+        if ($n < 2 || count($resultat) >= $max) {
+            break;
+        }
+        $f = $formes[$cle];
+        uksort($f, fn($x, $y) => [$f[$y], mb_strlen($x)] <=> [$f[$x], mb_strlen($y)]);
+        $mot = (string) array_key_first($f);
+        $resultat[] = [$mot === 'ia' ? 'IA' : $mot, $n];
+    }
+    return $resultat;
+}
+
+function bloc_mots(array $avis, string $niveau = 'h2'): string
+{
+    $mots = mots_cles($avis);
+    if (!$mots) {
+        return '';
+    }
+    $liste = implode('', array_map(fn($m) => '<li class="tdb__mot">' . e($m[0]) . '<span class="tdb__mot-n">' . $m[1] . '</span></li>', $mots));
+    return '<section class="tdb__bloc" aria-labelledby="tdb-mots"><' . $niveau . ' class="tdb__titre" id="tdb-mots">Les mots qui reviennent</'
+        . $niveau . '><p class="tdb__aide">Dans les commentaires. Le chiffre : combien de commentaires emploient le mot.</p>'
+        . '<ul class="tdb__mots">' . $liste . '</ul></section>';
+}
+
+/** Carrousel des citations autorisées, chacune avec sa signature et un bouton pour la copier. */
+function bloc_citations(array $avis, string $signatureDefaut): string
+{
+    $cites = array_values(array_filter($avis, fn($a) => $a['citation'] && $a['commentaire']));
+    $n = count($cites);
+    if ($n === 0) {
+        return '';
+    }
+    $items = '';
+    foreach ($cites as $i => $a) {
+        $signature = $a['signature'] ?: $signatureDefaut;
+        $items .= '<li class="tdb__citation" aria-label="Citation ' . ($i + 1) . ' sur ' . $n . '"><blockquote><p>' . nl2br(e($a['commentaire']))
+            . '</p></blockquote><p class="tdb__citation-signature">' . e($signature) . ' · ' . (int) $a['note'] . '/5</p>'
+            . '<button class="nf-btn nf-btn--secondaire nf-btn--petit" type="button" data-copier="'
+            . e('« ' . preg_replace('/\s*\n\s*/u', ' ', $a['commentaire']) . ' » ' . $signature) . '">Copier la citation</button></li>';
+    }
+    $fleches = $n > 1 ? '<div class="tdb__fleches"><button class="tdb__fleche" type="button" data-sens="-1" aria-label="Citation précédente">←</button>'
+        . '<span class="tdb__compteur" aria-live="polite">1 / ' . $n . '</span>'
+        . '<button class="tdb__fleche" type="button" data-sens="1" aria-label="Citation suivante">→</button></div>' : '';
+    return '<section class="tdb__bloc tdb__carrousel" aria-labelledby="tdb-citations"><div class="tdb__bloc-tete"><h3 class="tdb__titre" id="tdb-citations">'
+        . ($n > 1 ? "Les $n citations autorisées" : 'La citation autorisée') . '</h3>' . $fleches . '</div>'
+        . '<ul class="tdb__citations" tabindex="0" aria-label="Citations autorisées">' . $items . '</ul></section>';
+}
+
+/** Les avis dans le temps : par heure (heure de Paris), ou par jour s'ils s'étalent sur plus de trois jours. */
+function bloc_temps(array $avis): string
+{
+    if (count($avis) < 2) {
+        return '';
+    }
+    $paris = new DateTimeZone('Europe/Paris');
+    $dates = array_map(fn($a) => (new DateTime($a['recu_le']))->setTimezone($paris), $avis);
+    $premier = min($dates);
+    $dernier = max($dates);
+    $parJour = $dernier->getTimestamp() - $premier->getTimestamp() > 72 * 3600;
+    $format = $parJour ? 'Y-m-d' : 'Y-m-d H';
+    $notes = [];
+    foreach ($avis as $i => $a) {
+        $notes[$dates[$i]->format($format)][] = (int) $a['note'];
+    }
+    $curseur = DateTime::createFromFormat($parJour ? '!Y-m-d' : '!Y-m-d H', $premier->format($format), $paris);
+    $fin = $dernier->format($format);
+    $colonnes = [];
+    while (true) {
+        $cle = $curseur->format($format);
+        $colonnes[] = [clone $curseur, $notes[$cle] ?? []];
+        if ($cle === $fin || count($colonnes) > 400) {
+            break;
+        }
+        $curseur->modify($parJour ? '+1 day' : '+1 hour');
+    }
+    // Trois créneaux vides d'affilée ou plus (la nuit) : une seule colonne « … », pour garder les autres lisibles
+    $serie = [];
+    $vides = [];
+    foreach ($colonnes as $c) {
+        if (!$c[1]) {
+            $vides[] = $c;
+            continue;
+        }
+        array_push($serie, ...(count($vides) >= 3 ? [['vide', $vides[0][0], end($vides)[0]]] : array_map(fn($v) => ['plein', $v[0], $v[1]], $vides)));
+        $vides = [];
+        $serie[] = ['plein', $c[0], $c[1]];
+    }
+    $max = max(array_map(fn($c) => count($c[1]), $colonnes));
+    $libelle = fn(DateTime $d) => $parJour ? $d->format('j') : $d->format('G') . ' h';
+    $html = '';
+    $lignes = '';
+    $jourPrecedent = '';
+    foreach ($serie as $c) {
+        $jour = $c[1]->format('Y-m-d');
+        $etiquetteJour = !$parJour && $jour !== $jourPrecedent ? '<span class="tdb__col-jour">' . date_longue($c[1], true) . '</span>' : '';
+        if ($c[0] === 'vide') {
+            $html .= '<li class="tdb__col tdb__col--vide" title="' . e($libelle($c[1]) . ' – ' . $libelle($c[2]) . ' : aucun avis') . '">'
+                . '<span class="tdb__col-zone"></span><span class="tdb__col-h">…</span><span class="tdb__col-moy"></span>' . $etiquetteJour . '</li>';
+            $jourPrecedent = $jour;
+            continue;
+        }
+        $jourPrecedent = $jour;
+        $n = count($c[2]);
+        $moyenne = $n ? nombre(array_sum($c[2]) / $n) : '';
+        $quandLong = date_longue($c[1], true) . ($parJour ? '' : ', ' . $libelle($c[1]));
+        $html .= '<li class="tdb__col"' . ($n ? ' title="' . e("$quandLong : $n avis, moyenne $moyenne/5") . '"' : '') . '>'
+            . '<span class="tdb__col-zone"><span class="tdb__col-n">' . ($n ?: '') . '</span><span class="tdb__col-barre" style="height:'
+            . round($n / $max * 100) . '%"></span></span><span class="tdb__col-h">' . $libelle($c[1]) . '</span>'
+            . '<span class="tdb__col-moy">' . $moyenne . '</span>' . $etiquetteJour . '</li>';
+        if ($n) {
+            $lignes .= '<tr><td>' . e($quandLong) . '</td><td>' . $n . '</td><td>' . $moyenne . '</td></tr>';
+        }
+    }
+    $titre = $parJour ? 'Les avis jour par jour' : 'Les avis heure par heure';
+    return '<section class="tdb__bloc" aria-labelledby="tdb-temps"><h3 class="tdb__titre" id="tdb-temps">' . $titre . '</h3>'
+        . '<p class="tdb__aide">Au-dessus de chaque barre, le nombre d’avis ; en dessous, la note moyenne' . ($parJour ? '.' : ' (heure de Paris).') . '</p>'
+        . '<ol class="tdb__colonnes" aria-hidden="true">' . $html . '</ol>'
+        . '<table class="sr-only"><caption>' . $titre . '</caption><tr><th>Quand</th><th>Avis</th><th>Note moyenne</th></tr>' . $lignes . '</table></section>';
+}
+
+/** Date, lieu, titre de l'intervention et lien vers la page de l'événement. */
+function fiche_evenement(array $evenement): string
+{
+    $parties = [];
+    $quand = !empty($evenement['date']) ? DateTime::createFromFormat('!Y-m-d', $evenement['date'], new DateTimeZone('Europe/Paris')) : false;
+    $lieu = trim(($quand ? date_longue($quand) : '') . (!empty($evenement['lieu']) ? ' · ' . $evenement['lieu'] : ''), ' ·');
+    if ($lieu !== '') {
+        $parties[] = '<p class="nf-label">' . e($lieu) . '</p>';
+    }
+    if (!empty($evenement['titre'])) {
+        $parties[] = '<p class="tdb__titre-intervention">«&#8239;' . e($evenement['titre']) . '&#8239;»</p>';
+    }
+    if (!empty($evenement['page'])) {
+        $parties[] = '<p class="tdb__lien-page"><a class="nf-link" href="' . e($evenement['page']) . '" target="_blank" rel="noopener">Voir la page de la conférence'
+            . '<span class="sr-only"> (nouvel onglet)</span>' . LIEN_EXT . '</a></p>';
+    }
+    return $parties ? '<div class="tdb__fiche">' . implode('', $parties) . '</div>' : '';
+}
+
 // Accès
 $config = nf_reglages() ?? [];
 $motDePasse = (string) ($config['tableau_mot_de_passe'] ?? '');
@@ -189,10 +397,13 @@ if ($label !== '') {
             . ($a['commentaire'] ? '<p class="tdb__commentaire">' . nl2br(e($a['commentaire'])) . '</p>' : '<p class="tdb__vide">Sans commentaire</p>')
             . '<p class="tdb__infos">' . implode(' · ', $infos) . '</p></div></li>';
     }
+    $evenement = $evenements[$label] ?? [];
     page('<section class="nf-section tdb"><p class="tdb__retour"><a class="nf-link" href="/tableau-de-bord/">← Toutes les conférences</a></p>'
-        . '<h2 class="nf-section__name">' . e($nom) . '</h2>' . chiffres(bilan($avis))
-        . ($avis ? '<p class="tdb__outils"><a class="nf-link" href="?evenement=' . e(rawurlencode($label)) . '&amp;format=csv">Exporter ces avis (CSV)</a></p>'
-            . '<ol class="tdb__liste">' . $lignes . '</ol>' : '')
+        . '<h2 class="nf-section__name">' . e($nom) . '</h2>' . fiche_evenement($evenement) . chiffres(bilan($avis))
+        . bloc_citations($avis, $evenement['signature_defaut'] ?? "Un participant · $nom") . bloc_temps($avis)
+        . ($avis ? '<section class="tdb__bloc" aria-labelledby="tdb-tous"><div class="tdb__bloc-tete"><h3 class="tdb__titre" id="tdb-tous">Tous les avis</h3>'
+            . '<a class="nf-link tdb__export" href="?evenement=' . e(rawurlencode($label)) . '&amp;format=csv">Exporter en CSV</a></div>'
+            . '<ol class="tdb__liste">' . $lignes . '</ol></section>' : '')
         . '</section>');
 }
 
@@ -211,10 +422,15 @@ $cartes = '';
 foreach ($parEvenement as $cle => $liste) {
     $b = bilan($liste);
     $etat = !empty($evenements[$cle]['ouvert']) ? 'Formulaire ouvert' : 'Formulaire fermé';
-    $cartes .= '<li class="tdb__evenement"><h2 class="nf-col__title"><a class="tdb__lien" href="?evenement=' . e(rawurlencode($cle)) . '">'
-        . e($evenements[$cle]['nom'] ?? $cle) . '</a></h2><p class="nf-label">' . e($cle) . ' · ' . $etat
+    $e = $evenements[$cle] ?? [];
+    $quand = !empty($e['date']) ? DateTime::createFromFormat('!Y-m-d', $e['date'], new DateTimeZone('Europe/Paris')) : false;
+    $cartes .= '<li class="tdb__evenement"><h3 class="nf-col__title"><a class="tdb__lien" href="?evenement=' . e(rawurlencode($cle)) . '">'
+        . e($e['nom'] ?? $cle) . '</a></h3><p class="nf-label">' . ($quand ? e(date_longue($quand)) . ' · ' : '')
+        . (!empty($e['lieu']) ? e($e['lieu']) . ' · ' : '') . $etat
         . ($b['dernier'] ? ' · dernier avis le ' . date_fr($b['dernier'], 'd/m/Y') : '') . '</p>' . chiffres($b) . '</li>';
 }
-page('<section class="nf-section tdb"><p class="tdb__outils">' . count($avis) . ' avis au total · '
-    . '<a class="nf-link" href="?format=csv">Tout exporter (CSV)</a> · <a class="nf-link" href="?sortir=1">Se déconnecter</a></p>'
-    . '<ul class="tdb__evenements">' . $cartes . '</ul></section>');
+$conferences = count(array_filter($parEvenement, fn($liste) => $liste));
+page('<section class="nf-section tdb"><p class="tdb__outils"><a class="nf-link" href="?format=csv">Tout exporter (CSV)</a> · '
+    . '<a class="nf-link" href="?sortir=1">Se déconnecter</a></p>' . indicateurs($conferences, $avis) . bloc_mots($avis)
+    . '<section class="tdb__bloc" aria-labelledby="tdb-conferences"><h2 class="tdb__titre" id="tdb-conferences">Les conférences</h2>'
+    . '<ul class="tdb__evenements">' . $cartes . '</ul></section></section>');

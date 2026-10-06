@@ -407,6 +407,47 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__commentaire { margin: 0 0 var(--space-2); font-size: 18px; line-height: 1.5; max-width: 40em; }
 .tdb__infos { margin: 0; font-size: 14px; line-height: 1.5; color: var(--gris); }
 .tdb__infos strong { color: var(--encre); font-weight: 600; }
+/* Tableau de bord : indicateurs de tête, blocs (mots, citations, temps), fiche de l'événement */
+.tdb__indicateurs { margin: 0 0 var(--space-16); }
+.tdb__valeur { display: flex; align-items: baseline; gap: var(--space-1); }
+.tdb__bloc { margin: 0 0 var(--space-16); }
+.tdb__bloc-tete { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3) var(--space-6); margin-bottom: var(--space-4); }
+.tdb__bloc-tete .tdb__titre { margin: 0; }
+.tdb__titre { font-family: var(--font-display); font-weight: 800; font-size: 24px; line-height: 1.2; letter-spacing: -.02em; margin: 0 0 var(--space-2); }
+.tdb__aide { margin: 0 0 var(--space-4); font-size: 14px; color: var(--gris); }
+.tdb__mots { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.tdb__mot { display: inline-flex; align-items: center; gap: var(--space-2); min-height: 36px; padding: 0 6px 0 14px; border: 1px solid var(--encre); border-radius: var(--radius-full); font-size: 15px; font-weight: 500; }
+.tdb__mot-n { display: grid; place-items: center; min-width: 24px; height: 24px; padding: 0 6px; box-sizing: border-box; border-radius: var(--radius-full); background: var(--jaune); color: var(--on-jaune); font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.tdb__fiche { display: grid; gap: var(--space-2); margin: calc(-1 * var(--space-4)) 0 var(--space-8); }
+.tdb__fiche p { margin: 0; }
+.tdb__titre-intervention { font-size: 20px; line-height: 1.35; font-weight: 600; max-width: 34em; }
+.tdb__lien-page { font-size: 15px; }
+.tdb__export { font-size: 15px; }
+/* Carrousel des citations : défilement horizontal aimanté, une citation par vue sur mobile */
+.tdb__fleches { display: flex; align-items: center; gap: var(--space-3); }
+.tdb__fleche { display: grid; place-items: center; width: 44px; height: 44px; border: 1.5px solid var(--encre); border-radius: var(--radius-full); background: transparent; color: var(--encre); font: 600 18px/1 var(--font-sans); cursor: pointer; }
+.tdb__fleche:hover { background: var(--encre); color: var(--on-encre); }
+.tdb__fleche:focus-visible, .tdb__citations:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+.tdb__compteur { min-width: 3.5em; text-align: center; font-size: 15px; color: var(--gris); font-variant-numeric: tabular-nums; }
+.tdb__citations { list-style: none; margin: 0; padding: 0 0 var(--space-2); display: grid; grid-auto-flow: column; grid-auto-columns: min(100%, 520px); gap: var(--space-4); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: thin; }
+.tdb__citation { scroll-snap-align: start; display: grid; align-content: start; gap: var(--space-4); justify-items: start; padding: var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); border-top: 4px solid var(--jaune); }
+.tdb__citation blockquote { margin: 0; }
+.tdb__citation blockquote p { margin: 0; font-size: 20px; line-height: 1.45; font-weight: 500; }
+.tdb__citation blockquote p::before { content: "« "; }
+.tdb__citation blockquote p::after { content: " »"; }
+.tdb__citation-signature { margin: 0; font-size: 15px; font-weight: 600; }
+/* Avis dans le temps : colonnes jaunes sur un axe fin, chiffre au-dessus, moyenne dessous */
+.tdb__colonnes { list-style: none; margin: 0; padding: 0 0 22px; display: flex; gap: 2px; overflow-x: auto; }
+.tdb__col { position: relative; flex: 1 1 0; min-width: 36px; display: grid; grid-template-rows: 150px auto auto; justify-items: center; font-size: 13px; }
+.tdb__col--vide { flex: 0 0 28px; min-width: 28px; }
+.tdb__col-zone { align-self: stretch; justify-self: stretch; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; border-bottom: var(--rule-thin) solid var(--trait-champ); }
+.tdb__col--vide .tdb__col-zone { border-bottom-style: dashed; }
+.tdb__col-n { font-weight: 700; font-variant-numeric: tabular-nums; margin-bottom: 4px; }
+.tdb__col-barre { display: block; width: 100%; max-width: 40px; background: var(--jaune); }
+.tdb__col-h { margin-top: 6px; color: var(--encre); white-space: nowrap; }
+.tdb__col-moy { color: var(--gris); font-variant-numeric: tabular-nums; min-height: 1.3em; }
+.tdb__col-jour { position: absolute; left: 0; top: 100%; color: var(--gris); white-space: nowrap; font-size: 12px; }
+@media (max-width: 759px) { .tdb__titre { font-size: 22px; } .tdb__citation blockquote p { font-size: 18px; } .tdb__indicateurs { margin-bottom: var(--space-12); } }
 /* Accès aux résultats complets : le code, en capitales et bien espacé, puis le bouton */
 .acces { display: grid; gap: var(--space-6); max-width: 420px; margin-top: var(--space-12); }
 .acces__code { text-transform: uppercase; letter-spacing: .12em; font-weight: 600; }

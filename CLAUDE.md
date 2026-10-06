@@ -58,9 +58,9 @@ Quand un chiffre change, le mettre à jour partout : compteurs, meta description
 ## Pages d'événement et avis
 
 - Une page d'événement (ex. `/cotesdarmor/`) déclare `"evenement": "<label>"` dans ses méta et place `{{formulaire_avis}}` sous le titre de sa section `#avis` : bloc `src/blocs/formulaire-avis.html`, script `assets/avis.js`. Pages en `noindex`, hors sitemap.
-- Les événements sont listés dans `data/evenements.json` (nom, signature par défaut d'une citation, label Ghost, `ouvert`). Nouvel événement : une entrée ici et une page dans `src/pages/`.
+- Les événements sont listés dans `data/evenements.json` (nom, date, lieu, titre de l'intervention, page, signature par défaut d'une citation, label Ghost, `ouvert`). Nouvel événement : une entrée ici et une page dans `src/pages/`.
 - `api/avis.php` (outils communs : `api/lib.php`) : enregistre l'avis dans Supabase (schéma privé `nf`, fonctions `nf_avis_*`), abonne à la newsletter dans Ghost avec le label de l'événement, puis envoie l'avis par e-mail à Nicolas (Brevo). Chaque étape est indépendante ; l'e-mail signale ce qui est à reprendre.
-- Tableau de bord privé : `/tableau-de-bord/` (mot de passe ; `tableau-de-bord/index.php` remplit le gabarit généré depuis `src/pages/tableau-de-bord.html`).
+- Tableau de bord privé : `/tableau-de-bord/` (mot de passe ; `tableau-de-bord/index.php` remplit le gabarit généré depuis `src/pages/tableau-de-bord.html`, script `assets/tableau.js`) : indicateurs, mots qui reviennent, puis par conférence sa fiche, ses citations autorisées (carrousel), ses avis heure par heure et l'export CSV.
 - Clés, codes et mots de passe vivent uniquement dans `nfrancois-config.php` chez Hostinger, hors du dépôt public. Jamais de secret ni de donnée d'avis dans le dépôt.
 
 ## SEO
