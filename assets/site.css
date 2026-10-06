@@ -399,7 +399,7 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
 .tdb__barre { height: 10px; background: var(--survol); }
 .tdb__barre span { display: block; height: 100%; background: var(--jaune); }
 .tdb__barre-n { color: var(--gris); text-align: right; font-variant-numeric: tabular-nums; }
-/* Commentaires, citations, abonnés : une ligne chacun, chiffre aligné à droite puis libellé, filet entre les lignes */
+/* Avis, commentaires, citations, abonnés : une ligne chacun, chiffre aligné à droite puis libellé, filet entre les lignes */
 .tdb__stats { list-style: none; margin: 0; padding: 0; display: grid; }
 .tdb__stats li { display: flex; align-items: baseline; gap: var(--space-3); padding-block: var(--space-2); border-top: var(--rule-thin) solid var(--gris-clair); }
 .tdb__stats li:last-child { padding-bottom: 0; }
@@ -434,8 +434,6 @@ a:hover > .lien-ext { transform: translate(2px, -2px); }
   .tdb__indicateur .nf-preuve__n { font-size: 40px; }
 }
 .tdb__valeur { display: flex; align-items: baseline; gap: var(--space-1); }
-.tdb__moyenne-bloc { display: grid; gap: var(--space-1); justify-items: center; justify-self: start; }
-.tdb__moyenne-n { margin: 0; font-size: 14px; color: var(--gris); }
 /* Nuage de mots : la taille suit la fréquence (--poids de 0 à 1), le plus fréquent surligné */
 .tdb__nuage { list-style: none; margin: 0; padding: var(--space-8) var(--space-6); display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: var(--space-2) var(--space-6); background: var(--papier-clair); border: var(--rule-thin) solid var(--gris-clair); }
 .tdb__nuage-mot { font-family: var(--font-display); font-size: calc(17px + var(--poids) * 31px); font-weight: 800; line-height: 1.15; letter-spacing: -.02em; color: color-mix(in srgb, var(--encre) calc(55% + var(--poids) * 45%), var(--papier)); }

@@ -99,14 +99,13 @@ function chiffres(array $b): string
         $barres .= '<li><span class="tdb__barre-note">' . $note . '</span><span class="tdb__barre"><span style="width:'
             . round($compte / $max * 100) . '%"></span></span><span class="tdb__barre-n">' . $compte . '</span></li>';
     }
-    $nb = fn(int $n, string $un, string $plusieurs) => $n . ' ' . ($n > 1 ? $plusieurs : $un);
-    // Commentaires, citations, abonnés : chaque chiffre au-dessus de son libellé
+    // Avis, commentaires, citations, abonnés : une ligne chacun, le chiffre puis son libellé
     $stat = fn(int $n, string $un, string $plusieurs) => '<li><span class="tdb__stat-n">' . $n . '</span><span class="tdb__stat-l">'
         . ($n > 1 ? $plusieurs : $un) . '</span></li>';
-    return '<div class="tdb__chiffres"><div class="tdb__moyenne-bloc"><p class="tdb__moyenne"><span class="nf-preuve__n">' . nombre($b['moyenne'])
-        . '</span><span class="tdb__sur">/5</span></p><p class="tdb__moyenne-n">' . $nb($b['n'], 'avis', 'avis') . '</p></div>'
+    return '<div class="tdb__chiffres"><p class="tdb__moyenne"><span class="nf-preuve__n">' . nombre($b['moyenne'])
+        . '</span><span class="tdb__sur">/5</span></p>'
         . '<ul class="tdb__repartition" aria-label="Répartition des notes">' . $barres . '</ul>'
-        . '<ul class="tdb__stats">' . $stat($b['commentaires'], 'commentaire', 'commentaires')
+        . '<ul class="tdb__stats">' . $stat($b['n'], 'avis', 'avis') . $stat($b['commentaires'], 'commentaire', 'commentaires')
         . $stat($b['citations'], 'citation autorisée', 'citations autorisées')
         . $stat($b['abonnes'], 'abonné à la newsletter', 'abonnés à la newsletter') . '</ul></div>';
 }
