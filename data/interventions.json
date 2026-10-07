@@ -1,5 +1,5 @@
 {
-  "_lisez_moi": "Source : tableau Google « interventions-nfrancois ». Les textes sont saisis tels quels (apostrophes droites, espaces normales) : scripts/build.py applique la typographie française. Les trois rubriques (prises_de_parole, medias, publications) s'affichent ensemble sur la page Interventions, par année. type = ce que Nicolas a fait : Conférence, Table ronde, Atelier, Webinaire, Cours, Interview, Podcast, Article, Citation, Étude, Livre blanc (traductions dans scripts/build.py). statut : Passé ou À venir. date : AAAA-MM (ou AAAA si le mois est inconnu). Version anglaise : chaque entrée peut porter un objet « en » qui remplace les champs traduits (titre, organisateur, ville, precision, date_affichee, editeur…) ; les autres champs, dont les noms propres, sont repris tels quels.",
+  "_lisez_moi": "Source : tableau Google « interventions-nfrancois ». Les textes sont saisis tels quels (apostrophes droites, espaces normales) : scripts/build.py applique la typographie française. Les trois rubriques (prises_de_parole, medias, publications) s'affichent ensemble sur la page Interventions, par année. type = ce que Nicolas a fait : Conférence, Table ronde, Atelier, Webinaire, Cours, Interview, Podcast, Article, Citation, Étude, Livre blanc (traductions dans scripts/build.py). statut : Passé ou À venir. date : AAAA-MM (ou AAAA si le mois est inconnu). ville (et lieu des accréditations) : à l'étranger, toujours avec le pays (« Houffalize, Belgique ») ; en France, la ville seule, que la version anglaise complète en « Pau, France ». Version anglaise : chaque entrée peut porter un objet « en » qui remplace les champs traduits (titre, organisateur, ville, precision, date_affichee, editeur…) ; les autres champs, dont les noms propres, sont repris tels quels.",
   "prises_de_parole": [
     {
       "id": "C-21",
@@ -477,10 +477,10 @@
   "accreditations": [
     {
       "evenement": "Web Summit",
-      "lieu": "Lisbonne",
+      "lieu": "Lisbonne, Portugal",
       "annees": "novembre 2026",
       "en": {
-        "lieu": "Lisbon",
+        "lieu": "Lisbon, Portugal",
         "annees": "November 2026"
       }
     },

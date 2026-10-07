@@ -145,12 +145,20 @@ def ligne(quand, nature, titre, meta, lien, lang):
     return f'{li}<a class="nf-fiche" href="{attr(lien)}">{inner}{FLECHE}</a></li>'
 
 
+def lieu(texte, lang):
+    """En anglais, un lieu sans pays est en France : « Pau » devient « Pau, France ». Les lieux à l'étranger portent
+    déjà leur pays dans les données (« Houffalize, Belgique »)."""
+    if lang == "en" and texte and "," not in texte and texte != "Online":
+        return texte + ", France"
+    return texte
+
+
 def fiche(item, lang):
     if item["type"] not in TYPES:
         raise SystemExit(f'{item["id"]} : type inconnu « {item["type"]} » (types possibles : {", ".join(TYPES)})')
     # Qui : l'organisateur d'une prise de parole, le média d'un passage, l'éditeur d'une publication
     qui = tr(item, "organisateur", lang) or tr(item, "media", lang) or tr(item, "editeur", lang)
-    meta = " · ".join(x for x in [qui, tr(item, "ville", lang), tr(item, "precision", lang)] if x)
+    meta = " · ".join(x for x in [qui, lieu(tr(item, "ville", lang), lang), tr(item, "precision", lang)] if x)
     return ligne(date_courte(item, lang), LANGUES[lang]["types"][item["type"]], tr(item, "titre", lang), meta,
                  item.get("lien", ""), lang)
 
@@ -179,7 +187,7 @@ def reconnaissances(d, lang):
         meta = " · ".join(tr(r, k, lang) for k in ("nature", "organisme", "date"))
         cols.append(f'<div class="nf-col"><h3 class="nf-col__title">{typo(tr(r, "titre", lang), lang)}</h3>'
                     f'<p class="nf-col__meta">{typo(meta, lang)}</p></div>')
-    acc = " · ".join(f'{a["evenement"]}, {tr(a, "lieu", lang)}, {tr(a, "annees", lang)}' for a in d["accreditations"])
+    acc = " · ".join(f'{a["evenement"]}, {lieu(tr(a, "lieu", lang), lang)}, {tr(a, "annees", lang)}' for a in d["accreditations"])
     cols.append(f'<div class="nf-col"><h3 class="nf-col__title">{LANGUES[lang]["accreditations"]}</h3>'
                 f'<p class="nf-col__meta">{typo(acc, lang)}</p></div>')
     return '<div class="nf-cols">' + "".join(cols) + "</div>"

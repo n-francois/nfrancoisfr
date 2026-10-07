@@ -54,6 +54,7 @@ Quand un chiffre change, le mettre à jour partout : compteurs, meta description
 - Prise de parole : `<li><strong>Titre (format)</strong> — Organisateur, Ville, Pays · mois année</li>`
 - Média : `<li><strong>Média</strong> · type — <a href="…" target="_blank" rel="noopener">Titre</a> · mois année</li>`
 - Mois en toutes lettres (« juin 2026 » / « June 2026 »).
+- Villes : à l'étranger avec le pays (« Houffalize, Belgique ») ; en France, la ville seule en FR, suivie de « , France » en EN (ajouté par `scripts/build.py`).
 
 ## Pages d'événement et avis
 
