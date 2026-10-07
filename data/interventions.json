@@ -12,7 +12,7 @@
       "lien": "",
       "accueil": true,
       "en": {
-        "titre": "AI, a new touchpoint with visitors"
+        "titre": "AI: a new touchpoint with visitors"
       }
     },
     {
@@ -46,7 +46,7 @@
       "en": {
         "titre": "Staying visible when AI answers everything",
         "organisateur": "Next Tourisme, “Accélération IA” edition",
-        "precision": "panel moderator, co-organizer of the edition"
+        "precision": "panel moderator, co-organizer of this edition"
       }
     },
     {
@@ -60,7 +60,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "AI in tourism: neither panic nor naivety"
+        "titre": "AI in tourism: neither panic nor naiveté"
       }
     },
     {
@@ -75,7 +75,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "AI at your golf course: what really changes in your day-to-day"
+        "titre": "AI at your golf course: what really changes in your daily operations"
       }
     },
     {
@@ -89,7 +89,7 @@
       "lien": "https://www.lechotouristique.com/article/ia-dans-le-voyage-a-quoi-sattendre-en-2026",
       "accueil": true,
       "en": {
-        "titre": "AI in travel: what to expect in 2026?"
+        "titre": "AI in travel: what to expect in 2026"
       }
     },
     {
@@ -103,7 +103,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "AI in tourism: demystify, demonstrate, question",
+        "titre": "AI in tourism: demystifying, demonstrating, questioning",
         "ville": "Houffalize, Belgium"
       }
     },
@@ -118,7 +118,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "Generative AI: uses and potential in tourism and leisure"
+        "titre": "Generative AI: use cases and potential in tourism and leisure"
       }
     },
     {
@@ -236,7 +236,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "precision": "designed and hosted the series, 9 dates, 1,000+ attendees"
+        "precision": "designed and hosted the series, nine events, 1,000+ attendees"
       }
     },
     {
@@ -252,7 +252,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "Generative AI: uses and potential in tourism",
+        "titre": "Generative AI: use cases and potential in tourism",
         "date_affichee": "Oct–Dec 2024",
         "precision": "course module, first- to third-year students"
       }
@@ -268,7 +268,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "AI & tourism: state of play and outlook"
+        "titre": "AI and tourism: where things stand and what's next"
       }
     },
     {
@@ -283,7 +283,7 @@
       "lien": "",
       "accueil": false,
       "en": {
-        "titre": "Generative AI in tourism: uses and opportunities",
+        "titre": "Generative AI in tourism: use cases and opportunities",
         "organisateur": "IFTM · TOM.travel, Grand Angle show",
         "precision": "TV interview"
       }
@@ -374,7 +374,7 @@
       "titre": "Quand l'intelligence artificielle se met au service du tourisme",
       "lien": "https://www.puissancetelevision.fr/societe/quand-lintelligence-artificielle-se-met-au-service-du-tourisme/",
       "en": {
-        "titre": "When artificial intelligence serves tourism"
+        "titre": "Putting AI to work for tourism"
       }
     },
     {
@@ -467,7 +467,7 @@
       "organisme": "ministère de l'Économie",
       "nature": "Nomination",
       "en": {
-        "titre": "Ambassador of France’s “Osez l'IA” national initiative for the tourism sector",
+        "titre": "Tourism ambassador for France’s national “Osez l'IA” initiative",
         "nature": "Appointment",
         "organisme": "French Ministry of Economy",
         "date": "since September 2025"
