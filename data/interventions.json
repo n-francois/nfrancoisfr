@@ -2,6 +2,20 @@
   "_lisez_moi": "Source : tableau Google « interventions-nfrancois ». Les textes sont saisis tels quels (apostrophes droites, espaces normales) : scripts/build.py applique la typographie française. Les trois rubriques (prises_de_parole, medias, publications) s'affichent ensemble sur la page Interventions, par année. type = ce que Nicolas a fait : Conférence, Table ronde, Atelier, Webinaire, Cours, Interview, Podcast, Article, Citation, Étude, Livre blanc (traductions dans scripts/build.py). statut : Passé ou À venir. date : AAAA-MM (ou AAAA si le mois est inconnu). Version anglaise : chaque entrée peut porter un objet « en » qui remplace les champs traduits (titre, organisateur, ville, precision, date_affichee, editeur…) ; les autres champs, dont les noms propres, sont repris tels quels.",
   "prises_de_parole": [
     {
+      "id": "C-21",
+      "statut": "Passé",
+      "date": "2026-10",
+      "titre": "L'IA, nouveau point de contact avec les clientèles touristiques",
+      "organisateur": "Trophées du Tourisme en Côtes d'Armor",
+      "ville": "Saint-Brieuc",
+      "type": "Conférence",
+      "lien": "",
+      "accueil": false,
+      "en": {
+        "titre": "AI, the new touchpoint with travelers"
+      }
+    },
+    {
       "id": "C-01",
       "statut": "Passé",
       "date": "2026-07",
@@ -492,7 +506,7 @@
     "Grands Remous, Québec",
     "Rencontres nationales du e-tourisme",
     "Rencontres de l'Ardenne",
-    "Saline Royale d'Arc-et-Senans",
+    "Trophées du Tourisme en Côtes d'Armor",
     "Association des Directeurs de Golf de France",
     "Syndicat des Loisirs Actifs"
   ],
