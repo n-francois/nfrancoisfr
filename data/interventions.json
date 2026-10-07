@@ -327,8 +327,10 @@
       "media": "AI Experience",
       "titre": "Tourisme : l'IA prépare déjà le voyage sans vous",
       "lien": "https://www.ai-experience.io/podcast/tourisme-lia-prepare-deja-le-voyage-sans-vous",
+      "precision": "animé par Julien Redelsperger",
       "en": {
-        "titre": "Tourism: AI is already planning the trip without you"
+        "titre": "Tourism: AI is already planning the trip without you",
+        "precision": "hosted by Julien Redelsperger"
       }
     },
     {
