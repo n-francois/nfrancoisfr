@@ -10,7 +10,7 @@
       "ville": "Saint-Brieuc",
       "type": "Conférence",
       "lien": "",
-      "accueil": false,
+      "accueil": true,
       "en": {
         "titre": "AI, the new touchpoint with travelers"
       }
@@ -58,7 +58,7 @@
       "ville": "Saline Royale d'Arc-et-Senans",
       "type": "Conférence",
       "lien": "",
-      "accueil": true,
+      "accueil": false,
       "en": {
         "titre": "AI in tourism: neither panic nor naivety"
       }
@@ -378,13 +378,15 @@
     {
       "id": "M-07",
       "date": "2025-02",
+      "date_affichee": "févr.–oct. 2025",
       "type": "Podcast",
       "titre": "30 min IA & Tourisme",
       "lien": "https://www.etourisme.info/30-mn-ia-tourisme-un-nouveau-podcast-video/",
       "en": {
-        "precision": "Host of several episodes"
+        "date_affichee": "Feb–Oct 2025",
+        "precision": "Co-host alongside Jean-Luc Boulin, Jean-Philippe Duchesneau, and Benoit Dudragne"
       },
-      "precision": "Animateur de plusieurs épisodes"
+      "precision": "Co-animateur aux côtés de Jean-Luc Boulin, Jean-Philippe Duchesneau et Benoit Dudragne"
     },
     {
       "id": "M-09",

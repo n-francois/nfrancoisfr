@@ -89,6 +89,7 @@ def fr(text):
     t = html.escape(text, quote=False).replace("'", "’")
     t = re.sub(r" ([:;?!%»])", NNBSP + r"\1", t)
     t = t.replace("« ", "«" + NNBSP)
+    t = re.sub(r"(\d) (?=\d{3}\b)", "\\1\u00a0", t)  # séparateur des milliers insécable : « 1 000+ » ne se coupe pas
     return t
 
 
